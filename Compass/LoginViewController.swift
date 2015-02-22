@@ -39,6 +39,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.makeUsernameBorder()
         self.makePasswordBorder()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        // get current user cached on disk
+        var currentUser = PFUser.currentUser()
+        if currentUser != nil {
+            // go to table segue
+            self.performSegueWithIdentifier("showMapView", sender: self)
+        } else {
+            // wait for signup/login
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

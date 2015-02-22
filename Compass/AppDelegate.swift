@@ -8,12 +8,15 @@
 
 import UIKit
 import Parse
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
     var window: UIWindow?
 
+    var locationManager: CLLocationManager! = nil
+    var isExecutingInBackground = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -21,31 +24,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId("RWNddnNuYwk6BfS87tsIlSXNPX1FIHOsDxYriBId",
             clientKey: "jZtdpdn7ydTL3izCvenqQchVGG5Ctv8ApaLzeq8E")
         
+        // init location manager
+        locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        
+        if (self.locationManager.respondsToSelector("requestAlwaysAuthorization")) {
+            self.locationManager.requestAlwaysAuthorization()
+        }
+        
+        locationManager.startUpdatingLocation()
+        
         return true
     }
 
     func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        isExecutingInBackground = true
+        
+        /* Reduce the accuracy to ease the strain on iOS while in background */
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        isExecutingInBackground = false
+        
+        /* increase location detection accuracy in foreground */
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
     func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    // MARK: Location Manager Delegate
+    
+    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
+        if isExecutingInBackground {
+            // in background - do not do any heavy processing
+        } else {
+            // in foreground - resume normal processing
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+//        NSLog("%@", locations)
+    }
 }
 

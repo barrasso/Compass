@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		042B4AD61A9A5672007F361F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B4AD51A9A5672007F361F /* AppDelegate.swift */; };
 		042B4ADB1A9A5672007F361F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 042B4AD91A9A5672007F361F /* Main.storyboard */; };
-		042B4ADD1A9A5672007F361F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 042B4ADC1A9A5672007F361F /* Images.xcassets */; };
 		042B4AE01A9A5672007F361F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042B4ADE1A9A5672007F361F /* LaunchScreen.xib */; };
 		042B4AEC1A9A5672007F361F /* CompassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B4AEB1A9A5672007F361F /* CompassTests.swift */; };
 		042B4AF81A9A56B2007F361F /* ElegantIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 042B4AF71A9A56B2007F361F /* ElegantIcons.ttf */; };
@@ -34,6 +33,8 @@
 		042B4B201A9A6266007F361F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B1F1A9A6266007F361F /* SystemConfiguration.framework */; };
 		042B4B221A9A626F007F361F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B211A9A626F007F361F /* libz.dylib */; };
 		042B4B241A9A6278007F361F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B231A9A6278007F361F /* libsqlite3.dylib */; };
+		042B4B291A9A6C3E007F361F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 042B4B281A9A6C3E007F361F /* Media.xcassets */; };
+		042B4B2B1A9A6E2A007F361F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B2A1A9A6E2A007F361F /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +52,6 @@
 		042B4AD41A9A5672007F361F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		042B4AD51A9A5672007F361F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		042B4ADA1A9A5672007F361F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		042B4ADC1A9A5672007F361F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		042B4ADF1A9A5672007F361F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		042B4AE51A9A5672007F361F /* CompassTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompassTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		042B4AEA1A9A5672007F361F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,6 +79,8 @@
 		042B4B211A9A626F007F361F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		042B4B231A9A6278007F361F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		042B4B251A9A62A5007F361F /* Compass-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Compass-Bridging-Header.h"; sourceTree = "<group>"; };
+		042B4B281A9A6C3E007F361F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		042B4B2A1A9A6E2A007F361F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 			files = (
 				042B4B241A9A6278007F361F /* libsqlite3.dylib in Frameworks */,
 				042B4B221A9A626F007F361F /* libz.dylib in Frameworks */,
+				042B4B2B1A9A6E2A007F361F /* MapKit.framework in Frameworks */,
 				042B4B201A9A6266007F361F /* SystemConfiguration.framework in Frameworks */,
 				042B4B1E1A9A625A007F361F /* StoreKit.framework in Frameworks */,
 				042B4B1C1A9A6254007F361F /* Security.framework in Frameworks */,
@@ -143,7 +146,7 @@
 				042B4B011A9A598B007F361F /* MapViewController.swift */,
 				042B4B031A9A599E007F361F /* ProximityTableViewController.swift */,
 				042B4AD91A9A5672007F361F /* Main.storyboard */,
-				042B4ADC1A9A5672007F361F /* Images.xcassets */,
+				042B4B281A9A6C3E007F361F /* Media.xcassets */,
 				042B4ADE1A9A5672007F361F /* LaunchScreen.xib */,
 				042B4AD31A9A5672007F361F /* Supporting Files */,
 			);
@@ -209,6 +212,7 @@
 		042B4B0E1A9A61F3007F361F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				042B4B2A1A9A6E2A007F361F /* MapKit.framework */,
 				042B4B231A9A6278007F361F /* libsqlite3.dylib */,
 				042B4B211A9A626F007F361F /* libz.dylib */,
 				042B4B1F1A9A6266007F361F /* SystemConfiguration.framework */,
@@ -274,6 +278,15 @@
 				TargetAttributes = {
 					042B4ACF1A9A5672007F361F = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 3GBQ2H4QX7;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					042B4AE41A9A5672007F361F = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -307,11 +320,11 @@
 			files = (
 				042B4AF81A9A56B2007F361F /* ElegantIcons.ttf in Resources */,
 				042B4AFC1A9A56C6007F361F /* login-bg.jpg in Resources */,
+				042B4B291A9A6C3E007F361F /* Media.xcassets in Resources */,
 				042B4AFD1A9A56C6007F361F /* or-divider.png in Resources */,
 				042B4ADB1A9A5672007F361F /* Main.storyboard in Resources */,
 				042B4AE01A9A5672007F361F /* LaunchScreen.xib in Resources */,
 				042B4AFE1A9A56C6007F361F /* triangle-select.png in Resources */,
-				042B4ADD1A9A5672007F361F /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +469,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/parse-library-1.6.1",
@@ -463,6 +478,7 @@
 				INFOPLIST_FILE = Compass/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Compass-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -473,6 +489,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/parse-library-1.6.1",
@@ -480,6 +498,7 @@
 				INFOPLIST_FILE = Compass/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Compass-Bridging-Header.h";
 			};
 			name = Release;
