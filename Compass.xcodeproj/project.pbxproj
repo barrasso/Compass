@@ -17,6 +17,8 @@
 		042B4AFD1A9A56C6007F361F /* or-divider.png in Resources */ = {isa = PBXBuildFile; fileRef = 042B4AFA1A9A56C6007F361F /* or-divider.png */; };
 		042B4AFE1A9A56C6007F361F /* triangle-select.png in Resources */ = {isa = PBXBuildFile; fileRef = 042B4AFB1A9A56C6007F361F /* triangle-select.png */; };
 		042B4B001A9A56FA007F361F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B4AFF1A9A56FA007F361F /* LoginViewController.swift */; };
+		042B4B021A9A598B007F361F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B4B011A9A598B007F361F /* MapViewController.swift */; };
+		042B4B041A9A599E007F361F /* ProximityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B4B031A9A599E007F361F /* ProximityTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		042B4AFA1A9A56C6007F361F /* or-divider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "or-divider.png"; sourceTree = "<group>"; };
 		042B4AFB1A9A56C6007F361F /* triangle-select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "triangle-select.png"; sourceTree = "<group>"; };
 		042B4AFF1A9A56FA007F361F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		042B4B011A9A598B007F361F /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		042B4B031A9A599E007F361F /* ProximityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProximityTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,8 @@
 			children = (
 				042B4AD51A9A5672007F361F /* AppDelegate.swift */,
 				042B4AFF1A9A56FA007F361F /* LoginViewController.swift */,
+				042B4B011A9A598B007F361F /* MapViewController.swift */,
+				042B4B031A9A599E007F361F /* ProximityTableViewController.swift */,
 				042B4AD91A9A5672007F361F /* Main.storyboard */,
 				042B4ADC1A9A5672007F361F /* Images.xcassets */,
 				042B4ADE1A9A5672007F361F /* LaunchScreen.xib */,
@@ -245,6 +251,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				042B4B001A9A56FA007F361F /* LoginViewController.swift in Sources */,
+				042B4B041A9A599E007F361F /* ProximityTableViewController.swift in Sources */,
+				042B4B021A9A598B007F361F /* MapViewController.swift in Sources */,
 				042B4AD61A9A5672007F361F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,7 +12,7 @@
         <!--Login-->
         <scene sceneID="4Zj-dQ-KIE">
             <objects>
-                <viewController title="Login" id="P5R-L2-cP1" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController title="Login" id="P5R-L2-cP1" customClass="LoginViewController" customModule="Compass" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bqt-lP-nuy"/>
                         <viewControllerLayoutGuide type="bottom" id="zOL-lt-3hA"/>
@@ -24,11 +24,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="login-bg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="oC3-HZ-etl">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="334"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CJ5-Lo-vy4">
-                                <rect key="frame" x="41" y="365" width="292" height="30"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="compass" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GwS-m7-UUs">
                                 <rect key="frame" x="77" y="124" width="221" height="58"/>
                                 <fontDescription key="fontDescription" name="AcademyEngravedLetPlain" family="Academy Engraved LET" pointSize="50"/>
@@ -57,7 +52,6 @@
                                 </state>
                                 <connections>
                                     <action selector="signupButtonToggled:" destination="P5R-L2-cP1" eventType="touchUpInside" id="1GJ-cl-iX6"/>
-                                    <action selector="toggleSignUp:" destination="P5R-L2-cP1" eventType="touchUpInside" id="eKX-wh-5d7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RA9-6v-V1R">
@@ -68,7 +62,6 @@
                                 </state>
                                 <connections>
                                     <action selector="loginButtonToggled:" destination="P5R-L2-cP1" eventType="touchUpInside" id="Dau-GH-nit"/>
-                                    <action selector="toggleLogIn:" destination="P5R-L2-cP1" eventType="touchUpInside" id="N9V-Q4-spy"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="triangle-select.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ru7-FD-cDC">
@@ -77,14 +70,14 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="triangle-select.png" translatesAutoresizingMaskIntoConstraints="NO" id="g7g-UH-Upz">
                                 <rect key="frame" x="290" y="319" width="20" height="19"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dWx-rq-xZo">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dWx-rq-xZo">
                                 <rect key="frame" x="41" y="403" width="292" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VlR-hf-rqp">
-                                <rect key="frame" x="300" y="403" width="33" height="30"/>
-                                <fontDescription key="fontDescription" name="ElegantIcons" family="ElegantIcons" pointSize="35"/>
+                                <rect key="frame" x="327" y="403" width="32" height="30"/>
+                                <fontDescription key="fontDescription" name="ElegantIcons" family="ElegantIcons" pointSize="39"/>
                                 <state key="normal" title="5">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -92,17 +85,20 @@
                                     <action selector="arrowButtonSelected:" destination="P5R-L2-cP1" eventType="touchUpInside" id="mSu-Jw-BVH"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CJ5-Lo-vy4">
+                                <rect key="frame" x="41" y="355" width="292" height="30"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="arrowButton" destination="VlR-hf-rqp" id="GUJ-2Z-J9x"/>
+                        <outlet property="arrowButton" destination="VlR-hf-rqp" id="P3R-53-iJc"/>
                         <outlet property="loginTriangle" destination="g7g-UH-Upz" id="0DD-4b-bw5"/>
-                        <outlet property="loginTriangleSelected" destination="g7g-UH-Upz" id="Toz-nj-jcI"/>
                         <outlet property="passwordTextField" destination="dWx-rq-xZo" id="Uhj-Ji-fUK"/>
                         <outlet property="signupTriangle" destination="Ru7-FD-cDC" id="HKl-gq-f7s"/>
-                        <outlet property="signupTriangleSelected" destination="Ru7-FD-cDC" id="Eed-pA-0zM"/>
                         <outlet property="usernameTextField" destination="CJ5-Lo-vy4" id="rU2-VT-Bn3"/>
                         <segue destination="WtT-yE-IYt" kind="show" identifier="showMapView" id="jrA-W0-ora"/>
                     </connections>
@@ -114,7 +110,6 @@
         <!--Tab Bar Controller-->
         <scene sceneID="8yU-Rg-cru">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pwO-rd-s0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController id="WtT-yE-IYt" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -128,14 +123,15 @@
                         <segue destination="8CY-UZ-Q7O" kind="relationship" relationship="viewControllers" id="J9E-Md-JlK"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pwO-rd-s0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="868.5" y="371.5"/>
         </scene>
-        <!--Item-->
+        <!--Map-->
         <scene sceneID="d9i-fI-7OX">
             <objects>
                 <navigationController id="8Ju-yy-SnL" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="q6u-Db-XXt"/>
+                    <tabBarItem key="tabBarItem" title="Map" id="q6u-Db-XXt"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="z6T-vm-UEN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -149,10 +145,10 @@
             </objects>
             <point key="canvasLocation" x="1504.5" y="-182.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Map-->
         <scene sceneID="IQ7-RV-e9v">
             <objects>
-                <viewController id="94D-TV-IGr" sceneMemberID="viewController">
+                <viewController id="94D-TV-IGr" customClass="MapViewController" customModule="Compass" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="07i-xU-Pb6"/>
                         <viewControllerLayoutGuide type="bottom" id="m6t-pe-QZF"/>
@@ -162,18 +158,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="39A-fd-MYe"/>
+                    <navigationItem key="navigationItem" title="Map" id="39A-fd-MYe"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A5Q-I7-SnR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2093.5" y="-182.5"/>
         </scene>
-        <!--Item-->
+        <!--List-->
         <scene sceneID="3jT-2u-G80">
             <objects>
                 <navigationController id="8CY-UZ-Q7O" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="1Za-wc-ZxI"/>
+                    <tabBarItem key="tabBarItem" title="List" id="1Za-wc-ZxI"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="YaZ-wf-b50">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -187,10 +183,10 @@
             </objects>
             <point key="canvasLocation" x="1504.5" y="861.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Users-->
         <scene sceneID="gov-Cf-4Wp">
             <objects>
-                <tableViewController id="qEV-w0-bVw" sceneMemberID="viewController">
+                <tableViewController id="qEV-w0-bVw" customClass="ProximityTableViewController" customModule="Compass" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3dM-Nm-5HB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -208,7 +204,7 @@
                             <outlet property="delegate" destination="qEV-w0-bVw" id="tWV-re-3VG"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="UP0-8i-1AK"/>
+                    <navigationItem key="navigationItem" title="Users" id="UP0-8i-1AK"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sfa-Ff-BsR" userLabel="First Responder" sceneMemberID="firstResponder"/>
