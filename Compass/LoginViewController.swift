@@ -81,7 +81,118 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func arrowButtonSelected(sender: AnyObject) {
+        // init error string
+        var error = "";
         
+        // check for empty email or password text fields
+        if (usernameTextField.text == "" || passwordTextField.text == "") {
+            error = "Please enter a email and password"
+        }
+            
+        // check for minimum / maximum username string length
+        else if (countElements(usernameTextField.text) >= 11 || countElements(usernameTextField.text) <= 2) {
+            error = "Invalid username length. Must be 3 - 10 characters"
+        }
+        
+        // check for minimum / maximum password string length
+        else if (countElements(passwordTextField.text) >= 21 || countElements(passwordTextField.text) <= 3) {
+            error = "Invalid password length. Must be 4 - 20 characters"
+        }
+        
+        // if the error string is not empty
+        if (error != "") {
+            self.displayAlert("Error", error: error)
+        }
+            
+        else {
+            // create a new PFUser
+            var user = PFUser()
+            
+            // set the user's name and password
+            user.username = usernameTextField.text
+            user.password = passwordTextField.text
+            
+            // inital activity indicator setup
+            activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0.0, 0.0, 100, 100))
+            activityIndicator.center = self.view.center
+            activityIndicator.hidesWhenStopped = true;
+            activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+            
+            // add to view and start animation
+            view.addSubview(activityIndicator)
+            activityIndicator.startAnimating()
+            
+            // begin ignoring user interaction
+            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+            
+            // check if sign up is active
+            if (signUpActive == true) {
+                // sign up in background
+                user.signUpInBackgroundWithBlock {
+                    (succeeded: Bool!, signupError: NSError!) -> Void in
+                    if signupError == nil {
+                        
+                        // stop animation and end ignoring events
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                        
+                        // now user can use app
+                        NSLog("Signed Up.")
+                        
+                        // go to table segue
+                        self.performSegueWithIdentifier("showMapView", sender: self)
+                        
+                    } else {
+                        
+                        // stop animation and end ignoring events
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                        
+                        // might be an error to display
+                        if let errorString = signupError.userInfo?["error"] as? NSString {
+                            error = errorString
+                        } else {
+                            error = "Oops. Something went wrong."
+                        }
+                        
+                        self.displayAlert("Could Not Sign Up", error: error)
+                    }
+                }
+            }
+                // if login is active
+            else if (signUpActive == false) {
+                
+                PFUser.logInWithUsernameInBackground(usernameTextField.text, password:passwordTextField.text) {
+                    (user: PFUser!, loginError: NSError!) -> Void in
+                    if loginError == nil {
+                        
+                        // stop animation and end ignoring events
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                        
+                        // perform user table segue
+                        self.performSegueWithIdentifier("showMapView", sender: self)
+                        
+                        NSLog("Logged In.")
+                        
+                    } else {
+                        
+                        // stop animation and end ignoring events
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                        
+                        // might be an error to display
+                        if let errorString = loginError.userInfo?["error"] as? NSString {
+                            error = errorString
+                        } else {
+                            error = "Oops. Something went wrong."
+                        }
+                        
+                        self.displayAlert("Invalid Login", error: error)
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func facebookButtonSelected(sender: AnyObject) {
