@@ -9,18 +9,21 @@
 import UIKit
 
 class MapViewController: UIViewController {
-
-    // MARK: View Functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        println("Device Name:  " + UIDevice.currentDevice().name)
+        println("Device Model:  " + UIDevice.currentDevice().model)
+        println("System Version:  " + UIDevice.currentDevice().systemVersion)
+        println("Device ID:  " + UIDevice.currentDevice().identifierForVendor.UUIDString)
+        println("\n-------------------------------\n")
 
         let httpMethod = "POST"
         var urlAsString = "http://155.41.17.18:8181/restconf/operations/oneM2M-cSEBase:createResource"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
-        
         var err: NSError?
         
         // set POST params
@@ -34,7 +37,7 @@ class MapViewController: UIViewController {
                     ],
                     [
                     "attributeName":"resourceName",
-                    "attributeValue":"ae11"
+                    "attributeValue":"LocationAE/Devices/" + UIDevice.currentDevice().identifierForVendor.UUIDString
                     ],
                     [
                     "attributeName":"labels",
@@ -61,15 +64,14 @@ class MapViewController: UIViewController {
         urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
         urlRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
         
-        // start data task
+        // start data task request
         var task = session.dataTaskWithRequest(urlRequest, completionHandler: { (data, response, error) -> Void in
             var responseError: NSError?
-            
-            var json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error:&responseError )
+            // deserialize json object
+            var json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error:&responseError)
             
             if responseError == nil {
-                
-                println("successfully deserialized...")
+                println("Successfully deserialized...\n")
                 
                 if json is NSDictionary {
                     let deserializedDictionary = json as NSDictionary
@@ -79,13 +81,12 @@ class MapViewController: UIViewController {
                     let deserializedArray = json as NSArray
                     println("Deserialized JSON Array = \(deserializedArray)")
                 } else {
-                    println("wat")
+                    println("Something other object was returned...")
                 }
             } else if responseError != nil {
                 println("An error happened while deserializing the JSON data: \(responseError)")
             }
         })
-        
         task.resume()
     }
 
