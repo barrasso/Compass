@@ -22,11 +22,12 @@ class MapViewController: UIViewController {
         let httpMethod = "POST"
         var urlAsString = "http://155.41.17.18:8181/restconf/operations/oneM2M-cSEBase:createResource"
         
+        // url request properties
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
         var err: NSError?
         
-        // set POST params
+        // set POST input params
         var params: [NSString : AnyObject] =
         [
             "input": [
@@ -53,10 +54,10 @@ class MapViewController: UIViewController {
             ]
         ]
         
-        // init session
-        var session = NSURLSession.sharedSession()
-        
-        // config request
+        // init queue
+        let queue = NSOperationQueue()
+
+        // config request with timeout
         let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
         urlRequest.HTTPMethod = httpMethod
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -64,8 +65,8 @@ class MapViewController: UIViewController {
         urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
         urlRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
         
-        // start data task request
-        var task = session.dataTaskWithRequest(urlRequest, completionHandler: { (data, response, error) -> Void in
+        // create new thread for data request
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (reponse: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
             var responseError: NSError?
             // deserialize json object
             var json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error:&responseError)
@@ -86,8 +87,7 @@ class MapViewController: UIViewController {
             } else if responseError != nil {
                 println("An error happened while deserializing the JSON data: \(responseError)")
             }
-        })
-        task.resume()
+        }
     }
 
     override func didReceiveMemoryWarning() {
