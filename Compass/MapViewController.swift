@@ -16,45 +16,41 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        mapView.showsUserLocation = true
-        
-//        // 1
-//        let location = CLLocationCoordinate2D(
-//            latitude: 51.50007773,
-//            longitude: -0.1246402
-//        )
-//        // 2
-//        let span = MKCoordinateSpanMake(0.05, 0.05)
-//        let region = MKCoordinateRegion(center: location, span: span)
-//        mapView.setRegion(region, animated: true)
-//        
-//        //3
-//        let annotation = MKPointAnnotation()
-//        annotation.setCoordinate(location)
-//        annotation.title = "Big Ben"
-//        annotation.subtitle = "London"
-//        mapView.addAnnotation(annotation)
+        mapView.showsUserLocation = true
         
         println("Device Name:  " + UIDevice.currentDevice().name)
         println("Device Model:  " + UIDevice.currentDevice().model)
         println("System Version:  " + UIDevice.currentDevice().systemVersion)
         println("Device ID:  " + UIDevice.currentDevice().identifierForVendor.UUIDString)
         println("\n-------------------------------\n")
-
+        
+        // do logic to determine what beacon im next to
+        
+        // when updating beacon id, send flag to locplugin for uri of updated content
+        // walk in front of beacon 1 then post
+        // fetch content
+        // walk in front of beacon 2 then post
+        // fetch content
+        
+        // fetch things/beaconid/numberIrecieved/content
+        
+        var beaconID = "1"
+        
         // set input method & params
-        let httpMethod = "POST"
+        let httpMethod = "GET"
         var params: [NSString : AnyObject] =
         [
             "from":"http:localhost:10000",
             "requestIdentifier":"12345",
-            "resourceType":"container",
+            "resourceType":"contentInstance",
             "content": [
-                "labels":"",
-                "resourceName":"LocationAE/Things/Testings/" + UIDevice.currentDevice().identifierForVendor.UUIDString
+                "contentInfo":"ID1",
+                "content":beaconID,
+                "resourceName": UIDevice.currentDevice().identifierForVendor.UUIDString
             ]
         ]
         
-        // swift api call
+        // swift http api call
         MBSwiftPostman(method: httpMethod, jsonPayloadParams: params)
     }
 

@@ -20,11 +20,17 @@ class MBSwiftPostman {
         
         switch (method) {
         case "POST":
-            self.urlAsString = "http://localhost:8282/InCSE1?from=http:localhost:10000&requestIdentifier=12345"
+            
+            self.urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/"+UIDevice.currentDevice().identifierForVendor.UUIDString+"?from=http:localhost:10000&requestIdentifier=12345"
+            
+            
             println("Using POST method...")
             break;
         case "GET":
-            self.urlAsString = "http://localhost:8282/InCSE1?from=coap:localhost:10000&requestIdentifier=12345"
+            
+            self.urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/BeaconID/Latest?from=coap:localhost:10000&requestIdentifier=12345"
+            
+            
             println("Using GET method...")
             break;
         case "DELETE":
@@ -46,13 +52,13 @@ class MBSwiftPostman {
         
         // config request with timeout
         let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
-        urlRequest.HTTPMethod = httpMethod
+        urlRequest.HTTPMethod = self.httpMethod
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
         urlRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(self.jsonPayload, options: nil, error: &err)
         
-        // create new thread for data request
+        // create connection on a new thread for request
         NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (reponse: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
             var responseError: NSError?
             // deserialize json object
