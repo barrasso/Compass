@@ -7,11 +7,33 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
     
+    @IBOutlet var mapView: MKMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        mapView.showsUserLocation = true
+        
+//        // 1
+//        let location = CLLocationCoordinate2D(
+//            latitude: 51.50007773,
+//            longitude: -0.1246402
+//        )
+//        // 2
+//        let span = MKCoordinateSpanMake(0.05, 0.05)
+//        let region = MKCoordinateRegion(center: location, span: span)
+//        mapView.setRegion(region, animated: true)
+//        
+//        //3
+//        let annotation = MKPointAnnotation()
+//        annotation.setCoordinate(location)
+//        annotation.title = "Big Ben"
+//        annotation.subtitle = "London"
+//        mapView.addAnnotation(annotation)
         
         println("Device Name:  " + UIDevice.currentDevice().name)
         println("Device Model:  " + UIDevice.currentDevice().model)
@@ -19,78 +41,53 @@ class MapViewController: UIViewController {
         println("Device ID:  " + UIDevice.currentDevice().identifierForVendor.UUIDString)
         println("\n-------------------------------\n")
 
+        // set input method & params
         let httpMethod = "POST"
-        var urlAsString = "http://155.41.17.18:8181/restconf/operations/oneM2M-cSEBase:createResource"
-        
-        // url request properties
-        let url = NSURL(string: urlAsString)
-        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
-        var err: NSError?
-        
-        // set POST input params
         var params: [NSString : AnyObject] =
         [
-            "input": [
-                "Attributes":[
-                    [
-                    "attributeName":"resourceType",
-                    "attributeValue":"AE"
-                    ],
-                    [
-                    "attributeName":"resourceName",
-                    "attributeValue":"LocationAE/Devices/" + UIDevice.currentDevice().identifierForVendor.UUIDString
-                    ],
-                    [
-                    "attributeName":"labels",
-                    "attributeValue":"containerunderAE"
-                    ],
-                    [
-                    "attributeName":"ontologyRef",
-                    "attributeValue":"/CSE1/122111111"
-                    ]
-                ],
-                "originatorID":"12",
-                "resourceURI":"InCSE1"
+            "from":"http:localhost:10000",
+            "requestIdentifier":"12345",
+            "resourceType":"container",
+            "content": [
+                "labels":"",
+                "resourceName":"LocationAE/Things/Testings/" + UIDevice.currentDevice().identifierForVendor.UUIDString
             ]
         ]
         
-        // init queue
-        let queue = NSOperationQueue()
-
-        // config request with timeout
-        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
-        urlRequest.HTTPMethod = httpMethod
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
-        urlRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
-        
-        // create new thread for data request
-        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (reponse: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            var responseError: NSError?
-            // deserialize json object
-            var json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error:&responseError)
-            
-            if responseError == nil {
-                println("Successfully deserialized...\n")
-                
-                if json is NSDictionary {
-                    let deserializedDictionary = json as NSDictionary
-                    println("Deserialized JSON Dictionary = \(deserializedDictionary)")
-                }
-                else if json is NSArray {
-                    let deserializedArray = json as NSArray
-                    println("Deserialized JSON Array = \(deserializedArray)")
-                } else {
-                    println("Something other object was returned...")
-                }
-            } else if responseError != nil {
-                println("An error happened while deserializing the JSON data: \(responseError)")
-            }
-        }
+        // swift api call
+        MBSwiftPostman(method: httpMethod, jsonPayloadParams: params)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 }
+
+
+///// OLD JSON Payload object
+//
+//var params: [NSString : AnyObject] =
+//[
+//    "input": [
+//        "Attributes":[
+//            [
+//                "attributeName":"resourceType",
+//                "attributeValue":"AE"
+//            ],
+//            [
+//                "attributeName":"resourceName",
+//                "attributeValue":"LocationAE/Things/" + UIDevice.currentDevice().identifierForVendor.UUIDString
+//            ],
+//            [
+//                "attributeName":"labels",
+//                "attributeValue":"containerunderAE"
+//            ],
+//            [
+//                "attributeName":"ontologyRef",
+//                "attributeValue":"/CSE1/122111111"
+//            ],
+//        ],
+//        "originatorID":"12",
+//        "resourceURI":"InCSE1"
+//    ]
+//]
