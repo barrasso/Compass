@@ -37,7 +37,9 @@ class MapViewController: UIViewController {
         var beaconID = "1"
         
         // set input method & params
-        let httpMethod = "GET"
+        let httpMethod = "POST"
+        
+        /* use this json payload to create content instances */
         var params: [NSString : AnyObject] =
         [
             "from":"http:localhost:10000",
@@ -49,6 +51,18 @@ class MapViewController: UIViewController {
                 "resourceName": UIDevice.currentDevice().identifierForVendor.UUIDString
             ]
         ]
+        
+        /* use this json payload to create containers */
+//        var params: [NSString : AnyObject] =
+//        [
+//            "from":"http:localhost:10000",
+//            "requestIdentifier":"12345",
+//            "resourceType":"container",
+//            "content": [
+//                "labels":"",
+//                "resourceName": UIDevice.currentDevice().identifierForVendor.UUIDString
+//            ]
+//        ]
         
         // swift http api call
         MBSwiftPostman(method: httpMethod, jsonPayloadParams: params)

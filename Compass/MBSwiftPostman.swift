@@ -21,8 +21,13 @@ class MBSwiftPostman {
         switch (method) {
         case "POST":
             
-            self.urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/"+UIDevice.currentDevice().identifierForVendor.UUIDString+"?from=http:localhost:10000&requestIdentifier=12345"
+            // first just cse1, create container LocationAE
+            // then with cse1/locationae, create container Things
+            // then with cse1/locationae/things, create container UUID
+            self.urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things?from=http:localhost:10000&requestIdentifier=12345"
             
+            // then use this to create contentInstance
+            self.urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/"+UIDevice.currentDevice().identifierForVendor.UUIDString+"?from=http:localhost:10000&requestIdentifier=12345"
             
             println("Using POST method...")
             break;
