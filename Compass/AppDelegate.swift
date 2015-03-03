@@ -72,7 +72,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-//        NSLog("%@", locations)
+        var newLocation: AnyObject? = locations.last
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("newLocationNoti", object: self, userInfo: NSDictionary(object: newLocation!, forKey: "newLocationResult"))
     }
 }
 

@@ -16,6 +16,9 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // subscribe to location updates
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatedLocation:", name: "newLocationNoti", object: nil)
+        
         mapView.showsUserLocation = true
         
         println("Device Name:  " + UIDevice.currentDevice().name)
@@ -65,11 +68,28 @@ class MapViewController: UIViewController {
 //        ]
         
         // swift http api call
-        MBSwiftPostman(method: httpMethod, jsonPayloadParams: params)
+        //MBSwiftPostman(method: httpMethod, jsonPayloadParams: params)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // MARK: Location Handling
+    
+    func updatedLocation(noti: NSNotification) {
+        
+        // try to cast to expected type
+        if let info = noti.userInfo {
+            
+            if let s : AnyObject = info["newLocationResult"] {
+                println("found \(s)")
+            } else {
+                println("not found")
+            }
+        } else {
+            println("wrong user info type")
+        }
     }
 }
 
