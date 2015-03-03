@@ -7,19 +7,25 @@
 //
 
 import UIKit
+import CoreLocation
 import MapKit
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet var mapView: MKMapView!
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        mapView = MKMapView()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mapView.showsUserLocation = true
+
         // subscribe to location updates
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatedLocation:", name: "newLocationNoti", object: nil)
-        
-        mapView.showsUserLocation = true
         
         println("Device Name:  " + UIDevice.currentDevice().name)
         println("Device Model:  " + UIDevice.currentDevice().model)
@@ -82,42 +88,36 @@ class MapViewController: UIViewController {
         // try to cast to expected type
         if let info = noti.userInfo {
             
-            if let s : AnyObject = info["newLocationResult"] {
-                println("found \(s)")
+            if let userLocation : CLLocation = info["newLocationResult"] as? CLLocation {
+                println("Latitude: \(userLocation.coordinate.latitude)")
+                println("Longitude: \(userLocation.coordinate.longitude)")
+                println("\n-------------------------------\n")
+                
+                addPinToMapView(userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+                
             } else {
-                println("not found")
+                println("Could not find new location...")
             }
         } else {
-            println("wrong user info type")
+            println("Wrong userInfo type...")
         }
     }
+    
+    func setCenterOfMapToLocation(location: CLLocationCoordinate2D) {
+        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        let region = MKCoordinateRegion(center: location, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func addPinToMapView(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+        
+        // create location coordinate
+        let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+//        // instantiate annotation
+//        let annotation = MBAnnotation(coordinate: location, title: "Current Location", subtitle: "test")
+//        
+//        mapView.addAnnotation(annotation)
+        setCenterOfMapToLocation(location)
+    }
 }
-
-
-///// OLD JSON Payload object
-//
-//var params: [NSString : AnyObject] =
-//[
-//    "input": [
-//        "Attributes":[
-//            [
-//                "attributeName":"resourceType",
-//                "attributeValue":"AE"
-//            ],
-//            [
-//                "attributeName":"resourceName",
-//                "attributeValue":"LocationAE/Things/" + UIDevice.currentDevice().identifierForVendor.UUIDString
-//            ],
-//            [
-//                "attributeName":"labels",
-//                "attributeValue":"containerunderAE"
-//            ],
-//            [
-//                "attributeName":"ontologyRef",
-//                "attributeValue":"/CSE1/122111111"
-//            ],
-//        ],
-//        "originatorID":"12",
-//        "resourceURI":"InCSE1"
-//    ]
-//]

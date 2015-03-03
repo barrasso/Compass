@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func applicationWillTerminate(application: UIApplication) {
     }
 
-    // MARK: Location Manager Delegate
+    // MARK: Location Manager Delegate Methods
     
     func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
         if isExecutingInBackground {
@@ -75,6 +75,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         var newLocation: AnyObject? = locations.last
         
         NSNotificationCenter.defaultCenter().postNotificationName("newLocationNoti", object: self, userInfo: NSDictionary(object: newLocation!, forKey: "newLocationResult"))
+    }
+    
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("The authorization status of location services is changed to: ")
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .Authorized:
+            println("Authorized")
+        case .AuthorizedWhenInUse:
+            println("Authorized when in use")
+        case .Denied:
+            println("Denied")
+        case .NotDetermined:
+            println("Not determined")
+        case .Restricted:
+            println("Restricted")
+        default:
+            println("Unhandled")
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        println("Location manager failed with error: \(error)")
     }
 }
 

@@ -36,6 +36,7 @@
 		042B4B291A9A6C3E007F361F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 042B4B281A9A6C3E007F361F /* Media.xcassets */; };
 		042B4B2B1A9A6E2A007F361F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B2A1A9A6E2A007F361F /* MapKit.framework */; };
 		04A4FCDA1AA1025000403042 /* MBSwiftPostman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */; };
+		04A4FCF01AA64B4D00403042 /* MBAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		042B4B281A9A6C3E007F361F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		042B4B2A1A9A6E2A007F361F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSwiftPostman.swift; sourceTree = "<group>"; };
+		04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				042B4B011A9A598B007F361F /* MapViewController.swift */,
 				042B4B031A9A599E007F361F /* ProximityTableViewController.swift */,
 				04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */,
+				04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */,
 				042B4AD91A9A5672007F361F /* Main.storyboard */,
 				042B4B281A9A6C3E007F361F /* Media.xcassets */,
 				042B4ADE1A9A5672007F361F /* LaunchScreen.xib */,
@@ -346,6 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				042B4B001A9A56FA007F361F /* LoginViewController.swift in Sources */,
+				04A4FCF01AA64B4D00403042 /* MBAnnotation.swift in Sources */,
 				042B4B041A9A599E007F361F /* ProximityTableViewController.swift in Sources */,
 				042B4B021A9A598B007F361F /* MapViewController.swift in Sources */,
 				04A4FCDA1AA1025000403042 /* MBSwiftPostman.swift in Sources */,
