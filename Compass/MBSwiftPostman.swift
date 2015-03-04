@@ -10,58 +10,44 @@ import Foundation
 
 class MBSwiftPostman {
     
-    let httpMethod : String!
-    let urlAsString : String!
-    var jsonPayload : [NSString : AnyObject]
+    // MARK: POST Methods
     
-    init(method: String!, jsonPayloadParams: [NSString : AnyObject]) {
-        self.httpMethod = method
-        self.jsonPayload = jsonPayloadParams
+    func createContentInstanceWith(beaconID: String) {
         
-        switch (method) {
-        case "POST":
-            
-            // first just cse1, create container LocationAE
-            // then with cse1/locationae, create container Things
-            // then with cse1/locationae/things, create container UUID
-            self.urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things?from=http:localhost:10000&requestIdentifier=12345"
-            
-            // then use this to create contentInstance
-            self.urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/"+UIDevice.currentDevice().identifierForVendor.UUIDString+"?from=http:localhost:10000&requestIdentifier=12345"
-            
-            println("Using POST method...")
-            break;
-        case "GET":
-            
-            self.urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/BeaconID/Latest?from=coap:localhost:10000&requestIdentifier=12345"
-            
-            
-            println("Using GET method...")
-            break;
-        case "DELETE":
-            self.urlAsString = "http://localhost:8282/InCSE1?from=http:localhost:10000&requestIdentifier=12345"
-            println("Using DELETE method...")
-            break;
-        default:
-            println("Invalid HTTP method.")
-            break;
-        }
+        // set input method
+        let httpMethod = "POST"
+        
+        // use this url to create contentInstance
+        let urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/2954A1E2-13FB-4A7C-B89D-6478322525E1/LocIBeacon/?from=http:localhost:10000&requestIdentifier=12345"
+        
+        /* use this json payload to create content instances */
+        var params: [NSString : AnyObject] =
+        [
+            "from":"http:localhost:10000",
+            "requestIdentifier":"12345",
+            "resourceType":"contentInstance",
+            "content": [
+                "contentInfo":"ID1",
+                "content":beaconID,
+                "resourceName": "IBeaconID"
+            ]
+        ]
         
         // url request properties
-        let url = NSURL(string: self.urlAsString)
+        let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
         var err: NSError?
         
-        // init queue
-        let queue = NSOperationQueue()
-        
         // config request with timeout
         let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
-        urlRequest.HTTPMethod = self.httpMethod
+        urlRequest.HTTPMethod = httpMethod
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
-        urlRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(self.jsonPayload, options: nil, error: &err)
+        urlRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+        
+        // init queue
+        let queue = NSOperationQueue()
         
         // create connection on a new thread for request
         NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (reponse: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
@@ -88,5 +74,106 @@ class MBSwiftPostman {
         }
     }
     
+    // MARK: GET Methods
     
+    func getRequest() {
+    
+        // set input method
+        let httpMethod = "GET"
+    
+        // use this url to get this device's beaconID
+        let urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/2954A1E2-13FB-4A7C-B89D-6478322525E1/LocIBeacon/IBeaconID/?from=http:localhost:10000&requestIdentifier=12345"
+        
+        // url request properties
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        var err: NSError?
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        
+        // init queue
+        let queue = NSOperationQueue()
+        
+        // create connection on a new thread for request
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (reponse: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            var responseError: NSError?
+            
+            // deserialize json object
+            var json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error:&responseError)
+            
+            if responseError == nil {
+                println("Successfully deserialized...\n")
+                
+                if json is NSDictionary {
+                    let deserializedDictionary = json as NSDictionary
+                    println("Deserialized JSON Dictionary = \(deserializedDictionary)")
+                }
+                else if json is NSArray {
+                    let deserializedArray = json as NSArray
+                    println("Deserialized JSON Array = \(deserializedArray)")
+                } else {
+                    println("Something other object was returned...")
+                }
+            } else if responseError != nil {
+                println("An error happened while deserializing the JSON data: \(responseError)\n")
+            }
+        }        
+    }
+    
+    // MARK: DELETE Methods
+    
+    func deleteContentInstance() {
+     
+        // set input method
+        let httpMethod = "DELETE"
+        
+        // use this url to delete content instance
+        let urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/2954A1E2-13FB-4A7C-B89D-6478322525E1/LocIBeacon/IBeaconID/?from=http:localhost:10000&requestIdentifier=12345"
+        
+        // url request properties
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        var err: NSError?
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        
+        // init queue
+        let queue = NSOperationQueue()
+        
+        // create connection on a new thread for request
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (reponse: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            var responseError: NSError?
+            
+            // deserialize json object
+            var json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error:&responseError)
+            
+            if responseError == nil {
+                println("Successfully deserialized...\n")
+                
+                if json is NSDictionary {
+                    let deserializedDictionary = json as NSDictionary
+                    println("Deserialized JSON Dictionary = \(deserializedDictionary)")
+                }
+                else if json is NSArray {
+                    let deserializedArray = json as NSArray
+                    println("Deserialized JSON Array = \(deserializedArray)")
+                } else {
+                    println("Something other object was returned...")
+                }
+            } else if responseError != nil {
+                println("An error happened while deserializing the JSON data: \(responseError)")
+            }
+        }
+    }
 }
+

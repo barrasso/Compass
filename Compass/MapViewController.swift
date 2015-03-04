@@ -42,39 +42,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // fetch content
         
         // fetch things/beaconid/numberIrecieved/content
-        
-        var beaconID = "1"
-        
-        // set input method & params
-        let httpMethod = "POST"
-        
-        /* use this json payload to create content instances */
-        var params: [NSString : AnyObject] =
-        [
-            "from":"http:localhost:10000",
-            "requestIdentifier":"12345",
-            "resourceType":"contentInstance",
-            "content": [
-                "contentInfo":"ID1",
-                "content":beaconID,
-                "resourceName": UIDevice.currentDevice().identifierForVendor.UUIDString
-            ]
-        ]
-        
-        /* use this json payload to create containers */
-//        var params: [NSString : AnyObject] =
-//        [
-//            "from":"http:localhost:10000",
-//            "requestIdentifier":"12345",
-//            "resourceType":"container",
-//            "content": [
-//                "labels":"",
-//                "resourceName": UIDevice.currentDevice().identifierForVendor.UUIDString
-//            ]
-//        ]
-        
-        // swift http api call
-        //MBSwiftPostman(method: httpMethod, jsonPayloadParams: params)
     }
 
     override func didReceiveMemoryWarning() {
@@ -116,8 +83,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
 //        // instantiate annotation
 //        let annotation = MBAnnotation(coordinate: location, title: "Current Location", subtitle: "test")
-//        
 //        mapView.addAnnotation(annotation)
+        
         setCenterOfMapToLocation(location)
     }
+    
+    // MARK: IBActions
+    
+    @IBAction func getButtonSelected(sender: AnyObject) {
+        MBSwiftPostman().getRequest()
+    }
+    
+    @IBAction func postButtonSelected(sender: AnyObject) {
+        MBSwiftPostman().createContentInstanceWith("2")
+    }
+    
+    @IBAction func deleteButtonSelected(sender: AnyObject) {
+        MBSwiftPostman().deleteContentInstance()
+    }
+    
 }
