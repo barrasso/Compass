@@ -10,8 +10,18 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDelegate {
     
+    // init beacon manager instance
+    let beaconManager : ESTBeaconManager = ESTBeaconManager()
+    
+    let colors = [
+        54482: UIColor(red: 84/255, green: 77/255, blue: 160/255, alpha: 1),
+        31351: UIColor(red: 142/255, green: 212/255, blue: 220/255, alpha: 1),
+        27327: UIColor(red: 162/255, green: 213/255, blue: 181/255, alpha: 1)
+    ]
+    
+    // init map view
     @IBOutlet var mapView: MKMapView!
     
     required init(coder aDecoder: NSCoder) {
@@ -23,6 +33,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         
         mapView.showsUserLocation = true
+        
+        // set beacon manager delegate
+        beaconManager.delegate = self
+        
+        // start ranging beacons
+        self.setupBeaconRegions()
 
         // subscribe to location updates
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatedLocation:", name: "newLocationNoti", object: nil)
@@ -102,4 +118,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         MBSwiftPostman().deleteContentInstance()
     }
     
+    // MARK: Beacon Functions
+    
+    func setupBeaconRegions() {
+        var beaconRegion : ESTBeaconRegion = ESTBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), identifier: "Estimotes")
+//        var iceBeaconRegion : ESTBeaconRegion = ESTBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), major: 27574, minor: 10869, identifier: "iceRegion")
+//        beaconManager.startRangingBeaconsInRegion(blueberryBeaconRegion)
+        beaconManager.startRangingBeaconsInRegion(beaconRegion)
+    }
+    
+    func beaconManager(manager: ESTBeaconManager!, didRangeBeacons beacons: [AnyObject]!, inRegion region: ESTBeaconRegion!) {
+        
+        let knownBeacons = beacons.filter{ $0.proximity != CLProximity.Unknown }
+        
+        if (knownBeacons.count > 0) {
+            let closestBeacon = knownBeacons[0] as ESTBeacon
+            println("I've found \(closestBeacon.minor.integerValue) beacon in range!")
+
+        }
+    }
 }

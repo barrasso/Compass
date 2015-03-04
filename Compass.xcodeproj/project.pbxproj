@@ -37,6 +37,8 @@
 		042B4B2B1A9A6E2A007F361F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B2A1A9A6E2A007F361F /* MapKit.framework */; };
 		04A4FCDA1AA1025000403042 /* MBSwiftPostman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */; };
 		04A4FCF01AA64B4D00403042 /* MBAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */; };
+		04A4FD0C1AA78D2E00403042 /* libEstimoteSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A4FD0B1AA78D2E00403042 /* libEstimoteSDK.a */; };
+		04A4FD0E1AA78FD000403042 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A4FD0D1AA78FD000403042 /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,32 @@
 		042B4B2A1A9A6E2A007F361F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSwiftPostman.swift; sourceTree = "<group>"; };
 		04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBAnnotation.swift; sourceTree = "<group>"; };
+		04A4FCF31AA78D2E00403042 /* ESTBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTBeacon.h; sourceTree = "<group>"; };
+		04A4FCF41AA78D2E00403042 /* ESTBeaconDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTBeaconDefinitions.h; sourceTree = "<group>"; };
+		04A4FCF51AA78D2E00403042 /* ESTBeaconFirmwareVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTBeaconFirmwareVO.h; sourceTree = "<group>"; };
+		04A4FCF61AA78D2E00403042 /* ESTBeaconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTBeaconManager.h; sourceTree = "<group>"; };
+		04A4FCF71AA78D2E00403042 /* ESTBeaconRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTBeaconRegion.h; sourceTree = "<group>"; };
+		04A4FCF81AA78D2E00403042 /* ESTBeaconUpdateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTBeaconUpdateConfig.h; sourceTree = "<group>"; };
+		04A4FCF91AA78D2E00403042 /* ESTBeaconUpdateInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTBeaconUpdateInfo.h; sourceTree = "<group>"; };
+		04A4FCFA1AA78D2E00403042 /* ESTBeaconVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTBeaconVO.h; sourceTree = "<group>"; };
+		04A4FCFB1AA78D2E00403042 /* ESTBulkUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTBulkUpdater.h; sourceTree = "<group>"; };
+		04A4FCFC1AA78D2E00403042 /* ESTConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTConfig.h; sourceTree = "<group>"; };
+		04A4FCFD1AA78D2E00403042 /* ESTDateRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTDateRule.h; sourceTree = "<group>"; };
+		04A4FCFE1AA78D2E00403042 /* ESTDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTDefinitions.h; sourceTree = "<group>"; };
+		04A4FCFF1AA78D2E00403042 /* ESTFirmwareInfoVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTFirmwareInfoVO.h; sourceTree = "<group>"; };
+		04A4FD001AA78D2E00403042 /* ESTMotionRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTMotionRule.h; sourceTree = "<group>"; };
+		04A4FD011AA78D2E00403042 /* ESTNearable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTNearable.h; sourceTree = "<group>"; };
+		04A4FD021AA78D2E00403042 /* ESTNearableDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTNearableDefinitions.h; sourceTree = "<group>"; };
+		04A4FD031AA78D2E00403042 /* ESTNearableManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTNearableManager.h; sourceTree = "<group>"; };
+		04A4FD041AA78D2E00403042 /* ESTNearableRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTNearableRule.h; sourceTree = "<group>"; };
+		04A4FD051AA78D2E00403042 /* ESTOrientationRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTOrientationRule.h; sourceTree = "<group>"; };
+		04A4FD061AA78D2E00403042 /* ESTProximityRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTProximityRule.h; sourceTree = "<group>"; };
+		04A4FD071AA78D2E00403042 /* ESTRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTRule.h; sourceTree = "<group>"; };
+		04A4FD081AA78D2E00403042 /* ESTTemperatureRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTTemperatureRule.h; sourceTree = "<group>"; };
+		04A4FD091AA78D2E00403042 /* ESTTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTTrigger.h; sourceTree = "<group>"; };
+		04A4FD0A1AA78D2E00403042 /* ESTTriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTTriggerManager.h; sourceTree = "<group>"; };
+		04A4FD0B1AA78D2E00403042 /* libEstimoteSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEstimoteSDK.a; sourceTree = "<group>"; };
+		04A4FD0D1AA78FD000403042 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,11 +120,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04A4FD0E1AA78FD000403042 /* CoreBluetooth.framework in Frameworks */,
 				042B4B241A9A6278007F361F /* libsqlite3.dylib in Frameworks */,
 				042B4B221A9A626F007F361F /* libz.dylib in Frameworks */,
 				042B4B2B1A9A6E2A007F361F /* MapKit.framework in Frameworks */,
 				042B4B201A9A6266007F361F /* SystemConfiguration.framework in Frameworks */,
 				042B4B1E1A9A625A007F361F /* StoreKit.framework in Frameworks */,
+				04A4FD0C1AA78D2E00403042 /* libEstimoteSDK.a in Frameworks */,
 				042B4B1C1A9A6254007F361F /* Security.framework in Frameworks */,
 				042B4B1A1A9A624D007F361F /* QuartzCore.framework in Frameworks */,
 				042B4B181A9A6243007F361F /* MobileCoreServices.framework in Frameworks */,
@@ -126,6 +156,7 @@
 			children = (
 				042B4AD21A9A5672007F361F /* Compass */,
 				042B4B0E1A9A61F3007F361F /* Frameworks */,
+				04A4FCF11AA78D2E00403042 /* EstimoteSDK */,
 				042B4B051A9A61DD007F361F /* parse-library-1.6.1 */,
 				042B4AE81A9A5672007F361F /* CompassTests */,
 				042B4AD11A9A5672007F361F /* Products */,
@@ -218,6 +249,7 @@
 		042B4B0E1A9A61F3007F361F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04A4FD0D1AA78FD000403042 /* CoreBluetooth.framework */,
 				042B4B2A1A9A6E2A007F361F /* MapKit.framework */,
 				042B4B231A9A6278007F361F /* libsqlite3.dylib */,
 				042B4B211A9A626F007F361F /* libz.dylib */,
@@ -233,6 +265,46 @@
 			);
 			name = Frameworks;
 			path = Compass;
+			sourceTree = "<group>";
+		};
+		04A4FCF11AA78D2E00403042 /* EstimoteSDK */ = {
+			isa = PBXGroup;
+			children = (
+				04A4FCF21AA78D2E00403042 /* Headers */,
+				04A4FD0B1AA78D2E00403042 /* libEstimoteSDK.a */,
+			);
+			path = EstimoteSDK;
+			sourceTree = "<group>";
+		};
+		04A4FCF21AA78D2E00403042 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				04A4FCF31AA78D2E00403042 /* ESTBeacon.h */,
+				04A4FCF41AA78D2E00403042 /* ESTBeaconDefinitions.h */,
+				04A4FCF51AA78D2E00403042 /* ESTBeaconFirmwareVO.h */,
+				04A4FCF61AA78D2E00403042 /* ESTBeaconManager.h */,
+				04A4FCF71AA78D2E00403042 /* ESTBeaconRegion.h */,
+				04A4FCF81AA78D2E00403042 /* ESTBeaconUpdateConfig.h */,
+				04A4FCF91AA78D2E00403042 /* ESTBeaconUpdateInfo.h */,
+				04A4FCFA1AA78D2E00403042 /* ESTBeaconVO.h */,
+				04A4FCFB1AA78D2E00403042 /* ESTBulkUpdater.h */,
+				04A4FCFC1AA78D2E00403042 /* ESTConfig.h */,
+				04A4FCFD1AA78D2E00403042 /* ESTDateRule.h */,
+				04A4FCFE1AA78D2E00403042 /* ESTDefinitions.h */,
+				04A4FCFF1AA78D2E00403042 /* ESTFirmwareInfoVO.h */,
+				04A4FD001AA78D2E00403042 /* ESTMotionRule.h */,
+				04A4FD011AA78D2E00403042 /* ESTNearable.h */,
+				04A4FD021AA78D2E00403042 /* ESTNearableDefinitions.h */,
+				04A4FD031AA78D2E00403042 /* ESTNearableManager.h */,
+				04A4FD041AA78D2E00403042 /* ESTNearableRule.h */,
+				04A4FD051AA78D2E00403042 /* ESTOrientationRule.h */,
+				04A4FD061AA78D2E00403042 /* ESTProximityRule.h */,
+				04A4FD071AA78D2E00403042 /* ESTRule.h */,
+				04A4FD081AA78D2E00403042 /* ESTTemperatureRule.h */,
+				04A4FD091AA78D2E00403042 /* ESTTrigger.h */,
+				04A4FD0A1AA78D2E00403042 /* ESTTriggerManager.h */,
+			);
+			path = Headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -485,6 +557,10 @@
 				);
 				INFOPLIST_FILE = Compass/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EstimoteSDK",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Compass-Bridging-Header.h";
@@ -505,6 +581,10 @@
 				);
 				INFOPLIST_FILE = Compass/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EstimoteSDK",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Compass-Bridging-Header.h";
