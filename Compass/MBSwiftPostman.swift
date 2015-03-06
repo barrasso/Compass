@@ -18,7 +18,7 @@ class MBSwiftPostman {
         let httpMethod = "POST"
         
         // use this url to create contentInstance
-        let urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/2954A1E2-13FB-4A7C-B89D-6478322525E1/LocIBeacon/?from=http:localhost:10000&requestIdentifier=12345"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/LocationAE/Things/MACAddrOfPhone/LocBeacon/BeaconID?from=http:52.10.62.166:10000&requestIdentifier=12345"
         
         /* use this json payload to create content instances */
         var params: [NSString : AnyObject] =
@@ -29,7 +29,6 @@ class MBSwiftPostman {
             "content": [
                 "contentInfo":"ID1",
                 "content":beaconID,
-                "resourceName": "IBeaconID"
             ]
         ]
         
@@ -82,7 +81,7 @@ class MBSwiftPostman {
         let httpMethod = "GET"
     
         // use this url to get this device's beaconID
-        let urlAsString = "http://localhost:8282/InCSE1/LocationAE/Things/2954A1E2-13FB-4A7C-B89D-6478322525E1/LocIBeacon/IBeaconID/?from=http:localhost:10000&requestIdentifier=12345"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/LocationAE/Things/MACAddrOfPhone/LocBeacon/BeaconID/latest?from=http:52.10.62.166:10000&requestIdentifier=12345"
         
         // url request properties
         let url = NSURL(string: urlAsString)

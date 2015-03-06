@@ -14,11 +14,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
     
     // init beacon manager instance
     let beaconManager : ESTBeaconManager = ESTBeaconManager()
+    var closestBeaconID : Int!
     
     let colors = [
-        54482: UIColor(red: 84/255, green: 77/255, blue: 160/255, alpha: 1),
-        31351: UIColor(red: 142/255, green: 212/255, blue: 220/255, alpha: 1),
-        27327: UIColor(red: 162/255, green: 213/255, blue: 181/255, alpha: 1)
+        48808: UIColor(red: 84/255, green: 77/255, blue: 160/255, alpha: 1),
+        10869: UIColor(red: 142/255, green: 212/255, blue: 220/255, alpha: 1),
+        32129: UIColor(red: 162/255, green: 213/255, blue: 181/255, alpha: 1)
     ]
     
     // init map view
@@ -48,16 +49,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
         println("System Version:  " + UIDevice.currentDevice().systemVersion)
         println("Device ID:  " + UIDevice.currentDevice().identifierForVendor.UUIDString)
         println("\n-------------------------------\n")
-        
-        // do logic to determine what beacon im next to
-        
-        // when updating beacon id, send flag to locplugin for uri of updated content
-        // walk in front of beacon 1 then post
-        // fetch content
-        // walk in front of beacon 2 then post
-        // fetch content
-        
-        // fetch things/beaconid/numberIrecieved/content
     }
 
     override func didReceiveMemoryWarning() {
@@ -111,7 +102,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
     }
     
     @IBAction func postButtonSelected(sender: AnyObject) {
-        MBSwiftPostman().createContentInstanceWith("2")
+//        MBSwiftPostman().createContentInstanceWith(String(closestBeaconID))
+        MBSwiftPostman().createContentInstanceWith("92")
     }
     
     @IBAction func deleteButtonSelected(sender: AnyObject) {
@@ -122,8 +114,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
     
     func setupBeaconRegions() {
         var beaconRegion : ESTBeaconRegion = ESTBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), identifier: "Estimotes")
-//        var iceBeaconRegion : ESTBeaconRegion = ESTBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), major: 27574, minor: 10869, identifier: "iceRegion")
-//        beaconManager.startRangingBeaconsInRegion(blueberryBeaconRegion)
         beaconManager.startRangingBeaconsInRegion(beaconRegion)
     }
     
@@ -133,8 +123,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
         
         if (knownBeacons.count > 0) {
             let closestBeacon = knownBeacons[0] as ESTBeacon
-            println("I've found \(closestBeacon.minor.integerValue) beacon in range!")
+            println("The closest beacon to me is ID: \(closestBeacon.minor.integerValue)!")
 
+            self.view.backgroundColor = self.colors[closestBeacon.minor.integerValue]
+            
+            self.closestBeaconID = closestBeacon.minor.integerValue
         }
     }
+    
+    // PRIORITY
+    
+    // 1.) BeaconID
+    // 2.) CMX Location (x,y)
+    // 3.) GPS Location (x,y)
+    
+    // loc method x node contain lat/long when GPS takes precedent
+    
+    
+    // USERS
+    
+    // user subtree with respective UUID
+    // InCSE -> UserAE -> UserID -> UUID
+    
 }
