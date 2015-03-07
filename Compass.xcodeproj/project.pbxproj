@@ -82,9 +82,9 @@
 		042B4B1F1A9A6266007F361F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		042B4B211A9A626F007F361F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		042B4B231A9A6278007F361F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		042B4B251A9A62A5007F361F /* Compass-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Compass-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		042B4B281A9A6C3E007F361F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		042B4B2A1A9A6E2A007F361F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		0483CA331AA96B9B00836F63 /* Compass-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Compass-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSwiftPostman.swift; sourceTree = "<group>"; };
 		04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBAnnotation.swift; sourceTree = "<group>"; };
 		04A4FCF31AA78D2E00403042 /* ESTBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTBeacon.h; sourceTree = "<group>"; };
@@ -184,7 +184,7 @@
 				042B4AD91A9A5672007F361F /* Main.storyboard */,
 				042B4B281A9A6C3E007F361F /* Media.xcassets */,
 				042B4ADE1A9A5672007F361F /* LaunchScreen.xib */,
-				042B4B251A9A62A5007F361F /* Compass-Bridging-Header.h */,
+				0483CA331AA96B9B00836F63 /* Compass-Bridging-Header.h */,
 				042B4AD31A9A5672007F361F /* Supporting Files */,
 			);
 			path = Compass;
