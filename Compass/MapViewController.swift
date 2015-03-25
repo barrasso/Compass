@@ -33,6 +33,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.closestBeaconID = 0
+        
         mapView.showsUserLocation = true
         
         // set beacon manager delegate
@@ -119,13 +121,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
     
     func beaconManager(manager: ESTBeaconManager!, didRangeBeacons beacons: [AnyObject]!, inRegion region: ESTBeaconRegion!) {
         
+        // filter out unknown beacons
         let knownBeacons = beacons.filter{ $0.proximity != CLProximity.Unknown }
         
         if (knownBeacons.count > 0) {
             let closestBeacon = knownBeacons[0] as ESTBeacon
+            
             println("The closest beacon to me is ID: \(closestBeacon.minor.integerValue)!")
-
             self.view.backgroundColor = self.colors[closestBeacon.minor.integerValue]
+            
+            // check if the closest beacon ID has changed value
+            if (self.closestBeaconID != closestBeacon.minor.integerValue) {
+                println("Beacon ID Changed! It is now: \(closestBeacon.minor.integerValue)")
+                
+                // update tree with new beacon ID content instance
+                MBSwiftPostman().createContentInstanceWith(String(self.closestBeaconID))
+            }
             
             self.closestBeaconID = closestBeacon.minor.integerValue
         }

@@ -150,6 +150,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         // now user can use app
                         NSLog("Signed Up.")
                         
+                        // create new container entry in UserAE
+                        MBSwiftPostman().createNewUserContainer()
+                        
                         // go to table segue
                         self.performSegueWithIdentifier("showMapView", sender: self)
                         
