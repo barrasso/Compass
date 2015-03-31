@@ -35,10 +35,52 @@
 		042B4B241A9A6278007F361F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B231A9A6278007F361F /* libsqlite3.dylib */; };
 		042B4B291A9A6C3E007F361F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 042B4B281A9A6C3E007F361F /* Media.xcassets */; };
 		042B4B2B1A9A6E2A007F361F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B2A1A9A6E2A007F361F /* MapKit.framework */; };
+		043C8A901AC5E1290056EDC9 /* libEstimoteIndoorSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 043C8A6B1AC5E1290056EDC9 /* libEstimoteIndoorSDK.a */; };
+		043C8A911AC5E1290056EDC9 /* 5a.mov in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A6D1AC5E1290056EDC9 /* 5a.mov */; };
+		043C8A921AC5E1290056EDC9 /* 5b.mov in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A6E1AC5E1290056EDC9 /* 5b.mov */; };
+		043C8A931AC5E1290056EDC9 /* 8a.mov in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A6F1AC5E1290056EDC9 /* 8a.mov */; };
+		043C8A941AC5E1290056EDC9 /* 8b.mov in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A701AC5E1290056EDC9 /* 8b.mov */; };
+		043C8A951AC5E1290056EDC9 /* 8c.mov in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A711AC5E1290056EDC9 /* 8c.mov */; };
+		043C8A961AC5E1290056EDC9 /* 5a_first_frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A731AC5E1290056EDC9 /* 5a_first_frame@2x.png */; };
+		043C8A971AC5E1290056EDC9 /* 5b_first_frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A741AC5E1290056EDC9 /* 5b_first_frame@2x.png */; };
+		043C8A981AC5E1290056EDC9 /* 8a_first_frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A751AC5E1290056EDC9 /* 8a_first_frame@2x.png */; };
+		043C8A991AC5E1290056EDC9 /* 8b_first_frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A761AC5E1290056EDC9 /* 8b_first_frame@2x.png */; };
+		043C8A9A1AC5E1290056EDC9 /* 8c_first_frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A771AC5E1290056EDC9 /* 8c_first_frame@2x.png */; };
+		043C8A9B1AC5E1290056EDC9 /* beacon_grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A781AC5E1290056EDC9 /* beacon_grey@2x.png */; };
+		043C8A9C1AC5E1290056EDC9 /* beaconblueberry@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A791AC5E1290056EDC9 /* beaconblueberry@2x.png */; };
+		043C8A9D1AC5E1290056EDC9 /* beaconBlueberrySmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A7A1AC5E1290056EDC9 /* beaconBlueberrySmall.png */; };
+		043C8A9E1AC5E1290056EDC9 /* beaconBlueberrySmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A7B1AC5E1290056EDC9 /* beaconBlueberrySmall@2x.png */; };
+		043C8A9F1AC5E1290056EDC9 /* beacongrey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A7C1AC5E1290056EDC9 /* beacongrey@2x.png */; };
+		043C8AA01AC5E1290056EDC9 /* beaconGreySmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A7D1AC5E1290056EDC9 /* beaconGreySmall@2x.png */; };
+		043C8AA11AC5E1290056EDC9 /* beaconicy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A7E1AC5E1290056EDC9 /* beaconicy@2x.png */; };
+		043C8AA21AC5E1290056EDC9 /* beaconIcySmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A7F1AC5E1290056EDC9 /* beaconIcySmall.png */; };
+		043C8AA31AC5E1290056EDC9 /* beaconIcySmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A801AC5E1290056EDC9 /* beaconIcySmall@2x.png */; };
+		043C8AA41AC5E1290056EDC9 /* beaconmint@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A811AC5E1290056EDC9 /* beaconmint@2x.png */; };
+		043C8AA51AC5E1290056EDC9 /* beaconMintSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A821AC5E1290056EDC9 /* beaconMintSmall.png */; };
+		043C8AA61AC5E1290056EDC9 /* beaconMintSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A831AC5E1290056EDC9 /* beaconMintSmall@2x.png */; };
+		043C8AA71AC5E1290056EDC9 /* indoor_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A841AC5E1290056EDC9 /* indoor_error@2x.png */; };
+		043C8AA81AC5E1290056EDC9 /* instructions@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A851AC5E1290056EDC9 /* instructions@2x.png */; };
+		043C8AA91AC5E1290056EDC9 /* navigation_guy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A861AC5E1290056EDC9 /* navigation_guy@2x.png */; };
+		043C8AAA1AC5E1290056EDC9 /* screen8_beacon_blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A871AC5E1290056EDC9 /* screen8_beacon_blue@2x.png */; };
+		043C8AAB1AC5E1290056EDC9 /* screen8_beacon_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A881AC5E1290056EDC9 /* screen8_beacon_gray@2x.png */; };
+		043C8AAC1AC5E1290056EDC9 /* screen8_beacon_gray_trans@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A891AC5E1290056EDC9 /* screen8_beacon_gray_trans@2x.png */; };
+		043C8AAD1AC5E1290056EDC9 /* screen8_beacon_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A8A1AC5E1290056EDC9 /* screen8_beacon_green@2x.png */; };
+		043C8AAE1AC5E1290056EDC9 /* screen8_beacon_purple@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A8B1AC5E1290056EDC9 /* screen8_beacon_purple@2x.png */; };
+		043C8AAF1AC5E1290056EDC9 /* tick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A8C1AC5E1290056EDC9 /* tick@2x.png */; };
+		043C8AB01AC5E1290056EDC9 /* welcome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A8D1AC5E1290056EDC9 /* welcome@2x.png */; };
+		043C8AB11AC5E1290056EDC9 /* SixBeaconsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A8E1AC5E1290056EDC9 /* SixBeaconsView.xib */; };
+		043C8AB21AC5E1290056EDC9 /* wall_bump.wav in Resources */ = {isa = PBXBuildFile; fileRef = 043C8A8F1AC5E1290056EDC9 /* wall_bump.wav */; };
+		043C8AB41AC5E19D0056EDC9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 043C8AB31AC5E19D0056EDC9 /* AVFoundation.framework */; };
+		043C8AB61AC5E1A80056EDC9 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 043C8AB51AC5E1A80056EDC9 /* MediaPlayer.framework */; };
+		043C8AB81AC5E1AE0056EDC9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 043C8AB71AC5E1AE0056EDC9 /* MessageUI.framework */; };
 		04A4FCDA1AA1025000403042 /* MBSwiftPostman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */; };
 		04A4FCF01AA64B4D00403042 /* MBAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */; };
 		04A4FD0C1AA78D2E00403042 /* libEstimoteSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A4FD0B1AA78D2E00403042 /* libEstimoteSDK.a */; };
 		04A4FD0E1AA78FD000403042 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A4FD0D1AA78FD000403042 /* CoreBluetooth.framework */; };
+		04F0E3C01ACB0A6800018155 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */; };
+		04F0E3C51ACB0BFD00018155 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 04F0E3C41ACB0BFD00018155 /* location.json */; };
+		04F0E3C71ACB0CC700018155 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F0E3C61ACB0CC700018155 /* CoreMotion.framework */; };
+		04F0E3C91ACB0CDD00018155 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F0E3C81ACB0CDD00018155 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +126,53 @@
 		042B4B231A9A6278007F361F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		042B4B281A9A6C3E007F361F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		042B4B2A1A9A6E2A007F361F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		043C8A621AC5E1290056EDC9 /* ESTIndoorLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTIndoorLocationManager.h; sourceTree = "<group>"; };
+		043C8A631AC5E1290056EDC9 /* ESTIndoorLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTIndoorLocationView.h; sourceTree = "<group>"; };
+		043C8A641AC5E1290056EDC9 /* ESTLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTLocation.h; sourceTree = "<group>"; };
+		043C8A651AC5E1290056EDC9 /* ESTLocationBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTLocationBuilder.h; sourceTree = "<group>"; };
+		043C8A661AC5E1290056EDC9 /* ESTLocationLinearObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTLocationLinearObject.h; sourceTree = "<group>"; };
+		043C8A671AC5E1290056EDC9 /* ESTOrientedLineSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTOrientedLineSegment.h; sourceTree = "<group>"; };
+		043C8A681AC5E1290056EDC9 /* ESTOrientedPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTOrientedPoint.h; sourceTree = "<group>"; };
+		043C8A691AC5E1290056EDC9 /* ESTPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTPoint.h; sourceTree = "<group>"; };
+		043C8A6A1AC5E1290056EDC9 /* ESTPositionedBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTPositionedBeacon.h; sourceTree = "<group>"; };
+		043C8A6B1AC5E1290056EDC9 /* libEstimoteIndoorSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEstimoteIndoorSDK.a; sourceTree = "<group>"; };
+		043C8A6D1AC5E1290056EDC9 /* 5a.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = 5a.mov; sourceTree = "<group>"; };
+		043C8A6E1AC5E1290056EDC9 /* 5b.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = 5b.mov; sourceTree = "<group>"; };
+		043C8A6F1AC5E1290056EDC9 /* 8a.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = 8a.mov; sourceTree = "<group>"; };
+		043C8A701AC5E1290056EDC9 /* 8b.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = 8b.mov; sourceTree = "<group>"; };
+		043C8A711AC5E1290056EDC9 /* 8c.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = 8c.mov; sourceTree = "<group>"; };
+		043C8A731AC5E1290056EDC9 /* 5a_first_frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5a_first_frame@2x.png"; sourceTree = "<group>"; };
+		043C8A741AC5E1290056EDC9 /* 5b_first_frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5b_first_frame@2x.png"; sourceTree = "<group>"; };
+		043C8A751AC5E1290056EDC9 /* 8a_first_frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "8a_first_frame@2x.png"; sourceTree = "<group>"; };
+		043C8A761AC5E1290056EDC9 /* 8b_first_frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "8b_first_frame@2x.png"; sourceTree = "<group>"; };
+		043C8A771AC5E1290056EDC9 /* 8c_first_frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "8c_first_frame@2x.png"; sourceTree = "<group>"; };
+		043C8A781AC5E1290056EDC9 /* beacon_grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beacon_grey@2x.png"; sourceTree = "<group>"; };
+		043C8A791AC5E1290056EDC9 /* beaconblueberry@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconblueberry@2x.png"; sourceTree = "<group>"; };
+		043C8A7A1AC5E1290056EDC9 /* beaconBlueberrySmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beaconBlueberrySmall.png; sourceTree = "<group>"; };
+		043C8A7B1AC5E1290056EDC9 /* beaconBlueberrySmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconBlueberrySmall@2x.png"; sourceTree = "<group>"; };
+		043C8A7C1AC5E1290056EDC9 /* beacongrey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beacongrey@2x.png"; sourceTree = "<group>"; };
+		043C8A7D1AC5E1290056EDC9 /* beaconGreySmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconGreySmall@2x.png"; sourceTree = "<group>"; };
+		043C8A7E1AC5E1290056EDC9 /* beaconicy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconicy@2x.png"; sourceTree = "<group>"; };
+		043C8A7F1AC5E1290056EDC9 /* beaconIcySmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beaconIcySmall.png; sourceTree = "<group>"; };
+		043C8A801AC5E1290056EDC9 /* beaconIcySmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconIcySmall@2x.png"; sourceTree = "<group>"; };
+		043C8A811AC5E1290056EDC9 /* beaconmint@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconmint@2x.png"; sourceTree = "<group>"; };
+		043C8A821AC5E1290056EDC9 /* beaconMintSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beaconMintSmall.png; sourceTree = "<group>"; };
+		043C8A831AC5E1290056EDC9 /* beaconMintSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beaconMintSmall@2x.png"; sourceTree = "<group>"; };
+		043C8A841AC5E1290056EDC9 /* indoor_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "indoor_error@2x.png"; sourceTree = "<group>"; };
+		043C8A851AC5E1290056EDC9 /* instructions@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "instructions@2x.png"; sourceTree = "<group>"; };
+		043C8A861AC5E1290056EDC9 /* navigation_guy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation_guy@2x.png"; sourceTree = "<group>"; };
+		043C8A871AC5E1290056EDC9 /* screen8_beacon_blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen8_beacon_blue@2x.png"; sourceTree = "<group>"; };
+		043C8A881AC5E1290056EDC9 /* screen8_beacon_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen8_beacon_gray@2x.png"; sourceTree = "<group>"; };
+		043C8A891AC5E1290056EDC9 /* screen8_beacon_gray_trans@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen8_beacon_gray_trans@2x.png"; sourceTree = "<group>"; };
+		043C8A8A1AC5E1290056EDC9 /* screen8_beacon_green@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen8_beacon_green@2x.png"; sourceTree = "<group>"; };
+		043C8A8B1AC5E1290056EDC9 /* screen8_beacon_purple@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen8_beacon_purple@2x.png"; sourceTree = "<group>"; };
+		043C8A8C1AC5E1290056EDC9 /* tick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tick@2x.png"; sourceTree = "<group>"; };
+		043C8A8D1AC5E1290056EDC9 /* welcome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome@2x.png"; sourceTree = "<group>"; };
+		043C8A8E1AC5E1290056EDC9 /* SixBeaconsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SixBeaconsView.xib; sourceTree = "<group>"; };
+		043C8A8F1AC5E1290056EDC9 /* wall_bump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wall_bump.wav; sourceTree = "<group>"; };
+		043C8AB31AC5E19D0056EDC9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		043C8AB51AC5E1A80056EDC9 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		043C8AB71AC5E1AE0056EDC9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		0483CA331AA96B9B00836F63 /* Compass-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Compass-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSwiftPostman.swift; sourceTree = "<group>"; };
 		04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBAnnotation.swift; sourceTree = "<group>"; };
@@ -113,6 +202,10 @@
 		04A4FD0A1AA78D2E00403042 /* ESTTriggerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESTTriggerManager.h; sourceTree = "<group>"; };
 		04A4FD0B1AA78D2E00403042 /* libEstimoteSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEstimoteSDK.a; sourceTree = "<group>"; };
 		04A4FD0D1AA78FD000403042 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		04F0E3C41ACB0BFD00018155 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = location.json; sourceTree = "<group>"; };
+		04F0E3C61ACB0CC700018155 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		04F0E3C81ACB0CDD00018155 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +213,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04F0E3C91ACB0CDD00018155 /* Foundation.framework in Frameworks */,
+				04F0E3C71ACB0CC700018155 /* CoreMotion.framework in Frameworks */,
+				043C8AB81AC5E1AE0056EDC9 /* MessageUI.framework in Frameworks */,
+				043C8AB61AC5E1A80056EDC9 /* MediaPlayer.framework in Frameworks */,
+				043C8AB41AC5E19D0056EDC9 /* AVFoundation.framework in Frameworks */,
 				04A4FD0E1AA78FD000403042 /* CoreBluetooth.framework in Frameworks */,
 				042B4B241A9A6278007F361F /* libsqlite3.dylib in Frameworks */,
 				042B4B221A9A626F007F361F /* libz.dylib in Frameworks */,
@@ -127,6 +225,7 @@
 				042B4B201A9A6266007F361F /* SystemConfiguration.framework in Frameworks */,
 				042B4B1E1A9A625A007F361F /* StoreKit.framework in Frameworks */,
 				04A4FD0C1AA78D2E00403042 /* libEstimoteSDK.a in Frameworks */,
+				043C8A901AC5E1290056EDC9 /* libEstimoteIndoorSDK.a in Frameworks */,
 				042B4B1C1A9A6254007F361F /* Security.framework in Frameworks */,
 				042B4B1A1A9A624D007F361F /* QuartzCore.framework in Frameworks */,
 				042B4B181A9A6243007F361F /* MobileCoreServices.framework in Frameworks */,
@@ -154,9 +253,11 @@
 		042B4AC71A9A5672007F361F = {
 			isa = PBXGroup;
 			children = (
+				04F0E3C41ACB0BFD00018155 /* location.json */,
 				042B4AD21A9A5672007F361F /* Compass */,
 				042B4B0E1A9A61F3007F361F /* Frameworks */,
 				04A4FCF11AA78D2E00403042 /* EstimoteSDK */,
+				043C8A601AC5E1290056EDC9 /* EstimoteIndoorLocationSDK */,
 				042B4B051A9A61DD007F361F /* parse-library-1.6.1 */,
 				042B4AE81A9A5672007F361F /* CompassTests */,
 				042B4AD11A9A5672007F361F /* Products */,
@@ -181,6 +282,7 @@
 				042B4B031A9A599E007F361F /* ProximityTableViewController.swift */,
 				04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */,
 				04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */,
+				04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */,
 				042B4AD91A9A5672007F361F /* Main.storyboard */,
 				042B4B281A9A6C3E007F361F /* Media.xcassets */,
 				042B4ADE1A9A5672007F361F /* LaunchScreen.xib */,
@@ -249,6 +351,11 @@
 		042B4B0E1A9A61F3007F361F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04F0E3C81ACB0CDD00018155 /* Foundation.framework */,
+				04F0E3C61ACB0CC700018155 /* CoreMotion.framework */,
+				043C8AB71AC5E1AE0056EDC9 /* MessageUI.framework */,
+				043C8AB51AC5E1A80056EDC9 /* MediaPlayer.framework */,
+				043C8AB31AC5E19D0056EDC9 /* AVFoundation.framework */,
 				04A4FD0D1AA78FD000403042 /* CoreBluetooth.framework */,
 				042B4B2A1A9A6E2A007F361F /* MapKit.framework */,
 				042B4B231A9A6278007F361F /* libsqlite3.dylib */,
@@ -265,6 +372,81 @@
 			);
 			name = Frameworks;
 			path = Compass;
+			sourceTree = "<group>";
+		};
+		043C8A601AC5E1290056EDC9 /* EstimoteIndoorLocationSDK */ = {
+			isa = PBXGroup;
+			children = (
+				043C8A611AC5E1290056EDC9 /* Headers */,
+				043C8A6B1AC5E1290056EDC9 /* libEstimoteIndoorSDK.a */,
+				043C8A6C1AC5E1290056EDC9 /* Resources */,
+			);
+			path = EstimoteIndoorLocationSDK;
+			sourceTree = "<group>";
+		};
+		043C8A611AC5E1290056EDC9 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				043C8A621AC5E1290056EDC9 /* ESTIndoorLocationManager.h */,
+				043C8A631AC5E1290056EDC9 /* ESTIndoorLocationView.h */,
+				043C8A641AC5E1290056EDC9 /* ESTLocation.h */,
+				043C8A651AC5E1290056EDC9 /* ESTLocationBuilder.h */,
+				043C8A661AC5E1290056EDC9 /* ESTLocationLinearObject.h */,
+				043C8A671AC5E1290056EDC9 /* ESTOrientedLineSegment.h */,
+				043C8A681AC5E1290056EDC9 /* ESTOrientedPoint.h */,
+				043C8A691AC5E1290056EDC9 /* ESTPoint.h */,
+				043C8A6A1AC5E1290056EDC9 /* ESTPositionedBeacon.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		043C8A6C1AC5E1290056EDC9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				043C8A6D1AC5E1290056EDC9 /* 5a.mov */,
+				043C8A6E1AC5E1290056EDC9 /* 5b.mov */,
+				043C8A6F1AC5E1290056EDC9 /* 8a.mov */,
+				043C8A701AC5E1290056EDC9 /* 8b.mov */,
+				043C8A711AC5E1290056EDC9 /* 8c.mov */,
+				043C8A721AC5E1290056EDC9 /* Images */,
+				043C8A8E1AC5E1290056EDC9 /* SixBeaconsView.xib */,
+				043C8A8F1AC5E1290056EDC9 /* wall_bump.wav */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		043C8A721AC5E1290056EDC9 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				043C8A731AC5E1290056EDC9 /* 5a_first_frame@2x.png */,
+				043C8A741AC5E1290056EDC9 /* 5b_first_frame@2x.png */,
+				043C8A751AC5E1290056EDC9 /* 8a_first_frame@2x.png */,
+				043C8A761AC5E1290056EDC9 /* 8b_first_frame@2x.png */,
+				043C8A771AC5E1290056EDC9 /* 8c_first_frame@2x.png */,
+				043C8A781AC5E1290056EDC9 /* beacon_grey@2x.png */,
+				043C8A791AC5E1290056EDC9 /* beaconblueberry@2x.png */,
+				043C8A7A1AC5E1290056EDC9 /* beaconBlueberrySmall.png */,
+				043C8A7B1AC5E1290056EDC9 /* beaconBlueberrySmall@2x.png */,
+				043C8A7C1AC5E1290056EDC9 /* beacongrey@2x.png */,
+				043C8A7D1AC5E1290056EDC9 /* beaconGreySmall@2x.png */,
+				043C8A7E1AC5E1290056EDC9 /* beaconicy@2x.png */,
+				043C8A7F1AC5E1290056EDC9 /* beaconIcySmall.png */,
+				043C8A801AC5E1290056EDC9 /* beaconIcySmall@2x.png */,
+				043C8A811AC5E1290056EDC9 /* beaconmint@2x.png */,
+				043C8A821AC5E1290056EDC9 /* beaconMintSmall.png */,
+				043C8A831AC5E1290056EDC9 /* beaconMintSmall@2x.png */,
+				043C8A841AC5E1290056EDC9 /* indoor_error@2x.png */,
+				043C8A851AC5E1290056EDC9 /* instructions@2x.png */,
+				043C8A861AC5E1290056EDC9 /* navigation_guy@2x.png */,
+				043C8A871AC5E1290056EDC9 /* screen8_beacon_blue@2x.png */,
+				043C8A881AC5E1290056EDC9 /* screen8_beacon_gray@2x.png */,
+				043C8A891AC5E1290056EDC9 /* screen8_beacon_gray_trans@2x.png */,
+				043C8A8A1AC5E1290056EDC9 /* screen8_beacon_green@2x.png */,
+				043C8A8B1AC5E1290056EDC9 /* screen8_beacon_purple@2x.png */,
+				043C8A8C1AC5E1290056EDC9 /* tick@2x.png */,
+				043C8A8D1AC5E1290056EDC9 /* welcome@2x.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		04A4FCF11AA78D2E00403042 /* EstimoteSDK */ = {
@@ -397,11 +579,46 @@
 			buildActionMask = 2147483647;
 			files = (
 				042B4AF81A9A56B2007F361F /* ElegantIcons.ttf in Resources */,
+				043C8AA81AC5E1290056EDC9 /* instructions@2x.png in Resources */,
+				043C8A9B1AC5E1290056EDC9 /* beacon_grey@2x.png in Resources */,
+				043C8AA71AC5E1290056EDC9 /* indoor_error@2x.png in Resources */,
+				043C8A951AC5E1290056EDC9 /* 8c.mov in Resources */,
 				042B4AFC1A9A56C6007F361F /* login-bg.jpg in Resources */,
 				042B4B291A9A6C3E007F361F /* Media.xcassets in Resources */,
+				043C8AAD1AC5E1290056EDC9 /* screen8_beacon_green@2x.png in Resources */,
 				042B4AFD1A9A56C6007F361F /* or-divider.png in Resources */,
+				043C8A911AC5E1290056EDC9 /* 5a.mov in Resources */,
+				043C8A971AC5E1290056EDC9 /* 5b_first_frame@2x.png in Resources */,
+				043C8A9D1AC5E1290056EDC9 /* beaconBlueberrySmall.png in Resources */,
+				043C8A931AC5E1290056EDC9 /* 8a.mov in Resources */,
+				043C8AB11AC5E1290056EDC9 /* SixBeaconsView.xib in Resources */,
+				043C8AA61AC5E1290056EDC9 /* beaconMintSmall@2x.png in Resources */,
+				043C8AB21AC5E1290056EDC9 /* wall_bump.wav in Resources */,
+				043C8AA31AC5E1290056EDC9 /* beaconIcySmall@2x.png in Resources */,
+				043C8AB01AC5E1290056EDC9 /* welcome@2x.png in Resources */,
+				043C8AA11AC5E1290056EDC9 /* beaconicy@2x.png in Resources */,
+				043C8A921AC5E1290056EDC9 /* 5b.mov in Resources */,
+				043C8A981AC5E1290056EDC9 /* 8a_first_frame@2x.png in Resources */,
+				043C8A9E1AC5E1290056EDC9 /* beaconBlueberrySmall@2x.png in Resources */,
+				043C8AAB1AC5E1290056EDC9 /* screen8_beacon_gray@2x.png in Resources */,
+				043C8AA01AC5E1290056EDC9 /* beaconGreySmall@2x.png in Resources */,
+				043C8AAF1AC5E1290056EDC9 /* tick@2x.png in Resources */,
+				043C8A941AC5E1290056EDC9 /* 8b.mov in Resources */,
+				043C8A9C1AC5E1290056EDC9 /* beaconblueberry@2x.png in Resources */,
+				04F0E3C51ACB0BFD00018155 /* location.json in Resources */,
+				043C8AAE1AC5E1290056EDC9 /* screen8_beacon_purple@2x.png in Resources */,
+				043C8A961AC5E1290056EDC9 /* 5a_first_frame@2x.png in Resources */,
+				043C8AA91AC5E1290056EDC9 /* navigation_guy@2x.png in Resources */,
+				043C8AA51AC5E1290056EDC9 /* beaconMintSmall.png in Resources */,
 				042B4ADB1A9A5672007F361F /* Main.storyboard in Resources */,
+				043C8AA21AC5E1290056EDC9 /* beaconIcySmall.png in Resources */,
+				043C8AAC1AC5E1290056EDC9 /* screen8_beacon_gray_trans@2x.png in Resources */,
+				043C8AA41AC5E1290056EDC9 /* beaconmint@2x.png in Resources */,
+				043C8AAA1AC5E1290056EDC9 /* screen8_beacon_blue@2x.png in Resources */,
+				043C8A991AC5E1290056EDC9 /* 8b_first_frame@2x.png in Resources */,
 				042B4AE01A9A5672007F361F /* LaunchScreen.xib in Resources */,
+				043C8A9F1AC5E1290056EDC9 /* beacongrey@2x.png in Resources */,
+				043C8A9A1AC5E1290056EDC9 /* 8c_first_frame@2x.png in Resources */,
 				042B4AFE1A9A56C6007F361F /* triangle-select.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +637,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04F0E3C01ACB0A6800018155 /* LocationViewController.swift in Sources */,
 				042B4B001A9A56FA007F361F /* LoginViewController.swift in Sources */,
 				04A4FCF01AA64B4D00403042 /* MBAnnotation.swift in Sources */,
 				042B4B041A9A599E007F361F /* ProximityTableViewController.swift in Sources */,
@@ -560,7 +778,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/EstimoteSDK",
+					"$(PROJECT_DIR)/EstimoteIndoorLocationSDK",
 				);
+				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Compass-Bridging-Header.h";
@@ -584,7 +804,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/EstimoteSDK",
+					"$(PROJECT_DIR)/EstimoteIndoorLocationSDK",
 				);
+				OTHER_LDFLAGS = "-lc++";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Compass-Bridging-Header.h";

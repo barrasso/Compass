@@ -19,7 +19,7 @@ class MBSwiftPostman {
         let userID = PFUser.currentUser().username
         
         // use this url to create new user ID
-        let urlAsString = "http://52.10.62.166:8282/InCSE1/UserAE/?from=http:52.10.62.166:10000&requestIdentifier=12345"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkUserAE/?from=http:52.10.62.166:10000&requestIdentifier=12345"
         
         // default JSON payload
         var params: [NSString : AnyObject] =
@@ -82,7 +82,7 @@ class MBSwiftPostman {
         let httpMethod = "POST"
         
         // use this url to create contentInstance
-        let urlAsString = "http://52.10.62.166:8282/InCSE1/LocationAE/Things/MACAddrOfPhone/LocBeacon/BeaconID?from=http:52.10.62.166:10000&requestIdentifier=12345"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/MACAddrOfPhone/LocBeacon/BeaconID?from=http:52.10.62.166:10000&requestIdentifier=12345"
         
         /* use this json payload to create content instances */
         var params: [NSString : AnyObject] =
@@ -145,7 +145,7 @@ class MBSwiftPostman {
         let httpMethod = "GET"
     
         // use this url to get this device's beaconID
-        let urlAsString = "http://52.10.62.166:8282/InCSE1/LocationAE/Things/MACAddrOfPhone/LocBeacon/BeaconID/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/MACAddrOfPhone/LocBeacon/BeaconID/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
         
         // url request properties
         let url = NSURL(string: urlAsString)
