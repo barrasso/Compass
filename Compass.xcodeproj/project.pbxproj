@@ -82,6 +82,7 @@
 		04F0E3C91ACB0CDD00018155 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F0E3C81ACB0CDD00018155 /* Foundation.framework */; };
 		04FC36371ACB7334008E592E /* beacon_purple_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FC36361ACB7334008E592E /* beacon_purple_marker.png */; };
 		04FC36391ACB73CA008E592E /* beacon_blue_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FC36381ACB73CA008E592E /* beacon_blue_marker.png */; };
+		04FC363B1ACB79B2008E592E /* MBNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC363A1ACB79B2008E592E /* MBNavigationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -208,6 +209,7 @@
 		04F0E3C81ACB0CDD00018155 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04FC36361ACB7334008E592E /* beacon_purple_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beacon_purple_marker.png; sourceTree = "<group>"; };
 		04FC36381ACB73CA008E592E /* beacon_blue_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beacon_blue_marker.png; sourceTree = "<group>"; };
+		04FC363A1ACB79B2008E592E /* MBNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBNavigationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				042B4AD51A9A5672007F361F /* AppDelegate.swift */,
+				04FC363A1ACB79B2008E592E /* MBNavigationViewController.swift */,
 				04FC36341ACB1E51008E592E /* Scenes */,
 				04FC36351ACB1E6D008E592E /* Models */,
 				042B4AD91A9A5672007F361F /* Main.storyboard */,
@@ -659,6 +662,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04F0E3C01ACB0A6800018155 /* LocationViewController.swift in Sources */,
+				04FC363B1ACB79B2008E592E /* MBNavigationViewController.swift in Sources */,
 				042B4B001A9A56FA007F361F /* LoginViewController.swift in Sources */,
 				04A4FCF01AA64B4D00403042 /* MBAnnotation.swift in Sources */,
 				042B4B021A9A598B007F361F /* MapViewController.swift in Sources */,

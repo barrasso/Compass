@@ -110,7 +110,7 @@
         <!--Map-->
         <scene sceneID="d9i-fI-7OX">
             <objects>
-                <navigationController id="8Ju-yy-SnL" sceneMemberID="viewController">
+                <navigationController id="8Ju-yy-SnL" customClass="MBNavigationViewController" customModule="Compass" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Map" id="q6u-Db-XXt"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="z6T-vm-UEN">
@@ -137,19 +137,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GYV-zl-wE9">
+                            <searchBar contentMode="redraw" fixedFrame="YES" barStyle="black" placeholder="Find someone..." translatesAutoresizingMaskIntoConstraints="NO" id="GYV-zl-wE9">
                                 <rect key="frame" x="0.0" y="64" width="375" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
                             </searchBar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TJi-iL-02y">
-                                <rect key="frame" x="0.0" y="158" width="375" height="425"/>
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Map" id="39A-fd-MYe">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="X7r-cm-ao7"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Map" id="39A-fd-MYe"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="mapView" destination="TJi-iL-02y" id="uue-jv-y1c"/>

@@ -177,4 +177,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
 //            self.closestBeaconID = closestBeacon.minor.integerValue
 //        }
     }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
 }
