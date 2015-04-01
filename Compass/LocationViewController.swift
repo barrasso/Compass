@@ -13,16 +13,13 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
     @IBOutlet var indoorLocationView: ESTIndoorLocationView!
     @IBOutlet var showTraceSwitch: UISwitch!
     @IBOutlet var rotateOnUpdateSwitch: UISwitch!
-    
     @IBOutlet var positionLabel: UILabel!
     
-    var location:ESTLocation?
+    var location: ESTLocation?
     private var manager: ESTIndoorLocationManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = self.location?.name
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -51,12 +48,14 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
         let indoorLocation = ESTLocationBuilder.parseFromJSON(content)
         
         self.location = indoorLocation
+        self.title = indoorLocation.name
     }
     
     // MARK: UISwitch events
     
     @IBAction func showTraceSwitchChanged() {
         self.indoorLocationView.clearTrace()
+        self.indoorLocationView.traceColor = UIColor.blueColor()
         self.indoorLocationView.showTrace = self.showTraceSwitch.on
     }
     
@@ -79,6 +78,6 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
     func indoorLocationManager(manager: ESTIndoorLocationManager!, didFailToUpdatePositionWithError error: NSError!) {
         
         self.positionLabel.text = "It seems you are outside the location."
-        NSLog(error.localizedDescription)
+        //NSLog(error.localizedDescription)
     }
 }

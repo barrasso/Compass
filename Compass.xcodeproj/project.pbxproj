@@ -17,7 +17,6 @@
 		042B4AFE1A9A56C6007F361F /* triangle-select.png in Resources */ = {isa = PBXBuildFile; fileRef = 042B4AFB1A9A56C6007F361F /* triangle-select.png */; };
 		042B4B001A9A56FA007F361F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B4AFF1A9A56FA007F361F /* LoginViewController.swift */; };
 		042B4B021A9A598B007F361F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B4B011A9A598B007F361F /* MapViewController.swift */; };
-		042B4B041A9A599E007F361F /* ProximityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042B4B031A9A599E007F361F /* ProximityTableViewController.swift */; };
 		042B4B0A1A9A61DD007F361F /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B061A9A61DD007F361F /* Bolts.framework */; };
 		042B4B0B1A9A61DD007F361F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B071A9A61DD007F361F /* Parse.framework */; };
 		042B4B0C1A9A61DD007F361F /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 042B4B081A9A61DD007F361F /* ParseCrashReporting.framework */; };
@@ -81,6 +80,8 @@
 		04F0E3C51ACB0BFD00018155 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 04F0E3C41ACB0BFD00018155 /* location.json */; };
 		04F0E3C71ACB0CC700018155 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F0E3C61ACB0CC700018155 /* CoreMotion.framework */; };
 		04F0E3C91ACB0CDD00018155 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F0E3C81ACB0CDD00018155 /* Foundation.framework */; };
+		04FC36371ACB7334008E592E /* beacon_purple_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FC36361ACB7334008E592E /* beacon_purple_marker.png */; };
+		04FC36391ACB73CA008E592E /* beacon_blue_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FC36381ACB73CA008E592E /* beacon_blue_marker.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +109,6 @@
 		042B4AFB1A9A56C6007F361F /* triangle-select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "triangle-select.png"; sourceTree = "<group>"; };
 		042B4AFF1A9A56FA007F361F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		042B4B011A9A598B007F361F /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		042B4B031A9A599E007F361F /* ProximityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProximityTableViewController.swift; sourceTree = "<group>"; };
 		042B4B061A9A61DD007F361F /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		042B4B071A9A61DD007F361F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		042B4B081A9A61DD007F361F /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
@@ -203,9 +203,11 @@
 		04A4FD0B1AA78D2E00403042 /* libEstimoteSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEstimoteSDK.a; sourceTree = "<group>"; };
 		04A4FD0D1AA78FD000403042 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
-		04F0E3C41ACB0BFD00018155 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = location.json; sourceTree = "<group>"; };
+		04F0E3C41ACB0BFD00018155 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = location.json; path = ../location.json; sourceTree = "<group>"; };
 		04F0E3C61ACB0CC700018155 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		04F0E3C81ACB0CDD00018155 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		04FC36361ACB7334008E592E /* beacon_purple_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beacon_purple_marker.png; sourceTree = "<group>"; };
+		04FC36381ACB73CA008E592E /* beacon_blue_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beacon_blue_marker.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,7 +255,6 @@
 		042B4AC71A9A5672007F361F = {
 			isa = PBXGroup;
 			children = (
-				04F0E3C41ACB0BFD00018155 /* location.json */,
 				042B4AD21A9A5672007F361F /* Compass */,
 				042B4B0E1A9A61F3007F361F /* Frameworks */,
 				04A4FCF11AA78D2E00403042 /* EstimoteSDK */,
@@ -277,12 +278,8 @@
 			isa = PBXGroup;
 			children = (
 				042B4AD51A9A5672007F361F /* AppDelegate.swift */,
-				042B4AFF1A9A56FA007F361F /* LoginViewController.swift */,
-				042B4B011A9A598B007F361F /* MapViewController.swift */,
-				042B4B031A9A599E007F361F /* ProximityTableViewController.swift */,
-				04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */,
-				04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */,
-				04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */,
+				04FC36341ACB1E51008E592E /* Scenes */,
+				04FC36351ACB1E6D008E592E /* Models */,
 				042B4AD91A9A5672007F361F /* Main.storyboard */,
 				042B4B281A9A6C3E007F361F /* Media.xcassets */,
 				042B4ADE1A9A5672007F361F /* LaunchScreen.xib */,
@@ -295,6 +292,7 @@
 		042B4AD31A9A5672007F361F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				04F0E3C41ACB0BFD00018155 /* location.json */,
 				042B4AF61A9A56A4007F361F /* Fonts */,
 				042B4AF51A9A56A0007F361F /* Images */,
 				042B4AD41A9A5672007F361F /* Info.plist */,
@@ -324,6 +322,8 @@
 			children = (
 				042B4AF91A9A56C6007F361F /* login-bg.jpg */,
 				042B4AFA1A9A56C6007F361F /* or-divider.png */,
+				04FC36381ACB73CA008E592E /* beacon_blue_marker.png */,
+				04FC36361ACB7334008E592E /* beacon_purple_marker.png */,
 				042B4AFB1A9A56C6007F361F /* triangle-select.png */,
 			);
 			name = Images;
@@ -489,6 +489,25 @@
 			path = Headers;
 			sourceTree = "<group>";
 		};
+		04FC36341ACB1E51008E592E /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				042B4B011A9A598B007F361F /* MapViewController.swift */,
+				042B4AFF1A9A56FA007F361F /* LoginViewController.swift */,
+				04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		04FC36351ACB1E6D008E592E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */,
+				04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -611,9 +630,11 @@
 				043C8AA91AC5E1290056EDC9 /* navigation_guy@2x.png in Resources */,
 				043C8AA51AC5E1290056EDC9 /* beaconMintSmall.png in Resources */,
 				042B4ADB1A9A5672007F361F /* Main.storyboard in Resources */,
+				04FC36371ACB7334008E592E /* beacon_purple_marker.png in Resources */,
 				043C8AA21AC5E1290056EDC9 /* beaconIcySmall.png in Resources */,
 				043C8AAC1AC5E1290056EDC9 /* screen8_beacon_gray_trans@2x.png in Resources */,
 				043C8AA41AC5E1290056EDC9 /* beaconmint@2x.png in Resources */,
+				04FC36391ACB73CA008E592E /* beacon_blue_marker.png in Resources */,
 				043C8AAA1AC5E1290056EDC9 /* screen8_beacon_blue@2x.png in Resources */,
 				043C8A991AC5E1290056EDC9 /* 8b_first_frame@2x.png in Resources */,
 				042B4AE01A9A5672007F361F /* LaunchScreen.xib in Resources */,
@@ -640,7 +661,6 @@
 				04F0E3C01ACB0A6800018155 /* LocationViewController.swift in Sources */,
 				042B4B001A9A56FA007F361F /* LoginViewController.swift in Sources */,
 				04A4FCF01AA64B4D00403042 /* MBAnnotation.swift in Sources */,
-				042B4B041A9A599E007F361F /* ProximityTableViewController.swift in Sources */,
 				042B4B021A9A598B007F361F /* MapViewController.swift in Sources */,
 				04A4FCDA1AA1025000403042 /* MBSwiftPostman.swift in Sources */,
 				042B4AD61A9A5672007F361F /* AppDelegate.swift in Sources */,

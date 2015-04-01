@@ -14,13 +14,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
     
     // init beacon manager instance
     let beaconManager : ESTBeaconManager = ESTBeaconManager()
-    var closestBeaconID : Int!
+    var closestBeaconID = 0
     
     let colors = [
         48808: UIColor(red: 84/255, green: 77/255, blue: 160/255, alpha: 1),
         10869: UIColor(red: 142/255, green: 212/255, blue: 220/255, alpha: 1),
         32129: UIColor(red: 162/255, green: 213/255, blue: 181/255, alpha: 1)
     ]
+    
+    /* Annotations */
+    let annotationTitles = ["PHO 111"]
+    let annotationCoordinates = [CLLocationCoordinate2DMake(42.349228, -71.106104)]
+    var indoorAnnotations = []
     
     // init map view
     @IBOutlet var mapView: MKMapView!
@@ -32,13 +37,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.closestBeaconID = 0
-        
-        mapView.showsUserLocation = true
-        
-        // set beacon manager delegate
+                
+        // set delegates
+        mapView.delegate = self
         beaconManager.delegate = self
+        
+        // add annotations
+        self.addIndoorAnnotationsToMapView()
         
         // start ranging beacons
         self.setupBeaconRegions()
@@ -57,7 +62,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: Location Handling
+    // MARK: Utility Functions
+    
+    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
+    }
+    
+    // MARK: Location Handling Functions
     
     func updatedLocation(noti: NSNotification) {
         
@@ -69,7 +84,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
                 println("Longitude: \(userLocation.coordinate.longitude)")
                 println("\n-------------------------------\n")
                 
-                addPinToMapView(userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+                setCenterOfMapToLocation(userLocation.coordinate)
                 
             } else {
                 println("Could not find new location...")
@@ -79,40 +94,61 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
         }
     }
     
+    // MARK: Map Functions
+    
     func setCenterOfMapToLocation(location: CLLocationCoordinate2D) {
-        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        let span = MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
         let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
     }
     
-    func addPinToMapView(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+    func addIndoorAnnotationsToMapView() {
+        for (var i = 0; i < self.annotationTitles.count; i++) {
+            var newAnnotation = MBAnnotation(coordinate: self.annotationCoordinates[i], title: self.annotationTitles[i])
+            mapView.addAnnotation(newAnnotation)
+        }
+    }
+    
+    // MARK: Map View Delegate
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        if annotation is MKUserLocation {
+            return nil
+        } else if !(annotation is MBAnnotation) {
+            return nil
+        }
         
-        // create location coordinate
-        let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let reuseID = "marker"
+        var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseID)
         
-//        // instantiate annotation
-//        let annotation = MBAnnotation(coordinate: location, title: "Current Location", subtitle: "test")
-//        mapView.addAnnotation(annotation)
+        if anView == nil {
+            anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            anView.canShowCallout = true
+            
+            anView.rightCalloutAccessoryView = UIButton.buttonWithType(.InfoDark) as UIButton
+
+        } else {
+            anView.annotation = annotation
+        }
         
-        setCenterOfMapToLocation(location)
+        let customAnnotation = annotation as MBAnnotation
+        anView.image = UIImage(named: customAnnotation.imageName)
+        
+        return anView
     }
     
-    // MARK: IBActions
-    
-    @IBAction func getButtonSelected(sender: AnyObject) {
-        MBSwiftPostman().getRequest()
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+        if control == view.rightCalloutAccessoryView {
+            println("Disclosure Pressed! \(view.annotation.title)")
+            
+            if let mba = view.annotation as? MBAnnotation {
+                println("mba.imageName = \(mba.imageName)")
+                performSegueWithIdentifier("showIndoorMapView", sender: self)
+            }
+        }
     }
     
-    @IBAction func postButtonSelected(sender: AnyObject) {
-//        MBSwiftPostman().createContentInstanceWith(String(closestBeaconID))
-        MBSwiftPostman().createContentInstanceWith("92")
-    }
-    
-    @IBAction func deleteButtonSelected(sender: AnyObject) {
-        MBSwiftPostman().deleteContentInstance()
-    }
-    
-    // MARK: Beacon Functions
+    // MARK: Beacon Functions & Delegate
     
     func setupBeaconRegions() {
         var beaconRegion : ESTBeaconRegion = ESTBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), identifier: "Estimotes")
@@ -121,39 +157,24 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
     
     func beaconManager(manager: ESTBeaconManager!, didRangeBeacons beacons: [AnyObject]!, inRegion region: ESTBeaconRegion!) {
         
-        // filter out unknown beacons
-        let knownBeacons = beacons.filter{ $0.proximity != CLProximity.Unknown }
-        
-        if (knownBeacons.count > 0) {
-            let closestBeacon = knownBeacons[0] as ESTBeacon
-            
-            println("The closest beacon to me is ID: \(closestBeacon.minor.integerValue)!")
-            self.view.backgroundColor = self.colors[closestBeacon.minor.integerValue]
-            
-            // check if the closest beacon ID has changed value
-            if (self.closestBeaconID != closestBeacon.minor.integerValue) {
-                println("Beacon ID Changed! It is now: \(closestBeacon.minor.integerValue)")
-                
-                // update tree with new beacon ID content instance
-                MBSwiftPostman().createContentInstanceWith(String(self.closestBeaconID))
-            }
-            
-            self.closestBeaconID = closestBeacon.minor.integerValue
-        }
+//        // filter out unknown beacons
+//        let knownBeacons = beacons.filter{ $0.proximity != CLProximity.Unknown }
+//        
+//        if (knownBeacons.count > 0) {
+//            let closestBeacon = knownBeacons[0] as ESTBeacon
+//            
+//            println("The closest beacon to me is ID: \(closestBeacon.minor.integerValue)!")
+//            self.view.backgroundColor = self.colors[closestBeacon.minor.integerValue]
+//            
+//            // check if the closest beacon ID has changed value
+//            if (self.closestBeaconID != closestBeacon.minor.integerValue) {
+//                println("Beacon ID Changed! It is now: \(closestBeacon.minor.integerValue)")
+//                
+//                // update tree with new beacon ID content instance
+//                MBSwiftPostman().createContentInstanceWith(String(self.closestBeaconID))
+//            }
+//            
+//            self.closestBeaconID = closestBeacon.minor.integerValue
+//        }
     }
-    
-    // PRIORITY
-    
-    // 1.) BeaconID
-    // 2.) CMX Location (x,y)
-    // 3.) GPS Location (x,y)
-    
-    // loc method x node contain lat/long when GPS takes precedent
-    
-    
-    // USERS
-    
-    // user subtree with respective UUID
-    // InCSE -> UserAE -> UserID -> UUID
-    
 }

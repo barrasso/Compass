@@ -13,12 +13,13 @@ class MBAnnotation: NSObject, MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2DMake(0, 0)
     var title: String!
-    var subtitle: String!
+    var subtitle = "Indoor Map Available"
+    var imageName = "beacon_blue_marker.png"
     
-    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String) {
+    init(coordinate: CLLocationCoordinate2D, title: String) {
         self.coordinate = coordinate
         self.title = title
-        self.subtitle = subtitle
+        
         super.init()
     }
 
