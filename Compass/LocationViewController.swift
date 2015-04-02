@@ -18,6 +18,12 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
     var location: ESTLocation?
     private var manager: ESTIndoorLocationManager!
     
+    let colors = [
+        48808: UIColor(red: 84/255, green: 77/255, blue: 160/255, alpha: 1),
+        10869: UIColor(red: 142/255, green: 212/255, blue: 220/255, alpha: 1),
+        32129: UIColor(red: 162/255, green: 213/255, blue: 181/255, alpha: 1)
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

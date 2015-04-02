@@ -14,7 +14,7 @@ class MBAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2DMake(0, 0)
     var title: String!
     var subtitle = "Indoor Map Available"
-    var imageName = "beacon_blue_marker.png"
+    var imageName = "beacon_marker.png"
     
     init(coordinate: CLLocationCoordinate2D, title: String) {
         self.coordinate = coordinate

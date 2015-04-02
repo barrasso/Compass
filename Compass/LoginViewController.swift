@@ -247,9 +247,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        // hide buttons
-        arrowButton.userInteractionEnabled = false
-        arrowButton.alpha = 0
+        
+        if usernameTextField.text == "" || passwordTextField.text == "" {
+            // hide buttons
+            arrowButton.userInteractionEnabled = false
+            arrowButton.alpha = 0
+        }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

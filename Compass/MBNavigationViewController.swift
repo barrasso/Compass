@@ -16,7 +16,7 @@ class MBNavigationViewController: UINavigationController, UIViewControllerTransi
         // Customize nav bar
         self.navigationBar.barStyle = UIBarStyle.Black // makes status bar text white
         self.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationBar.barTintColor = UIColorFromHex(0x41c3f3, alpha: 1.0)
+        self.navigationBar.barTintColor = UIColorFromHex(0x01caa0, alpha: 1.0)
         self.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
     }
     

@@ -10,21 +10,17 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDelegate {
+class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate, ESTBeaconManagerDelegate {
+    
+    @IBOutlet var findSearchBar: UISearchBar!
     
     // init beacon manager instance
     let beaconManager : ESTBeaconManager = ESTBeaconManager()
     var closestBeaconID = 0
     
-    let colors = [
-        48808: UIColor(red: 84/255, green: 77/255, blue: 160/255, alpha: 1),
-        10869: UIColor(red: 142/255, green: 212/255, blue: 220/255, alpha: 1),
-        32129: UIColor(red: 162/255, green: 213/255, blue: 181/255, alpha: 1)
-    ]
-    
     /* Annotations */
     let annotationTitles = ["PHO 111"]
-    let annotationCoordinates = [CLLocationCoordinate2DMake(42.349228, -71.106104)]
+    let annotationCoordinates = [CLLocationCoordinate2DMake(42.349170, -71.106104)]
     var indoorAnnotations = []
     
     // init map view
@@ -41,6 +37,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
         // set delegates
         mapView.delegate = self
         beaconManager.delegate = self
+        findSearchBar.delegate = self
+        
+        // set map type
+        mapView.mapType = .Satellite
         
         // add annotations
         self.addIndoorAnnotationsToMapView()
@@ -60,6 +60,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        // end editing when touching view
+        self.view.endEditing(true)
     }
     
     // MARK: Utility Functions
@@ -94,7 +99,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
         }
     }
     
-    // MARK: Map Functions
+    // MARK: Map Utility Functions
     
     func setCenterOfMapToLocation(location: CLLocationCoordinate2D) {
         let span = MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
@@ -112,20 +117,36 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
     // MARK: Map View Delegate
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        
+        /* Customize User Location Annotation */
         if annotation is MKUserLocation {
-            return nil
+            
+            let reuseID = "userloc"
+            var userLocView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseID)
+            
+            if userLocView == nil {
+                userLocView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+                userLocView.canShowCallout = true
+                userLocView.image = UIImage(named: "user_marker.png")
+            } else {
+                userLocView.annotation = annotation
+            }
+            
+            return userLocView
+            
         } else if !(annotation is MBAnnotation) {
             return nil
         }
         
-        let reuseID = "marker"
-        var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseID)
+        /* Customize MBAnnotations */
+        let customReuseID = "marker"
+        var anView = mapView.dequeueReusableAnnotationViewWithIdentifier(customReuseID)
         
         if anView == nil {
-            anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            anView = MKAnnotationView(annotation: annotation, reuseIdentifier: customReuseID)
             anView.canShowCallout = true
-            
             anView.rightCalloutAccessoryView = UIButton.buttonWithType(.InfoDark) as UIButton
+            anView.rightCalloutAccessoryView.tintColor = UIColor.blackColor()
 
         } else {
             anView.annotation = annotation
@@ -142,7 +163,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
             println("Disclosure Pressed! \(view.annotation.title)")
             
             if let mba = view.annotation as? MBAnnotation {
-                println("mba.imageName = \(mba.imageName)")
                 performSegueWithIdentifier("showIndoorMapView", sender: self)
             }
         }
@@ -178,7 +198,36 @@ class MapViewController: UIViewController, MKMapViewDelegate, ESTBeaconManagerDe
 //        }
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    
+    // if not in range of beacons, write "Out of range" message to content instance
+    // fall back to LocGPS -> x,y & map ID instead of LocCMX 
+    // on user creation, also create LocCMX and LocBeacon containers under /things/macaddress
+    
+    
+    // SEARCH //
+    
+    // searches under UserAE, gets all UserIDs... finds match
+    // returns macaddress
+    // go to location ae, search under things/macaddresses/
+    // get that mac addresses location data
+    // update view
+    
+    
+    // MARK: Search Field Delegate
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.findSearchBar.resignFirstResponder()
+    }
+    
+    // MARK: Alert Functions
+    
+    func displayAlert(title:String, error:String) {
+        // display error alert
+        var errortAlert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        errortAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+            // close alert
+        }))
+        
+        self.presentViewController(errortAlert, animated: true, completion: nil)
     }
 }

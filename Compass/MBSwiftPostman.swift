@@ -13,6 +13,7 @@ class MBSwiftPostman {
     // MARK: UserAE POST Functions
     
     func createNewUserContainer() {
+        
         // set input method
         let httpMethod = "POST"
         
@@ -191,6 +192,7 @@ class MBSwiftPostman {
     // MARK: DELETE Methods
     
     func deleteContentInstance() {
+        
      
         // set input method
         let httpMethod = "DELETE"
