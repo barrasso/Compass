@@ -78,6 +78,10 @@
 		04A4FD0C1AA78D2E00403042 /* libEstimoteSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A4FD0B1AA78D2E00403042 /* libEstimoteSDK.a */; };
 		04A4FD0E1AA78FD000403042 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A4FD0D1AA78FD000403042 /* CoreBluetooth.framework */; };
 		04B11A471ACCA6E4000609B7 /* beacon_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B11A461ACCA6E4000609B7 /* beacon_marker.png */; };
+		04B455761AD5827D00273A4A /* 740-gear-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B455731AD5827D00273A4A /* 740-gear-toolbar.png */; };
+		04B455771AD5827D00273A4A /* 740-gear-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B455741AD5827D00273A4A /* 740-gear-toolbar@2x.png */; };
+		04B455781AD5827D00273A4A /* 740-gear-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B455751AD5827D00273A4A /* 740-gear-toolbar@3x.png */; };
+		04B4557A1AD582C600273A4A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B455791AD582C600273A4A /* SettingsViewController.swift */; };
 		04F0E3C01ACB0A6800018155 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */; };
 		04F0E3C51ACB0BFD00018155 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 04F0E3C41ACB0BFD00018155 /* location.json */; };
 		04F0E3C71ACB0CC700018155 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F0E3C61ACB0CC700018155 /* CoreMotion.framework */; };
@@ -205,6 +209,10 @@
 		04A4FD0B1AA78D2E00403042 /* libEstimoteSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libEstimoteSDK.a; sourceTree = "<group>"; };
 		04A4FD0D1AA78FD000403042 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		04B11A461ACCA6E4000609B7 /* beacon_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beacon_marker.png; sourceTree = "<group>"; };
+		04B455731AD5827D00273A4A /* 740-gear-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear-toolbar.png"; sourceTree = "<group>"; };
+		04B455741AD5827D00273A4A /* 740-gear-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear-toolbar@2x.png"; sourceTree = "<group>"; };
+		04B455751AD5827D00273A4A /* 740-gear-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "740-gear-toolbar@3x.png"; sourceTree = "<group>"; };
+		04B455791AD582C600273A4A /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		04F0E3C41ACB0BFD00018155 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = location.json; path = ../location.json; sourceTree = "<group>"; };
 		04F0E3C61ACB0CC700018155 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -327,6 +335,9 @@
 				04B11A461ACCA6E4000609B7 /* beacon_marker.png */,
 				0448E4331ACC7709005B3ADC /* marker_icon.png */,
 				042B4AFB1A9A56C6007F361F /* triangle-select.png */,
+				04B455731AD5827D00273A4A /* 740-gear-toolbar.png */,
+				04B455741AD5827D00273A4A /* 740-gear-toolbar@2x.png */,
+				04B455751AD5827D00273A4A /* 740-gear-toolbar@3x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -495,6 +506,7 @@
 			isa = PBXGroup;
 			children = (
 				042B4B011A9A598B007F361F /* MapViewController.swift */,
+				04B455791AD582C600273A4A /* SettingsViewController.swift */,
 				042B4AFF1A9A56FA007F361F /* LoginViewController.swift */,
 				04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */,
 			);
@@ -626,6 +638,9 @@
 				043C8AAF1AC5E1290056EDC9 /* tick@2x.png in Resources */,
 				043C8A941AC5E1290056EDC9 /* 8b.mov in Resources */,
 				043C8A9C1AC5E1290056EDC9 /* beaconblueberry@2x.png in Resources */,
+				04B455771AD5827D00273A4A /* 740-gear-toolbar@2x.png in Resources */,
+				04B455761AD5827D00273A4A /* 740-gear-toolbar.png in Resources */,
+				04B455781AD5827D00273A4A /* 740-gear-toolbar@3x.png in Resources */,
 				04F0E3C51ACB0BFD00018155 /* location.json in Resources */,
 				04B11A471ACCA6E4000609B7 /* beacon_marker.png in Resources */,
 				043C8AAE1AC5E1290056EDC9 /* screen8_beacon_purple@2x.png in Resources */,
@@ -668,6 +683,7 @@
 				042B4B021A9A598B007F361F /* MapViewController.swift in Sources */,
 				04A4FCDA1AA1025000403042 /* MBSwiftPostman.swift in Sources */,
 				042B4AD61A9A5672007F361F /* AppDelegate.swift in Sources */,
+				04B4557A1AD582C600273A4A /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

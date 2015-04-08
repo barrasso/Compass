@@ -146,7 +146,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Map" id="39A-fd-MYe"/>
+                    <navigationItem key="navigationItem" title="Map" id="39A-fd-MYe">
+                        <barButtonItem key="leftBarButtonItem" image="740-gear-toolbar.png" id="Vdi-1V-vG0">
+                            <connections>
+                                <segue destination="dGp-nr-8bS" kind="show" id="lfN-vF-efY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="findSearchBar" destination="GYV-zl-wE9" id="MfO-qV-KdS"/>
@@ -157,6 +163,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A5Q-I7-SnR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1645.5" y="371.5"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="0DV-vF-dzF">
+            <objects>
+                <viewController id="dGp-nr-8bS" customClass="SettingsViewController" customModule="Compass" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4Xf-iJ-duj"/>
+                        <viewControllerLayoutGuide type="bottom" id="mvY-Ya-xJK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="s8a-yl-rfB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tk6-2s-QfK">
+                                <rect key="frame" x="113" y="164" width="148" height="97"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" red="0.0" green="0.7725490196" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutButtonSelected:" destination="dGp-nr-8bS" eventType="touchUpInside" id="0Ug-7o-dQn"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="P5R-L2-cP1" kind="show" identifier="showLoginView" id="ZyE-Gu-Sjy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZiA-7F-1TE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1645.5" y="1291.5"/>
         </scene>
         <!--Location View Controller-->
         <scene sceneID="hDV-CE-qFS">
@@ -262,6 +303,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="740-gear-toolbar.png" width="22" height="22"/>
         <image name="marker_icon.png" width="48" height="64"/>
         <image name="triangle-select.png" width="500" height="500"/>
     </resources>

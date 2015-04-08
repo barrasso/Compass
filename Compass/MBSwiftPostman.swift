@@ -39,17 +39,14 @@ class MBSwiftPostman {
                 
                 // deserialize json object
                 let json = JSON(data: data)
-                println("json object: \(json)")
-                println("\n----------------------------------\n")
+                println("retrieved json object: \(json)")
+                println("\n--------------------------------\n")
                 
                 // extract UserAE container list
-                if let containerList = json["output"]["ResourceOutput"][0]["Attributes"].array {
-                    println(containerList)
-                    println("\n----------------------------------\n")
-                    
-                } else {
-                    println(json["output"]["ResourceOutput"][0]["Attributes"].error)
+                for obj in json["output"]["ResourceOutput"][0]["Attributes"][0] {
+                    println(obj.1)
                 }
+                println("\n----------------------------------\n")
             }
         } // end NSURLConnection block
     }

@@ -209,10 +209,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func facebookButtonSelected(sender: AnyObject) {
-    }
-
-    
     // MARK: Utility Methods
     
     func makeUsernameBorder() {
