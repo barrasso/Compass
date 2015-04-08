@@ -10,9 +10,19 @@ import Foundation
 
 class MBSwiftPostman {
     
-    // MARK: UserAE Search Functions
+    // MARK: UserAE Indoor Search Functions
     
-    func findQueriedUserInformation(username: String) {
+    func findQueriedUserLocBeacon(userid: String) {
+        
+    }
+    
+    func extractLocBeaconContent (userid: String) {
+        
+    }
+    
+    // MARK: UserAE Outdoor Search Functions
+    
+    func findQueriedUserLocGPS(userid: String) {
         
         let httpMethod = "GET"
         let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkUserAE/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
@@ -40,13 +50,60 @@ class MBSwiftPostman {
                 // deserialize json object
                 let json = JSON(data: data)
                 println("retrieved json object: \(json)")
-                println("\n--------------------------------\n")
+                println("\n-------------------------------\n")
                 
                 // extract UserAE container list
                 for obj in json["output"]["ResourceOutput"][0]["Attributes"][0] {
                     println(obj.1)
+                    
+                    // check for queried user id
+                    var string: String = obj.1.stringValue
+                    if string.rangeOfString(userid, options: nil, range: Range(start: string.startIndex, end: string.endIndex), locale: nil) != nil {
+                        println("Found user: \(userid)")
+                        self.extractLocGPSContent(userid)
+                        
+                    } else {
+                        println("Did not find user.")
+                    }
                 }
-                println("\n----------------------------------\n")
+                println("\n-------------------------------\n")
+            }
+        } // end NSURLConnection block
+    }
+    
+    func extractLocGPSContent(userid: String) {
+        
+        let httpMethod = "GET"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkUserAE/"+userid+"/latest?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
+        
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        
+        let queue = NSOperationQueue()
+        
+        // create connection on new thread
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            if error != nil {
+                println("Error: \(error)")
+                println("Response: \(response)")
+                
+            } else {
+                
+                // deserialize json object
+                let json = JSON(data: data)
+                println("received user container: \(json)")
+                println("\n-------------------------------\n")
+                
+                // extract gps location content
+                
+                
             }
         } // end NSURLConnection block
     }

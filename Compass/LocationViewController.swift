@@ -67,10 +67,6 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
     
     @IBAction func rotateOnUpdateSwitchChanged() {
         self.indoorLocationView.rotateOnPositionUpdate = self.rotateOnUpdateSwitch.on
-        
-        
-        
-        MBSwiftPostman().findQueriedUserInformation("")
     }
     
     // MARK: ESTIndoorLocationManager delegate

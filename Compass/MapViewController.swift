@@ -14,7 +14,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     @IBOutlet var findSearchBar: UISearchBar!
     
-    // init beacon manager instance
+    /* Beacon managaing */
     let beaconManager : ESTBeaconManager = ESTBeaconManager()
     var closestBeaconID = 0
     
@@ -23,7 +23,11 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     let annotationCoordinates = [CLLocationCoordinate2DMake(42.349170, -71.106104)]
     var indoorAnnotations = []
     
-    // init map view
+    /* Searching */
+    var searchActive: Bool = false
+    var queriedUser: String = ""
+    
+    /* Map View */
     @IBOutlet var mapView: MKMapView!
     
     required init(coder aDecoder: NSCoder) {
@@ -168,6 +172,35 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         }
     }
     
+    // MARK: Search Bar Delegate
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchActive = true
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchActive = false
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchActive = false
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchActive = true
+        self.findSearchBar.resignFirstResponder()
+        
+        var searchText = self.findSearchBar.text
+        var trimmedSearchText = searchText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        
+        if ((searchText == "") || (trimmedSearchText == "")) {
+            self.displayAlert("Error", error: "Please enter a valid username.")
+        } else {
+            println("Searching for: \(searchText)...")
+            MBSwiftPostman().findQueriedUserLocGPS(searchText)
+        }
+    }
+    
     // MARK: Beacon Functions & Delegate
     
     func setupBeaconRegions() {
@@ -203,21 +236,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     // fall back to LocGPS -> x,y & map ID instead of LocCMX 
     // on user creation, also create LocCMX and LocBeacon containers under /things/macaddress
     
-    
-    // SEARCH //
-    
-    // searches under UserAE, gets all UserIDs... finds match
-    // returns macaddress
-    // go to location ae, search under things/macaddresses/
-    // get that mac addresses location data
-    // update view
-    
-    
-    // MARK: Search Field Delegate
-    
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        self.findSearchBar.resignFirstResponder()
-    }
     
     // MARK: Alert Functions
     
