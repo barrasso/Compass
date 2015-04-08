@@ -12,7 +12,7 @@ class MBSwiftPostman {
     
     // MARK: UserAE Search Functions
     
-    func getUserIDContainerList() {
+    func findQueriedUserInformation(username: String) {
         
         let httpMethod = "GET"
         let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkUserAE/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
@@ -40,20 +40,18 @@ class MBSwiftPostman {
                 // deserialize json object
                 let json = JSON(data: data)
                 println("json object: \(json)")
+                println("\n----------------------------------\n")
                 
-                if let id = json["output"]["responseStatusCode"].int {
-                    println("got output: \(id)")
-
+                // extract UserAE container list
+                if let containerList = json["output"]["ResourceOutput"][0]["Attributes"].array {
+                    println(containerList)
+                    println("\n----------------------------------\n")
+                    
                 } else {
-                    println(json["output"]["responseStatusCode"].error)
-
+                    println(json["output"]["ResourceOutput"][0]["Attributes"].error)
                 }
             }
         } // end NSURLConnection block
-    }
-    
-    func findQueriedUserInformation(username: String) {
-        
     }
     
     // MARK: UserAE POST Functions
