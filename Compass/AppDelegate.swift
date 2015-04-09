@@ -22,6 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         
+        println("Device Name:  " + UIDevice.currentDevice().name)
+        println("Device Model:  " + UIDevice.currentDevice().model)
+        println("System Version:  " + UIDevice.currentDevice().systemVersion)
+        println("Device ID:  " + UIDevice.currentDevice().identifierForVendor.UUIDString)
+        println("\n-------------------------------\n")
+        
         // initialize parse sdk
         Parse.setApplicationId("RWNddnNuYwk6BfS87tsIlSXNPX1FIHOsDxYriBId",
             clientKey: "jZtdpdn7ydTL3izCvenqQchVGG5Ctv8ApaLzeq8E")

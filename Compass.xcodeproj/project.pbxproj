@@ -73,6 +73,7 @@
 		0448E4341ACC7709005B3ADC /* marker_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448E4331ACC7709005B3ADC /* marker_icon.png */; };
 		0448E4381ACC79A3005B3ADC /* user_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448E4371ACC79A3005B3ADC /* user_marker.png */; };
 		0448E43A1ACCA4F2005B3ADC /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0448E4391ACCA4F2005B3ADC /* SwiftyJSON.swift */; };
+		044F1B231AD720440085B2F6 /* MBUserLocGPSAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F1B221AD720440085B2F6 /* MBUserLocGPSAnnotation.swift */; };
 		04A4FCDA1AA1025000403042 /* MBSwiftPostman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */; };
 		04A4FCF01AA64B4D00403042 /* MBAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */; };
 		04A4FD0C1AA78D2E00403042 /* libEstimoteSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04A4FD0B1AA78D2E00403042 /* libEstimoteSDK.a */; };
@@ -179,6 +180,7 @@
 		0448E4331ACC7709005B3ADC /* marker_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marker_icon.png; sourceTree = "<group>"; };
 		0448E4371ACC79A3005B3ADC /* user_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_marker.png; sourceTree = "<group>"; };
 		0448E4391ACCA4F2005B3ADC /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		044F1B221AD720440085B2F6 /* MBUserLocGPSAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBUserLocGPSAnnotation.swift; sourceTree = "<group>"; };
 		0483CA331AA96B9B00836F63 /* Compass-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Compass-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSwiftPostman.swift; sourceTree = "<group>"; };
 		04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBAnnotation.swift; sourceTree = "<group>"; };
@@ -506,8 +508,8 @@
 			isa = PBXGroup;
 			children = (
 				042B4B011A9A598B007F361F /* MapViewController.swift */,
-				04B455791AD582C600273A4A /* SettingsViewController.swift */,
 				042B4AFF1A9A56FA007F361F /* LoginViewController.swift */,
+				04B455791AD582C600273A4A /* SettingsViewController.swift */,
 				04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */,
 			);
 			name = Scenes;
@@ -519,6 +521,7 @@
 				0448E4391ACCA4F2005B3ADC /* SwiftyJSON.swift */,
 				04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */,
 				04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */,
+				044F1B221AD720440085B2F6 /* MBUserLocGPSAnnotation.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -683,6 +686,7 @@
 				042B4B021A9A598B007F361F /* MapViewController.swift in Sources */,
 				04A4FCDA1AA1025000403042 /* MBSwiftPostman.swift in Sources */,
 				042B4AD61A9A5672007F361F /* AppDelegate.swift in Sources */,
+				044F1B231AD720440085B2F6 /* MBUserLocGPSAnnotation.swift in Sources */,
 				04B4557A1AD582C600273A4A /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

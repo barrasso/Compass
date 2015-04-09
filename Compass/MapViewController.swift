@@ -14,6 +14,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     @IBOutlet var findSearchBar: UISearchBar!
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     /* Beacon managaing */
     let beaconManager : ESTBeaconManager = ESTBeaconManager()
     var closestBeaconID = 0
@@ -25,7 +27,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     /* Searching */
     var searchActive: Bool = false
-    var queriedUser: String = ""
+    var queriedUser = ""
+    var queriedUserGPSCoordinates = CLLocationCoordinate2DMake(0, 0)
     
     /* Map View */
     @IBOutlet var mapView: MKMapView!
@@ -43,9 +46,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         beaconManager.delegate = self
         findSearchBar.delegate = self
         
-        // set map type
-        mapView.mapType = .Satellite
-        
         // add annotations
         self.addIndoorAnnotationsToMapView()
         
@@ -54,12 +54,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
 
         // subscribe to location updates
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatedLocation:", name: "newLocationNoti", object: nil)
-        
-        println("Device Name:  " + UIDevice.currentDevice().name)
-        println("Device Model:  " + UIDevice.currentDevice().model)
-        println("System Version:  " + UIDevice.currentDevice().systemVersion)
-        println("Device ID:  " + UIDevice.currentDevice().identifierForVendor.UUIDString)
-        println("\n-------------------------------\n")
     }
 
     override func didReceiveMemoryWarning() {
@@ -106,7 +100,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     // MARK: Map Utility Functions
     
     func setCenterOfMapToLocation(location: CLLocationCoordinate2D) {
-        let span = MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
+        let span = MKCoordinateSpan(latitudeDelta: 0.0025, longitudeDelta: 0.0025)
         let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
     }
@@ -124,7 +118,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         
         /* Customize User Location Annotation */
         if annotation is MKUserLocation {
-            
+            return nil
+        } else if !(annotation is MBAnnotation) {
             let reuseID = "userloc"
             var userLocView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseID)
             
@@ -137,9 +132,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             }
             
             return userLocView
-            
-        } else if !(annotation is MBAnnotation) {
-            return nil
         }
         
         /* Customize MBAnnotations */
@@ -166,8 +158,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         if control == view.rightCalloutAccessoryView {
             println("Disclosure Pressed! \(view.annotation.title)")
             
-            if let mba = view.annotation as? MBAnnotation {
+            if let indoorAnnotation = view.annotation as? MBAnnotation {
                 performSegueWithIdentifier("showIndoorMapView", sender: self)
+            }
+            
+            if let userGPSLocAnnotation = view.annotation as? MBUserLocGPSAnnotation {
+                println("start navigation to user....")
             }
         }
     }
@@ -193,11 +189,31 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         var searchText = self.findSearchBar.text
         var trimmedSearchText = searchText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
+        // inital activity indicator setup
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0.0, 0.0, 100, 100))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true;
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        
+        // add to view and start animation
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        // begin ignoring user interaction
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
         if ((searchText == "") || (trimmedSearchText == "")) {
+            // stop animation and end ignoring events
+            self.activityIndicator.stopAnimating()
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
             self.displayAlert("Error", error: "Please enter a valid username.")
         } else {
+            // clear cached user query info
+            self.queriedUser = ""
+            self.queriedUserGPSCoordinates = CLLocationCoordinate2DMake(0, 0)
+            
             println("Searching for: \(searchText)...")
-            MBSwiftPostman().findQueriedUserLocGPS(searchText)
+            self.findQueriedUserLocGPS(searchText)
         }
     }
     
@@ -248,4 +264,140 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         
         self.presentViewController(errortAlert, animated: true, completion: nil)
     }
+    
+    // MARK: UserAE GPS Search Functions
+        
+    func findQueriedUserLocGPS(userid: String) {
+        
+        let httpMethod = "GET"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkUserAE/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
+        
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        
+        let queue = NSOperationQueue()
+        
+        // create connection on new thread
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            if error != nil {
+                println("Error: \(error)")
+                println("Response: \(response)")
+                
+            } else {
+                
+                // deserialize json object
+                let json = JSON(data: data)
+                println("retrieved json object: \(json)")
+                println("\n-------------------------------\n")
+                
+                // extract UserAE container list
+                for obj in json["output"]["ResourceOutput"][0]["Attributes"][0] {
+                    println(obj.1)
+                    
+                    // check for queried user id
+                    var string: String = obj.1.stringValue
+                    if string.rangeOfString(userid, options: nil, range: Range(start: string.startIndex, end: string.endIndex), locale: nil) != nil {
+                        println("Found user: \(userid)")
+                        self.queriedUser = userid
+                        self.extractLatestLocGPSContent(userid)
+                        
+                    } else {
+                        println("Did not find user.")
+                    }
+                }
+                println("\n-------------------------------\n")
+                
+                if self.queriedUser == "" {
+                    self.displayAlert("Oh no!", error: "Did not find username \(userid)")
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        // stop animation and end ignoring events
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    })
+                }
+            }
+        } // end NSURLConnection block
+    }
+    
+    func extractLatestLocGPSContent(userid: String) {
+        
+        let httpMethod = "GET"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkUserAE/"+userid+"/latest?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        
+        let queue = NSOperationQueue()
+        
+        // create connection on new thread
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            if error != nil {
+                println("Error: \(error)")
+                println("Response: \(response)")
+                
+            } else {
+                
+                // deserialize json object
+                let json = JSON(data: data)
+                println("received user container: \(json)")
+                println("\n-------------------------------\n")
+                
+                // extract gps location content
+                for obj in json["output"]["ResourceOutput"][0]["Attributes"][7] {
+                    println(obj.1)
+                    
+                    // check for coords
+                    var string: NSString = obj.1.stringValue
+                    if string != "content" {
+                        println("Found coords: \(string)!")
+                        
+                        // convert string to CLLocationCoordinates
+                        var splitString = string.componentsSeparatedByString(",")
+                        var lat = (splitString[0] as NSString).doubleValue
+                        var long = (splitString[1] as NSString).doubleValue
+                        self.queriedUserGPSCoordinates = CLLocationCoordinate2D(latitude: lat as CLLocationDegrees, longitude: long as CLLocationDegrees)
+                        
+                        // create new marker
+                        var newAnnotation = MBUserLocGPSAnnotation(coordinate: self.queriedUserGPSCoordinates, title: self.queriedUser)
+                        self.mapView.addAnnotation(newAnnotation)
+                        
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            // stop animation and end ignoring events
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                        })
+                        
+                    } else {
+                        println("Did not find coords.")
+                    }
+                }
+                println("\n-------------------------------\n")
+                
+                if self.queriedUserGPSCoordinates.longitude == 0  && self.queriedUserGPSCoordinates.latitude == 0 {
+                    self.displayAlert("Oh no!", error: "Error finding \(userid)'s location.")
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        // stop animation and end ignoring events
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    })
+                }
+            }
+        } // end NSURLConnection block
+    }
+
 }
