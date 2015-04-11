@@ -73,21 +73,33 @@ This class's functions are triggered when a device's position is updated using R
 
 
 ### Accuracy Flag
-An `AccuracyFlag` container is created with it's `labels` attribute set to prioritize location accuracy for each `UUID` or `MACAddress` container under `InCSE1/LocationAE/Things/`.
+An `AccuracyFlag` container is created with it's `labels` attribute set to a 3-bit binary number in order to prioritize location accuracy for each `UUID` or `deviceMACAddress` container under `InCSE1/LocationAE/Things/`.
 
 * If labels[:1] == 1, then the `LocBeacon` container has the most accurate device position
 * If labels[:2] == 01, then the `LocCMX` container has the most accurate device position
 * If labels[:3] == 001, then `LocGPS` container has the most accuracte device position
 * Else, the device's position could not be found
 
+
 ###### AccuracyFlag Example
+1. *A device's GPS location is recorded*
 
+  * `MBSwiftPostman` updates (`PUT`) the device's `UUID` container `label` attribute to `001`.
+  * `MBSwiftPostman` creates (`POST`) a new content instance with the device's latitude and longitude under `LocGPS`.
 
+2. *The device is queried by another user*
 
+  * The search function `GET`s the device's `UUID` container and parses the `label` attribute
+  * The `label` is returned to the `getMostAccurateLocation` function and the switch `case 001:` is invoked
+  * The latest content instance in `LocGPS` is retrieved and passed to a displaying function for the map view
+  * This process is continuously repeated to monitor the queried device's position
 
-### Querying for User Location Data
+3. *The device enters an iBeacon indoor location.* 
 
+  * `MBSwiftPostman` updates (`PUT`) the device's `UUID` container `label` attribute to `101`.
+  * `MBSwiftPostman` creates (`POST`) a new content instance with the device's indoor position under `LocBeacon`. 
+  * The search function `GET`s the device's `UUID` container and parses the changed `label` attribute
+  * The `label` is returned to the `getMostAccurateLocation` function and the switch `case 1xx:` is invoked
+  * The latest content instance in `LocBeacon` is retrieved and passed to a displaying function for the indoor map view
+  * This process is continuously repeated to monitor the queried device's position . . .
 
-
-
-### Displaying Location Data
