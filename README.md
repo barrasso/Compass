@@ -15,7 +15,7 @@ Compass lets you find other device locations in real time using iBeacons, Cisco 
 
 
 #### Signup Process
-1. User succesfully creates a username called `newUserId` using `LoginViewController`
+1. User succesfully creates a username called `newUserId` *(for example)* using `LoginViewController`
 
 2. A container with `"resourceID":"newUserID"` is created under `InCSE1/UserAE/` 
 
@@ -27,13 +27,13 @@ Compass lets you find other device locations in real time using iBeacons, Cisco 
 
 ### Updating Location Data
 #### Prioritization
-1. `LocBeacon` content instances describe the device's [Estimote Indoor SDK](https://github.com/Estimote/iOS-Indoor-SDK) Map Position 
+1. `LocBeacon` content instances describe the device's [Estimote Indoor SDK](https://github.com/Estimote/iOS-Indoor-SDK) map position 
   * `(x,y,σ) and Map ID`
   
-2. `LocCMX` content instances describe the device's CMX Floor Map Position 
+2. `LocCMX` content instances describe the device's CMX floor map position 
   * `(X,Y) and Map ID`
   
-3. `LocGPS` content instance describe the device's Latitude and Longitude Position 
+3. `LocGPS` content instances describe the device's Latitude and Longitude position 
   * `(Lat,Long)`
   
 
