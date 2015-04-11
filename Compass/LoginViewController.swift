@@ -101,12 +101,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
             
         // check for minimum / maximum username string length
-        else if (countElements(usernameTextField.text) >= 11 || countElements(usernameTextField.text) <= 2) {
+        else if (count(usernameTextField.text) >= 11 || count(usernameTextField.text) <= 2) {
             error = "Invalid username length. Must be 3 - 10 characters"
         }
         
         // check for minimum / maximum password string length
-        else if (countElements(passwordTextField.text) >= 21 || countElements(passwordTextField.text) <= 3) {
+        else if (count(passwordTextField.text) >= 21 || count(passwordTextField.text) <= 3) {
             error = "Invalid password length. Must be 4 - 20 characters"
         }
         
@@ -140,7 +140,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             if (signUpActive == true) {
                 // sign up in background
                 user.signUpInBackgroundWithBlock {
-                    (succeeded: Bool!, signupError: NSError!) -> Void in
+                    (succeeded: Bool, signupError: NSError!) -> Void in
                     if signupError == nil {
                         
                         // stop animation and end ignoring events
@@ -164,7 +164,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         
                         // might be an error to display
                         if let errorString = signupError.userInfo?["error"] as? NSString {
-                            error = errorString
+                            error = errorString as String
                         } else {
                             error = "Oops. Something went wrong."
                         }
@@ -197,7 +197,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         
                         // might be an error to display
                         if let errorString = loginError.userInfo?["error"] as? NSString {
-                            error = errorString
+                            error = errorString as String
                         } else {
                             error = "Oops. Something went wrong."
                         }
@@ -231,7 +231,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Text Field Functions
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         // end editing when touching view
         self.view.endEditing(true)
     }

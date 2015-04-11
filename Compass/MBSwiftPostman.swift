@@ -71,11 +71,11 @@ class MBSwiftPostman {
                 println("Successfully deserialized...\n")
                 
                 if json is NSDictionary {
-                    let deserializedDictionary = json as NSDictionary
+                    let deserializedDictionary = json as! NSDictionary
                     println("Deserialized JSON Dictionary = \(deserializedDictionary)")
                 }
                 else if json is NSArray {
-                    let deserializedArray = json as NSArray
+                    let deserializedArray = json as! NSArray
                     println("Deserialized JSON Array = \(deserializedArray)")
                 } else {
                     println("Something other object was returned...")
@@ -135,11 +135,11 @@ class MBSwiftPostman {
                 println("Successfully deserialized...\n")
                 
                 if json is NSDictionary {
-                    let deserializedDictionary = json as NSDictionary
+                    let deserializedDictionary = json as! NSDictionary
                     println("Deserialized JSON Dictionary = \(deserializedDictionary)")
                 }
                 else if json is NSArray {
-                    let deserializedArray = json as NSArray
+                    let deserializedArray = json as! NSArray
                     println("Deserialized JSON Array = \(deserializedArray)")
                 } else {
                     println("Something other object was returned...")

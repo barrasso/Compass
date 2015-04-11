@@ -60,7 +60,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         super.didReceiveMemoryWarning()
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         // end editing when touching view
         self.view.endEditing(true)
     }
@@ -141,14 +141,14 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         if anView == nil {
             anView = MKAnnotationView(annotation: annotation, reuseIdentifier: customReuseID)
             anView.canShowCallout = true
-            anView.rightCalloutAccessoryView = UIButton.buttonWithType(.InfoDark) as UIButton
+            anView.rightCalloutAccessoryView = UIButton.buttonWithType(.InfoDark) as! UIButton
             anView.rightCalloutAccessoryView.tintColor = UIColor.blackColor()
 
         } else {
             anView.annotation = annotation
         }
         
-        let customAnnotation = annotation as MBAnnotation
+        let customAnnotation = annotation as! MBAnnotation
         anView.image = UIImage(named: customAnnotation.imageName)
         
         return anView
@@ -251,7 +251,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     // if not in range of beacons, write "Out of range" message to content instance
     // fall back to LocGPS -> x,y & map ID instead of LocCMX 
     // on user creation, also create LocCMX and LocBeacon containers under /things/macaddress
-    
     
     // MARK: Alert Functions
     
@@ -367,8 +366,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                         
                         // convert string to CLLocationCoordinates
                         var splitString = string.componentsSeparatedByString(",")
-                        var lat = (splitString[0] as NSString).doubleValue
-                        var long = (splitString[1] as NSString).doubleValue
+                        var lat = (splitString[0] as! NSString).doubleValue
+                        var long = (splitString[1] as! NSString).doubleValue
                         self.queriedUserGPSCoordinates = CLLocationCoordinate2D(latitude: lat as CLLocationDegrees, longitude: long as CLLocationDegrees)
                         
                         // create new marker

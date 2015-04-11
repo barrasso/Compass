@@ -49,7 +49,7 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
     func loadLocationFromJSON() {
         let bundle = NSBundle.mainBundle()
         let path = bundle.pathForResource("location", ofType: "json")
-        let content = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil) as String
+        let content = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil) as! String
         
         let indoorLocation = ESTLocationBuilder.parseFromJSON(content)
         
@@ -76,7 +76,7 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
         self.positionLabel.text = NSString(format: "x: %.2f   y: %.2f    α: %.2f",
             position.x,
             position.y,
-            position.orientation)
+            position.orientation) as String
         
         self.indoorLocationView.updatePosition(position)
     }
