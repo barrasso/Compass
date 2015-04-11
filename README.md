@@ -15,7 +15,7 @@ Compass lets you find other device locations in real time using iBeacons, Cisco 
 
 
 #### Signup Process
-1. User succesfully creates a username using `LoginViewController`
+1. User succesfully creates a username called `newUserId` using `LoginViewController`
 
 2. A container with `"resourceID":"newUserID"` is created under `InCSE1/UserAE/` 
 
@@ -39,7 +39,7 @@ Compass lets you find other device locations in real time using iBeacons, Cisco 
 
 
 #### iBeacons
-App uses Estimote's `BeaconManager` to monitor beacon ranges and indoor location positions.
+Compass uses Estimote's `BeaconManager` to monitor beacon ranges and indoor location positions.
 
   * While app is in foreground
     * Uses the `ESTBeaconManagerDelegate` method `didRangeBeacons` to determine if a device is in range of a iBeacon
@@ -50,11 +50,11 @@ App uses Estimote's `BeaconManager` to monitor beacon ranges and indoor location
 
 
 #### CMX
-App uses CMX plugin to `POST` updated coordinate positions on indoor map images provided by CMX API.
+Compass uses the CMX plugin to `POST` updated coordinate positions on indoor map images provided by CMX API.
 
 
 #### GPS
-App uses the iOS `CLLocationManager` to monitor the `Current Location` (latitude, longitude) of the device.
+Compass uses the iOS `CLLocationManager` to monitor the `Current Location` (latitude, longitude) of the device.
 
   * While app is in foreground
     * Desired accuracy is set to `kCLLocationAccuracyBest` to provide better location detection
