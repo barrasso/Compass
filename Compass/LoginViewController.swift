@@ -150,7 +150,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         // now user can use app
                         NSLog("Signed Up.")
                         
-                        // create new container entry in UserAE
+                        // initializes all required containers for new user
                         MBSwiftPostman().createNewUserContainer()
                         
                         // go to table segue
