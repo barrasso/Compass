@@ -28,6 +28,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     /* Searching */
     var searchActive: Bool = false
     var queriedUser = ""
+    var queriedUserUUID = ""
+    var accuracyFlag = ""
+    
     var queriedUserGPSCoordinates = CLLocationCoordinate2DMake(0, 0)
     
     /* Map View */
@@ -65,7 +68,17 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         self.view.endEditing(true)
     }
     
-    // MARK: Utility Functions
+    // MARK: View Utility Functions
+    
+    func displayAlert(title:String, error:String) {
+        // display error alert
+        var errortAlert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        errortAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
+            // close alert
+        }))
+        
+        self.presentViewController(errortAlert, animated: true, completion: nil)
+    }
     
     func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
@@ -75,7 +88,22 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
     
-    // MARK: Location Handling Functions
+    // MARK: Map Utility Functions
+    
+    func setCenterOfMapToLocation(location: CLLocationCoordinate2D) {
+        let span = MKCoordinateSpan(latitudeDelta: 0.0025, longitudeDelta: 0.0025)
+        let region = MKCoordinateRegion(center: location, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    func addIndoorAnnotationsToMapView() {
+        for (var i = 0; i < self.annotationTitles.count; i++) {
+            var newAnnotation = MBAnnotation(coordinate: self.annotationCoordinates[i], title: self.annotationTitles[i])
+            mapView.addAnnotation(newAnnotation)
+        }
+    }
+    
+    // MARK: Map Location Handling
     
     func updatedLocation(noti: NSNotification) {
         
@@ -94,21 +122,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             }
         } else {
             println("Wrong userInfo type...")
-        }
-    }
-    
-    // MARK: Map Utility Functions
-    
-    func setCenterOfMapToLocation(location: CLLocationCoordinate2D) {
-        let span = MKCoordinateSpan(latitudeDelta: 0.0025, longitudeDelta: 0.0025)
-        let region = MKCoordinateRegion(center: location, span: span)
-        mapView.setRegion(region, animated: true)
-    }
-    
-    func addIndoorAnnotationsToMapView() {
-        for (var i = 0; i < self.annotationTitles.count; i++) {
-            var newAnnotation = MBAnnotation(coordinate: self.annotationCoordinates[i], title: self.annotationTitles[i])
-            mapView.addAnnotation(newAnnotation)
         }
     }
     
@@ -208,12 +221,14 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             UIApplication.sharedApplication().endIgnoringInteractionEvents()
             self.displayAlert("Error", error: "Please enter a valid username.")
         } else {
+            
             // clear cached user query info
             self.queriedUser = ""
-            self.queriedUserGPSCoordinates = CLLocationCoordinate2DMake(0, 0)
+            self.queriedUserUUID = ""
+            self.accuracyFlag = ""
             
             println("Searching for: \(searchText)...")
-            self.findQueriedUserLocGPS(searchText)
+            self.getQueriedUserUUID(searchText)
         }
     }
     
@@ -247,29 +262,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
 //        }
     }
     
+    // MARK: Query Location Handling
     
-    // if not in range of beacons, write "Out of range" message to content instance
-    // fall back to LocGPS -> x,y & map ID instead of LocCMX 
-    // on user creation, also create LocCMX and LocBeacon containers under /things/macaddress
-    
-    // MARK: Alert Functions
-    
-    func displayAlert(title:String, error:String) {
-        // display error alert
-        var errortAlert = UIAlertController(title: title, message: error, preferredStyle: UIAlertControllerStyle.Alert)
-        errortAlert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { action in
-            // close alert
-        }))
-        
-        self.presentViewController(errortAlert, animated: true, completion: nil)
-    }
-    
-    // MARK: UserAE GPS Search Functions
-        
-    func findQueriedUserLocGPS(userid: String) {
+    func getQueriedUserUUID(userid: String) {
         
         let httpMethod = "GET"
-        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkUserAE/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkUserAE/"+userid+"/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -305,7 +303,15 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                     if string.rangeOfString(userid, options: nil, range: Range(start: string.startIndex, end: string.endIndex), locale: nil) != nil {
                         println("Found user: \(userid)")
                         self.queriedUser = userid
-                        self.extractLatestLocGPSContent(userid)
+                        
+                        // extract uuid
+                        var getUUID = string.lastPathComponent
+                        var uuid = getUUID.stringByReplacingOccurrencesOfString("]", withString: "", options: .LiteralSearch, range: nil)
+                        println("Found user UUID: \(uuid)")
+                        self.queriedUserUUID = uuid
+                        
+                        // find flag for uuid
+                        self.getQueriedUUIDAccuracyFlag(uuid)
                         
                     } else {
                         println("Did not find user.")
@@ -326,10 +332,108 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         } // end NSURLConnection block
     }
     
-    func extractLatestLocGPSContent(userid: String) {
+    func getQueriedUUIDAccuracyFlag(uuid: String) {
         
         let httpMethod = "GET"
-        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkUserAE/"+userid+"/latest?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=3"
+        
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        
+        let queue = NSOperationQueue()
+        
+        // create connection on new thread
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            if error != nil {
+                println("Error: \(error)")
+                println("Response: \(response)")
+                
+            } else {
+                
+                // deserialize json object
+                let json = JSON(data: data)
+                println("retrieved json object: \(json)")
+                println("\n-------------------------------\n")
+                
+                // extract UserAE container list
+                for obj in json["output"]["ResourceOutput"][0]["Attributes"][3] {
+                    println(obj.1)
+                    
+                    // check for accuracy flag
+                    var flag: String = obj.1.stringValue
+                    if flag != "labels" {
+                        println("Found flag: \(flag)")
+                        self.accuracyFlag = flag
+                        
+                        // pass flag to accurate location decision method
+                        self.getMostAccurateLocation(self.accuracyFlag)
+                        
+                    } else {
+                        println("Did not find flag.")
+                    }
+                }
+                println("\n-------------------------------\n")
+            }
+        } // end NSURLConnection block
+    }
+    
+    func getMostAccurateLocation(flag: String) {
+        
+        println("Finding best location...")
+        
+        var locBeaconFlag = flag[flag.startIndex]
+        var locCMXFlag = flag[advance(flag.startIndex, 1)]
+        var locGPSFlag = flag[advance(flag.startIndex, 2)]
+        println("LocBeacon Flag = \(locBeaconFlag)")
+        println("LocCMX Flag = \(locCMXFlag)")
+        println("LocGPS Flag = \(locGPSFlag)")
+        
+        // choose best locating method
+        if locBeaconFlag == "1" {
+            println("Getting beacon location...")
+            
+            // get beacon indoor position
+            
+        } else if locBeaconFlag == "0" && locCMXFlag == "1" {
+            println("Getting CMX location...")
+
+            // get cmx indoor position
+            
+        } else if locBeaconFlag == "0" && locCMXFlag == "0" && locGPSFlag == "1" {
+            println("Getting GPS location...")
+
+            // get GPS location
+            self.extractLatestLocGPSContent()
+            
+        } else {
+            
+            self.displayAlert("Oh no!", error: "Could not find any location for \(self.queriedUser)")
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                // stop animation and end ignoring events
+                self.activityIndicator.stopAnimating()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+            })
+        }
+    }
+    
+    // MARK: Beacon Query Functions
+    
+    // MARK: CMX Query Functions
+    
+    // MARK: GPS Query Functions
+    
+    func extractLatestLocGPSContent() {
+        
+        let httpMethod = "GET"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+self.queriedUserUUID+"/LocGPS/latest?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
         
@@ -387,7 +491,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 println("\n-------------------------------\n")
                 
                 if self.queriedUserGPSCoordinates.longitude == 0  && self.queriedUserGPSCoordinates.latitude == 0 {
-                    self.displayAlert("Oh no!", error: "Error finding \(userid)'s location.")
+                    self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s GPS location.")
                     
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         // stop animation and end ignoring events
@@ -398,5 +502,4 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             }
         } // end NSURLConnection block
     }
-
 }

@@ -368,17 +368,45 @@ class MBSwiftPostman {
         } // end url block
     }
     
+
+    // MARK: LocationAE AccuracyFlag Functions
     
+    func enableFlagForLocGPS() {
+        
+    }
     
+    func enableFlagForLocCMX() {
+        
+    }
     
+    func enableFlagForLocBeacon() {
+        
+    }
     
+    func disableFlagForLocGPS() {
+        
+    }
     
+    func disableFlagForLocCMX() {
+        
+    }
     
+    func disableFlagForLocBeacon() {
+        
+    }
     
     
     // MARK: LocationAE POST Functions
     
-    func createContentInstanceWith(beaconID: String) {
+    func createLocGPSContentInstance() {
+        
+    }
+    
+    func createLocCMXContentInstance() {
+        
+    }
+    
+    func createLocBeaconContentInstance(beaconID: String) {
         
         // set input method
         let httpMethod = "POST"
