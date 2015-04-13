@@ -80,13 +80,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var newLocation: AnyObject? = locations.last
+        var newLocation: CLLocation = locations.last as! CLLocation
         
+        var lat = newLocation.coordinate.latitude
+        var long = newLocation.coordinate.longitude
+        var coords = String(format: "%f,%f", lat,long)
         
+        // put 1 in LocGPS accuracy flag
+        MBSwiftPostman().getFlagEnableForLocGPS()
+        
+        // post content instance with updated position
+        MBSwiftPostman().createLocGPSContentInstance(coords)
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         println("Location manager failed with error: \(error)")
+        
+        // put 0 in LocGPS accuracy flag
+        MBSwiftPostman().getFlagDisableForLocGPS()
     }
 }
 

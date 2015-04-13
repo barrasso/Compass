@@ -56,7 +56,7 @@ class MBSwiftPostman {
             
             // deserialize json object
             let json = JSON(data: data)
-            println("received response: \(json)")
+            println("Setup \(userID) Container.")
             println("\n-------------------------------\n")
             
             self.createUUIDContainerUserAE()
@@ -108,7 +108,7 @@ class MBSwiftPostman {
             
             // deserialize json object
             let json = JSON(data: data)
-            println("received response: \(json)")
+            println("Setup UUID Container under UserAE.")
             println("\n-------------------------------\n")
             
             self.createUUIDContainerLocationAE()
@@ -159,7 +159,7 @@ class MBSwiftPostman {
             
             // deserialize json object
             let json = JSON(data: data)
-            println("received response: \(json)")
+            println("Setup UUID Container under LocationAE.")
             println("\n-------------------------------\n")
             
             self.createLocBeaconContainer()
@@ -210,7 +210,7 @@ class MBSwiftPostman {
             
             // deserialize json object
             let json = JSON(data: data)
-            println("received response: \(json)")
+            println("Setup LocBeacon Container.")
             println("\n-------------------------------\n")
             
             self.createLocCMXContainer()
@@ -261,7 +261,7 @@ class MBSwiftPostman {
             
             // deserialize json object
             let json = JSON(data: data)
-            println("received response: \(json)")
+            println("Setup LocCMX Container.")
             println("\n-------------------------------\n")
             
             self.createLocGPSContainer()
@@ -312,7 +312,7 @@ class MBSwiftPostman {
             
             // deserialize json object
             let json = JSON(data: data)
-            println("received response: \(json)")
+            println("Setup LocGPS Container.")
             println("\n-------------------------------\n")
             
             self.createAccuracyFlagContainer()
@@ -362,44 +362,289 @@ class MBSwiftPostman {
             
             // deserialize json object
             let json = JSON(data: data)
-            println("received response: \(json)")
+            println("Setup AccuracyFlag Container.")
             println("\n-------------------------------\n")
             
         } // end url block
     }
     
-
-    // MARK: LocationAE AccuracyFlag Functions
+    // MARK: LocationAE AccuracyFlag Enable Functions
     
-    func enableFlagForLocGPS() {
+    func getFlagEnableForLocGPS() {
+        
+        let httpMethod = "GET"
+        let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=3"
+        
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        
+        let queue = NSOperationQueue()
+        
+        // create connection on new thread
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            if error != nil {
+                println("Error: \(error)")
+                println("Response: \(response)")
+                
+            } else {
+                
+                // deserialize json object
+                let json = JSON(data: data)
+                
+                // extract UserAE container list
+                for obj in json["output"]["ResourceOutput"][0]["Attributes"][3] {
+                    
+                    // check for accuracy flag
+                    var flag: String = obj.1.stringValue
+                    if flag != "labels" {
+                        println("Found flag: \(flag)")
+                        
+                        // parse flag and update it
+                        self.putEnableFlagForLocGPS(flag)
+                        
+                    } else {
+                        // did not find flag
+                    }
+                }
+            }
+        } // end NSURLConnection block
+    }
+    
+    func putEnableFlagForLocGPS(flag: String) {
+        
+        let locBeaconFlag = flag[flag.startIndex]
+        let locCMXFlag = flag[advance(flag.startIndex, 1)]
+        let locGPSFlag = flag[advance(flag.startIndex, 2)]
+        
+        let newFlag = "\(locBeaconFlag)" + "\(locCMXFlag)" + "1"
+        
+        // set input method
+        let httpMethod = "PUT"
+        let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=3"
+        
+        /* use this json payload to update flag label */
+        var params: [NSString : AnyObject] =
+        [
+            "from":"http:localhost:10000",
+            "requestIdentifier":"12345",
+            "resourceType":"container",
+            "content": [
+                "labels":newFlag,
+                "resourceName":"AccuracyFlag",
+            ]
+        ]
+        
+        // url request properties
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        var err: NSError?
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        urlRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+        
+        // init queue
+        let queue = NSOperationQueue()
+        
+        // create connection on a new thread for request
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (reponse: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            
+            // deserialize json object
+            let json = JSON(data: data)
+            println("Enabled LocGPS flag.")
+            
+        } // end url block
+    }
+    
+    func getFlagEnableForLocCMX() {
         
     }
     
-    func enableFlagForLocCMX() {
+    func putEnableFlagForLocCMX() {
         
     }
     
-    func enableFlagForLocBeacon() {
+    func getFlagEnableForLocBeacon() {
         
     }
     
-    func disableFlagForLocGPS() {
+    func putEnableFlagForLocBeacon() {
         
     }
     
-    func disableFlagForLocCMX() {
+    // MARK: LocationAE AccuracyFlag Disable Functions
+    
+    func getFlagDisableForLocGPS() {
+        let httpMethod = "GET"
+        let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=3"
+        
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        
+        let queue = NSOperationQueue()
+        
+        // create connection on new thread
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            if error != nil {
+                println("Error: \(error)")
+                println("Response: \(response)")
+                
+            } else {
+                
+                // deserialize json object
+                let json = JSON(data: data)
+                
+                // extract UserAE container list
+                for obj in json["output"]["ResourceOutput"][0]["Attributes"][3] {
+                    
+                    // check for accuracy flag
+                    var flag: String = obj.1.stringValue
+                    if flag != "labels" {
+                        println("Found flag: \(flag)")
+                        
+                        // parse flag and update it
+                        self.putDisableFlagForLocGPS(flag)
+                        
+                    } else {
+                        // did not find flag
+                    }
+                }
+            }
+        } // end NSURLConnection block
+    }
+    
+    func putDisableFlagForLocGPS(flag: String) {
+        let locBeaconFlag = flag[flag.startIndex]
+        let locCMXFlag = flag[advance(flag.startIndex, 1)]
+        let locGPSFlag = flag[advance(flag.startIndex, 2)]
+        
+        let newFlag = "\(locBeaconFlag)" + "\(locCMXFlag)" + "0"
+        
+        // set input method
+        let httpMethod = "PUT"
+        let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=3"
+        
+        /* use this json payload to update flag label */
+        var params: [NSString : AnyObject] =
+        [
+            "from":"http:localhost:10000",
+            "requestIdentifier":"12345",
+            "resourceType":"container",
+            "content": [
+                "labels":newFlag,
+                "resourceName":"AccuracyFlag",
+            ]
+        ]
+        
+        // url request properties
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        var err: NSError?
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        urlRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+        
+        // init queue
+        let queue = NSOperationQueue()
+        
+        // create connection on a new thread for request
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (reponse: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            
+            // deserialize json object
+            let json = JSON(data: data)
+            println("Disables LocGPS flag.")
+            
+        } // end url block
+    }
+    
+    func getFlagDisableForLocCMX() {
         
     }
     
-    func disableFlagForLocBeacon() {
+    func putDisableFlagForLocCMX() {
+        
+    }
+    
+    func getFlagDisableForLocBeacon() {
+        
+    }
+    
+    func putDisableFlagForLocBeacon() {
         
     }
     
     
     // MARK: LocationAE POST Functions
     
-    func createLocGPSContentInstance() {
+    func createLocGPSContentInstance(coords: String) {
+        // set input method
+        let httpMethod = "POST"
+        let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+uuid+"/LocGPS/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=3"
         
+        /* use this json payload to create content instances */
+        var params: [NSString : AnyObject] =
+        [
+            "from":"http:localhost:10000",
+            "requestIdentifier":"12345",
+            "resourceType":"contentInstance",
+            "content": [
+                "content":coords
+            ]
+        ]
+        
+        // url request properties
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        var err: NSError?
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        urlRequest.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
+        
+        // init queue
+        let queue = NSOperationQueue()
+        
+        // create connection on a new thread for request
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (reponse: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            
+            // deserialize json object
+            let json = JSON(data: data)
+            println("Received response! Created a new content instance in LocGPS!")
+            println("\n-------------------------------\n")
+            
+        } // end url block
     }
     
     func createLocCMXContentInstance() {
@@ -448,7 +693,7 @@ class MBSwiftPostman {
             
             // deserialize json object
             let json = JSON(data: data)
-            println("received response: \(json)")
+            println("Received response! Created a new content instance in LocBeacon!")
             println("\n-------------------------------\n")
             
         } // end url block

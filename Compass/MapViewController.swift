@@ -301,7 +301,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 
                 // deserialize json object
                 let json = JSON(data: data)
-                println("retrieved json object: \(json)")
+                println("Got \(userid) container under UserAE.")
                 println("\n-------------------------------\n")
                 
                 // extract UserAE container list
@@ -369,7 +369,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 
                 // deserialize json object
                 let json = JSON(data: data)
-                println("retrieved json object: \(json)")
+                println("Got AccuracyFlag Container for \(uuid)")
                 println("\n-------------------------------\n")
                 
                 // extract UserAE container list
@@ -468,7 +468,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 
                 // deserialize json object
                 let json = JSON(data: data)
-                println("received user container: \(json)")
+                println("Got latest LocGPS content.")
                 println("\n-------------------------------\n")
                 
                 // extract gps location content
