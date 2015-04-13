@@ -27,8 +27,13 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     /* Searching */
     var searchActive: Bool = false
+    var isMappingQueriedUser: Bool = false
+    
+    var updatingLocationTimer: NSTimer?
+    
     var queriedUser = ""
     var queriedUserUUID = ""
+    var queriedUserAnnotation: MBUserLocGPSAnnotation?
     var accuracyFlag = ""
     
     var queriedUserGPSCoordinates = CLLocationCoordinate2DMake(0, 0)
@@ -103,28 +108,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         }
     }
     
-    // MARK: Map Location Handling
-    
-    func updatedLocation(noti: NSNotification) {
-        
-        // try to cast to expected type
-        if let info = noti.userInfo {
-            
-            if let userLocation : CLLocation = info["newLocationResult"] as? CLLocation {
-                println("Latitude: \(userLocation.coordinate.latitude)")
-                println("Longitude: \(userLocation.coordinate.longitude)")
-                println("\n-------------------------------\n")
-                
-                setCenterOfMapToLocation(userLocation.coordinate)
-                
-            } else {
-                println("Could not find new location...")
-            }
-        } else {
-            println("Wrong userInfo type...")
-        }
-    }
-    
     // MARK: Map View Delegate
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
@@ -181,6 +164,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         }
     }
     
+    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+        
+        // center map to user
+        self.setCenterOfMapToLocation(mapView.userLocation.location.coordinate)
+    }
+    
     // MARK: Search Bar Delegate
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
@@ -222,6 +211,19 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             self.displayAlert("Error", error: "Please enter a valid username.")
         } else {
             
+            // clear queried user marker if any
+            if isMappingQueriedUser {
+                let annotationsToRemove = self.mapView.annotations.filter({$0 as? MKUserLocation != self.mapView.userLocation})
+                self.mapView.removeAnnotations(annotationsToRemove)
+                self.isMappingQueriedUser = false
+                
+                // readd indoor map markers
+                self.addIndoorAnnotationsToMapView()
+                
+                // stop updating user location timer
+                self.updatingLocationTimer?.invalidate()
+            }
+            
             // clear cached user query info
             self.queriedUser = ""
             self.queriedUserUUID = ""
@@ -229,7 +231,15 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             
             println("Searching for: \(searchText)...")
             self.getQueriedUserUUID(searchText)
+            
+            // init update queried user location timer
+            self.updatingLocationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "updateQueriedUserLocation", userInfo: nil, repeats: true)
         }
+    }
+    
+    func updateQueriedUserLocation() {
+        println("Getting \(self.queriedUser)'s location again...")
+        self.getQueriedUserUUID(self.queriedUser)
     }
     
     // MARK: Beacon Functions & Delegate
@@ -426,6 +436,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     // MARK: Beacon Query Functions
     
+    
+    
     // MARK: CMX Query Functions
     
     // MARK: GPS Query Functions
@@ -476,7 +488,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                         
                         // create new marker
                         var newAnnotation = MBUserLocGPSAnnotation(coordinate: self.queriedUserGPSCoordinates, title: self.queriedUser)
+                        self.queriedUserAnnotation = newAnnotation
                         self.mapView.addAnnotation(newAnnotation)
+                        self.isMappingQueriedUser = true
                         
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             // stop animation and end ignoring events
