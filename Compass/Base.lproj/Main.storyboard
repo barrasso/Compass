@@ -163,15 +163,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" barStyle="black" placeholder="Find someone..." translatesAutoresizingMaskIntoConstraints="NO" id="GYV-zl-wE9">
+                            <searchBar contentMode="redraw" barStyle="black" placeholder="Find someone..." translatesAutoresizingMaskIntoConstraints="NO" id="GYV-zl-wE9">
                                 <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
                             </searchBar>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TJi-iL-02y">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TJi-iL-02y">
                                 <rect key="frame" x="0.0" y="108" width="375" height="559"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TJi-iL-02y" firstAttribute="top" secondItem="GYV-zl-wE9" secondAttribute="bottom" id="9I0-Qd-dUx"/>
+                            <constraint firstItem="TJi-iL-02y" firstAttribute="top" secondItem="GYV-zl-wE9" secondAttribute="bottom" id="APZ-8f-OAK"/>
+                            <constraint firstItem="TJi-iL-02y" firstAttribute="leading" secondItem="VTh-zg-Tgc" secondAttribute="leadingMargin" constant="-16" id="BEi-e9-Jte"/>
+                            <constraint firstItem="m6t-pe-QZF" firstAttribute="top" secondItem="TJi-iL-02y" secondAttribute="bottom" id="EG0-9f-5jo"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TJi-iL-02y" secondAttribute="trailing" constant="-16" id="G4g-YW-pHr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GYV-zl-wE9" secondAttribute="trailing" constant="-16" id="aSG-Jy-Kfi"/>
+                            <constraint firstItem="GYV-zl-wE9" firstAttribute="top" secondItem="07i-xU-Pb6" secondAttribute="bottom" id="n9R-EA-efe"/>
+                            <constraint firstItem="GYV-zl-wE9" firstAttribute="leading" secondItem="VTh-zg-Tgc" secondAttribute="leadingMargin" constant="-16" id="wSe-cy-caN"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="39A-fd-MYe">
                         <barButtonItem key="leftBarButtonItem" image="740-gear-toolbar.png" id="Vdi-1V-vG0">
@@ -255,22 +265,10 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kyT-PS-o2i">
-                                <rect key="frame" x="310" y="610" width="51" height="31"/>
-                                <color key="onTintColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <action selector="rotateOnUpdateSwitchChanged" destination="57X-N1-f8a" eventType="valueChanged" id="G3H-WD-vuB"/>
-                                </connections>
-                            </switch>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rotate room on update position" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hak-fe-0Ro">
-                                <rect key="frame" x="58" y="615" width="244" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cC5-Ai-sbP">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cC5-Ai-sbP">
                                 <rect key="frame" x="0.0" y="64" width="375" height="398"/>
                                 <subviews>
-                                    <view autoresizesSubviews="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hcQ-Ih-GWv" customClass="ESTIndoorLocationView">
+                                    <view autoresizesSubviews="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hcQ-Ih-GWv" customClass="ESTIndoorLocationView">
                                         <rect key="frame" x="47" y="90" width="280" height="280"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -305,26 +303,41 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <searchBar contentMode="redraw" fixedFrame="YES" barStyle="black" placeholder="Find someone..." translatesAutoresizingMaskIntoConstraints="NO" id="tA8-MS-I19">
+                                    <searchBar contentMode="redraw" barStyle="black" placeholder="Find someone..." translatesAutoresizingMaskIntoConstraints="NO" id="tA8-MS-I19">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="search"/>
                                     </searchBar>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="hcQ-Ih-GWv" firstAttribute="top" secondItem="tA8-MS-I19" secondAttribute="bottom" constant="46" id="96O-bi-hbA"/>
+                                    <constraint firstItem="hcQ-Ih-GWv" firstAttribute="top" secondItem="tA8-MS-I19" secondAttribute="bottom" constant="46" id="Apq-8H-gHh"/>
+                                    <constraint firstItem="tA8-MS-I19" firstAttribute="leading" secondItem="cC5-Ai-sbP" secondAttribute="leading" id="S1w-vB-wc2"/>
+                                    <constraint firstItem="tA8-MS-I19" firstAttribute="top" secondItem="cC5-Ai-sbP" secondAttribute="top" id="TqQ-fl-5Lw"/>
+                                    <constraint firstItem="hcQ-Ih-GWv" firstAttribute="leading" secondItem="cC5-Ai-sbP" secondAttribute="leading" constant="47" id="YTm-YC-1Kj"/>
+                                    <constraint firstAttribute="trailing" secondItem="tA8-MS-I19" secondAttribute="trailing" id="jwo-Ds-fDg"/>
+                                    <constraint firstAttribute="bottom" secondItem="hcQ-Ih-GWv" secondAttribute="bottom" constant="28" id="yTZ-61-u20"/>
+                                    <constraint firstAttribute="trailing" secondItem="hcQ-Ih-GWv" secondAttribute="trailing" constant="48" id="zLp-6n-A7v"/>
+                                </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="x: 0  y: 0   α:0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Nke-rH-8P7">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="x: 0  y: 0   α:0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Nke-rH-8P7">
                                 <rect key="frame" x="47" y="493" width="280" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0039215686269999999" green="0.79215686269999996" blue="0.62745098040000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="cC5-Ai-sbP" firstAttribute="top" secondItem="5nh-YJ-u6X" secondAttribute="bottom" id="BgF-9r-uK9"/>
+                            <constraint firstItem="Nke-rH-8P7" firstAttribute="top" secondItem="cC5-Ai-sbP" secondAttribute="bottom" constant="31" id="SiT-7r-cgV"/>
+                            <constraint firstItem="cC5-Ai-sbP" firstAttribute="leading" secondItem="6RJ-Ru-3qj" secondAttribute="leadingMargin" constant="-16" id="fKF-OA-9hc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cC5-Ai-sbP" secondAttribute="trailing" constant="-16" id="ogy-tG-e2A"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="indoorLocationView" destination="hcQ-Ih-GWv" id="iMZ-5N-1qU"/>
                         <outlet property="positionLabel" destination="Nke-rH-8P7" id="jG5-N7-0ha"/>
-                        <outlet property="rotateOnUpdateSwitch" destination="kyT-PS-o2i" id="Xgl-6A-gcv"/>
                         <outlet property="showTraceSwitch" destination="uaP-X4-0Vp" id="Lca-on-zVl"/>
                     </connections>
                 </viewController>

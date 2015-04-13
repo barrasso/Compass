@@ -12,7 +12,6 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
     
     @IBOutlet var indoorLocationView: ESTIndoorLocationView!
     @IBOutlet var showTraceSwitch: UISwitch!
-    @IBOutlet var rotateOnUpdateSwitch: UISwitch!
     @IBOutlet var positionLabel: UILabel!
     
     var location: ESTLocation?
@@ -38,6 +37,8 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
         
         self.indoorLocationView.drawLocation(self.location)
         self.manager.startIndoorLocation(self.location)
+        
+        self.indoorLocationView.rotateOnPositionUpdate = false
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -63,10 +64,6 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
         self.indoorLocationView.clearTrace()
         self.indoorLocationView.traceColor = UIColor.blueColor()
         self.indoorLocationView.showTrace = self.showTraceSwitch.on
-    }
-    
-    @IBAction func rotateOnUpdateSwitchChanged() {
-        self.indoorLocationView.rotateOnPositionUpdate = self.rotateOnUpdateSwitch.on
     }
     
     // MARK: ESTIndoorLocationManager delegate
