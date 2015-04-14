@@ -111,6 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // put 0 in LocGPS accuracy flag
         MBSwiftPostman().getFlagDisableForLocGPS()
     }
+    
         
     // MARK: ESTIndoorLocationManager delegate
     
@@ -178,16 +179,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         var coords = self.indoorCoords
         
         // put 1 in LocBeacon accuracy flag
-        println("enabling flag...")
+        println("enabling indoor flag...")
+        MBSwiftPostman().getFlagEnableForLocBeacon()
         
         // post content instance with updated indoor position
-        println("posting indoor location...\(coords)")
+        println("posting indoor location...\(coords!)")
+        MBSwiftPostman().createLocBeaconContentInstance(coords!)
     }
     
     func updateUserNotIndoorLocation() {
         
         // put 0 in LocBeacon accuracy flag
-        println("disabling flag...")
+        println("disabling indoor flag...")
+        MBSwiftPostman().getFlagDisableForLocBeacon()
     }
 }
 
