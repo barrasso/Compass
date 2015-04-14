@@ -32,13 +32,19 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
         
         self.loadLocationFromJSON()
         
+        // init indoor manager
         self.manager = ESTIndoorLocationManager()
         self.manager.delegate = self
         
+        // start drawing location
         self.indoorLocationView.drawLocation(self.location)
         self.manager.startIndoorLocation(self.location)
         
+        // disable rotation
         self.indoorLocationView.rotateOnPositionUpdate = false
+        
+        let flagView = UIImageView(image: UIImage(named: "user_marker.png"))
+        self.indoorLocationView.drawObject(flagView, withPosition: ESTPoint(x: 1.0, y: 1.0))
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -70,17 +76,19 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
     
     func indoorLocationManager(manager: ESTIndoorLocationManager!, didUpdatePosition position: ESTOrientedPoint!, inLocation location: ESTLocation!) {
         
+        // user's position inside room
         self.positionLabel.text = NSString(format: "x: %.2f   y: %.2f    α: %.2f",
             position.x,
             position.y,
             position.orientation) as String
         
+        // keep updating user location
         self.indoorLocationView.updatePosition(position)
     }
     
     func indoorLocationManager(manager: ESTIndoorLocationManager!, didFailToUpdatePositionWithError error: NSError!) {
         
-        self.positionLabel.text = "It seems you are outside the location."
+        self.positionLabel.text = "It seems that you are outside the location."
         //NSLog(error.localizedDescription)
     }
 }

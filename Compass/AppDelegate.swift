@@ -11,15 +11,24 @@ import Parse
 import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
-
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate, ESTIndoorLocationManagerDelegate {
     var window: UIWindow?
 
+    /* CLLocation Managing */
     var locationManager: CLLocationManager! = nil
     var isExecutingInBackground = false
+    
+    /* Estimote IndoorLocation */
+    var location: ESTLocation?
+    var indoorCoords: String?
+    private var manager: ESTIndoorLocationManager!
+    
+    var didUpdateIndoorLocation = false
+    var updateIndoorLocationTimer: NSTimer?
+    var notIndoorLocationTimer: NSTimer?
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
         UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         
         println("Device Name:  " + UIDevice.currentDevice().name)
@@ -31,6 +40,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // initialize parse sdk
         Parse.setApplicationId("RWNddnNuYwk6BfS87tsIlSXNPX1FIHOsDxYriBId",
             clientKey: "jZtdpdn7ydTL3izCvenqQchVGG5Ctv8ApaLzeq8E")
+        
+        // init indoor manager
+        self.initIndoorLocationManaging()
         
         // init location manager
         locationManager = CLLocationManager()
@@ -89,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // put 1 in LocGPS accuracy flag
         MBSwiftPostman().getFlagEnableForLocGPS()
         
-        // post content instance with updated position
+        // post content instance with updated GPS position
         MBSwiftPostman().createLocGPSContentInstance(coords)
     }
     
@@ -98,6 +110,84 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         // put 0 in LocGPS accuracy flag
         MBSwiftPostman().getFlagDisableForLocGPS()
+    }
+        
+    // MARK: ESTIndoorLocationManager delegate
+    
+    func indoorLocationManager(manager: ESTIndoorLocationManager!, didUpdatePosition position: ESTOrientedPoint!, inLocation location: ESTLocation!) {
+        
+        var yourPos = NSString(format: "Your position in %@ ---> x: %.2f   y: %.2f",
+            location.name,
+            position.x,
+            position.y) as String
+        println(yourPos)
+        
+        if !self.didUpdateIndoorLocation {
+            
+            self.indoorCoords = String(format: "%@,%.2f,%.2f", location.name, position.x, position.y)
+            
+            // stop not indoor timer
+            self.notIndoorLocationTimer?.invalidate()
+            
+            // init update timer
+            self.updateIndoorLocationTimer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "updateUserIndoorLocation", userInfo: nil, repeats: true)
+            
+            self.didUpdateIndoorLocation = true
+        }
+    }
+    
+    func indoorLocationManager(manager: ESTIndoorLocationManager!, didFailToUpdatePositionWithError error: NSError!) {
+        
+        if self.didUpdateIndoorLocation {
+            
+            NSLog(error.localizedDescription)
+            
+            // stop update indoor location timer
+            self.updateIndoorLocationTimer?.invalidate()
+            
+            // init not indoor location timer
+            self.notIndoorLocationTimer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "updateUserNotIndoorLocation", userInfo: nil, repeats: true)
+            
+            self.didUpdateIndoorLocation = false
+        }
+    }
+    
+    func loadLocationFromJSON() {
+        let bundle = NSBundle.mainBundle()
+        let path = bundle.pathForResource("location", ofType: "json")
+        let content = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil) as! String
+        
+        let indoorLocation = ESTLocationBuilder.parseFromJSON(content)
+        self.location = indoorLocation
+    }
+    
+    func initIndoorLocationManaging() {
+        
+        self.loadLocationFromJSON()
+        
+        // init indoor manager
+        self.manager = ESTIndoorLocationManager()
+        self.manager.delegate = self
+        
+        // start indoor locating
+        self.manager.startIndoorLocation(self.location)
+    }
+    
+    func updateUserIndoorLocation() {
+        
+        var coords = self.indoorCoords
+        
+        // put 1 in LocBeacon accuracy flag
+        println("enabling flag...")
+        
+        // post content instance with updated indoor position
+        println("posting indoor location...\(coords)")
+    }
+    
+    func updateUserNotIndoorLocation() {
+        
+        // put 0 in LocBeacon accuracy flag
+        println("disabling flag...")
     }
 }
 
