@@ -14,8 +14,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     @IBOutlet var findSearchBar: UISearchBar!
     
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    
     /* Annotations */
     let annotationTitles = ["PHO111"]
     let annotationCoordinates = [CLLocationCoordinate2DMake(42.349170, -71.106104)]
@@ -169,23 +167,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         var searchText = self.findSearchBar.text
         var trimmedSearchText = searchText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
         
-        // inital activity indicator setup
-        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0.0, 0.0, 100, 100))
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true;
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        
-        // add to view and start animation
-        view.addSubview(activityIndicator)
-        activityIndicator.startAnimating()
-        
-        // begin ignoring user interaction
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
-        
         if ((searchText == "") || (trimmedSearchText == "")) {
-            // stop animation and end ignoring events
-            self.activityIndicator.stopAnimating()
-            UIApplication.sharedApplication().endIgnoringInteractionEvents()
             self.displayAlert("Error", error: "Please enter a valid username.")
         } else {
             
@@ -280,11 +262,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 if self.queriedUser == "" {
                     self.displayAlert("Oh no!", error: "Did not find username \(userid)")
                     
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        // stop animation and end ignoring events
-                        self.activityIndicator.stopAnimating()
-                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                    })
                 }
             }
         } // end NSURLConnection block
@@ -375,12 +352,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         } else {
             
             self.displayAlert("Oh no!", error: "Could not find any location for \(self.queriedUser)")
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                // stop animation and end ignoring events
-                self.activityIndicator.stopAnimating()
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
-            })
+
         }
     }
     
@@ -431,13 +403,10 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                         self.isMappingQueriedUser = true
                         
                         // go to indoor map marker
-                        self.displayAlert("Found \(self.queriedUser)!", error: "Go to the \(mapid) indoor map.")
                         self.updatingLocationTimer?.invalidate()
                         
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            // stop animation and end ignoring events
-                            self.activityIndicator.stopAnimating()
-                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            self.performSegueWithIdentifier("showIndoorMapView", sender: self)
                         })
                         
                     } else {
@@ -448,18 +417,17 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 
                 if self.queriedUserBeaconCoordinates == "" {
                     self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s indoor location.")
-                    
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        // stop animation and end ignoring events
-                        self.activityIndicator.stopAnimating()
-                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                    })
+
                 }
             }
         } // end NSURLConnection block
     }
     
     // MARK: CMX Query Functions
+    
+    func extractLatestLocCMXContent() {
+        
+    }
     
     // MARK: GPS Query Functions
     
@@ -512,11 +480,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                         self.mapView.addAnnotation(newAnnotation)
                         self.isMappingQueriedUser = true
                         
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            // stop animation and end ignoring events
-                            self.activityIndicator.stopAnimating()
-                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                        })
                         
                     } else {
                         println("Did not find coords.")
@@ -526,12 +489,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 
                 if self.queriedUserGPSCoordinates.longitude == 0  && self.queriedUserGPSCoordinates.latitude == 0 {
                     self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s GPS location.")
-                    
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        // stop animation and end ignoring events
-                        self.activityIndicator.stopAnimating()
-                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-                    })
+
                 }
             }
         } // end NSURLConnection block
