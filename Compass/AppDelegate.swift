@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var indoorCoords: String?
     private var manager: ESTIndoorLocationManager!
     
+    var didJustStartApplication = true
     var didUpdateIndoorLocation = false
     var updateIndoorLocationTimer: NSTimer?
     var notIndoorLocationTimer: NSTimer?
@@ -111,7 +112,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // put 0 in LocGPS accuracy flag
         MBSwiftPostman().getFlagDisableForLocGPS()
     }
-    
         
     // MARK: ESTIndoorLocationManager delegate
     
@@ -139,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func indoorLocationManager(manager: ESTIndoorLocationManager!, didFailToUpdatePositionWithError error: NSError!) {
         
-        if self.didUpdateIndoorLocation {
+        if self.didUpdateIndoorLocation || self.didJustStartApplication {
             
             NSLog(error.localizedDescription)
             
@@ -150,6 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             self.notIndoorLocationTimer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "updateUserNotIndoorLocation", userInfo: nil, repeats: true)
             
             self.didUpdateIndoorLocation = false
+            self.didJustStartApplication = false
         }
     }
     
@@ -179,18 +180,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         var coords = self.indoorCoords
         
         // put 1 in LocBeacon accuracy flag
-        println("enabling indoor flag...")
         MBSwiftPostman().getFlagEnableForLocBeacon()
         
         // post content instance with updated indoor position
-        println("posting indoor location...\(coords!)")
         MBSwiftPostman().createLocBeaconContentInstance(coords!)
     }
     
     func updateUserNotIndoorLocation() {
         
         // put 0 in LocBeacon accuracy flag
-        println("disabling indoor flag...")
         MBSwiftPostman().getFlagDisableForLocBeacon()
     }
 }

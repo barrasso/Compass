@@ -337,6 +337,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="indoorLocationView" destination="hcQ-Ih-GWv" id="iMZ-5N-1qU"/>
+                        <outlet property="indoorSearchBar" destination="tA8-MS-I19" id="N9f-hK-6Zk"/>
                         <outlet property="positionLabel" destination="Nke-rH-8P7" id="jG5-N7-0ha"/>
                         <outlet property="showTraceSwitch" destination="uaP-X4-0Vp" id="Lca-on-zVl"/>
                     </connections>

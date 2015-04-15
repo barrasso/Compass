@@ -8,8 +8,9 @@
 
 import UIKit
 
-class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate {
+class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLocationManagerDelegate {
     
+    @IBOutlet var indoorSearchBar: UISearchBar!
     @IBOutlet var indoorLocationView: ESTIndoorLocationView!
     @IBOutlet var showTraceSwitch: UISwitch!
     @IBOutlet var positionLabel: UILabel!
@@ -43,6 +44,7 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
         // disable rotation
         self.indoorLocationView.rotateOnPositionUpdate = false
         
+        // dummy marker
         let flagView = UIImageView(image: UIImage(named: "user_marker.png"))
         self.indoorLocationView.drawObject(flagView, withPosition: ESTPoint(x: 1.0, y: 1.0))
     }
@@ -89,6 +91,85 @@ class LocationViewController: UIViewController, ESTIndoorLocationManagerDelegate
     func indoorLocationManager(manager: ESTIndoorLocationManager!, didFailToUpdatePositionWithError error: NSError!) {
         
         self.positionLabel.text = "It seems that you are outside the location."
-        //NSLog(error.localizedDescription)
     }
+    
+    // MARK: Search Bar Delegate
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        //
+    }
+    
+    // MARK: Beacon Query Functions
+//    
+//    func extractLatestLocBeaconContent() {
+//        let httpMethod = "GET"
+//        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+self.queriedUserUUID+"/LocGPS/latest?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
+//        let url = NSURL(string: urlAsString)
+//        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+//        
+//        // config request with timeout
+//        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+//        urlRequest.HTTPMethod = httpMethod
+//        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+//        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+//        
+//        let queue = NSOperationQueue()
+//        
+//        // create connection on new thread
+//        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+//            if error != nil {
+//                println("Error: \(error)")
+//                println("Response: \(response)")
+//                
+//            } else {
+//                
+//                // deserialize json object
+//                let json = JSON(data: data)
+//                println("Got latest LocGPS content.")
+//                println("\n-------------------------------\n")
+//                
+//                // extract gps location content
+//                for obj in json["output"]["ResourceOutput"][0]["Attributes"][7] {
+//                    
+//                    // check for coords
+//                    var string: NSString = obj.1.stringValue
+//                    if string != "content" {
+//                        println("Found coords: \(string)!")
+//                        
+//                        // convert string to map id, x and y
+//                        var splitString = string.componentsSeparatedByString(",")
+//                        var mapid = splitString[0] as! NSString
+//                        var x = (splitString[1] as! NSString).doubleValue
+//                        var y = (splitString[2] as! NSString).doubleValue
+//                        
+//                        // go to indoor map marker
+//                        
+//                        
+//                        self.isMappingQueriedUser = true
+//                        
+//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                            // stop animation and end ignoring events
+//                            self.activityIndicator.stopAnimating()
+//                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+//                        })
+//                        
+//                    } else {
+//                        println("Did not find coords.")
+//                    }
+//                }
+//                println("\n-------------------------------\n")
+//                
+//                if self.queriedUserBeaconCoordinates == "" {
+//                    self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s indoor location.")
+//                    
+//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                        // stop animation and end ignoring events
+//                        self.activityIndicator.stopAnimating()
+//                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+//                    })
+//                }
+//            }
+//        } // end NSURLConnection block
+//    }
 }

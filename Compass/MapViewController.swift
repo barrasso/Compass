@@ -10,32 +10,27 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate, ESTBeaconManagerDelegate {
+class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     
     @IBOutlet var findSearchBar: UISearchBar!
     
     var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
-    /* Beacon managaing */
-    let beaconManager : ESTBeaconManager = ESTBeaconManager()
-    var closestBeaconID = 0
-    
     /* Annotations */
-    let annotationTitles = ["PHO 111"]
+    let annotationTitles = ["PHO111"]
     let annotationCoordinates = [CLLocationCoordinate2DMake(42.349170, -71.106104)]
     var indoorAnnotations = []
     
     /* Searching */
-    var searchActive: Bool = false
     var isMappingQueriedUser: Bool = false
-    
     var updatingLocationTimer: NSTimer?
-    
+
+    var accuracyFlag = ""
     var queriedUser = ""
     var queriedUserUUID = ""
     var queriedUserAnnotation: MBUserLocGPSAnnotation?
-    var accuracyFlag = ""
     
+    var queriedUserBeaconCoordinates = ""
     var queriedUserGPSCoordinates = CLLocationCoordinate2DMake(0, 0)
     
     /* Map View */
@@ -51,14 +46,10 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 
         // set delegates
         mapView.delegate = self
-        beaconManager.delegate = self
         findSearchBar.delegate = self
         
         // add annotations
         self.addIndoorAnnotationsToMapView()
-        
-        // start ranging beacons
-        self.setupBeaconRegions()
 
         // subscribe to location updates
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatedLocation:", name: "newLocationNoti", object: nil)
@@ -172,20 +163,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     // MARK: Search Bar Delegate
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        searchActive = true
-    }
-    
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        searchActive = false
-    }
-    
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchActive = false
-    }
-    
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchActive = true
         self.findSearchBar.resignFirstResponder()
         
         var searchText = self.findSearchBar.text
@@ -240,36 +218,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     func updateQueriedUserLocation() {
         println("Getting \(self.queriedUser)'s location again...")
         self.getQueriedUserUUID(self.queriedUser)
-    }
-    
-    // MARK: Beacon Functions & Delegate
-    
-    func setupBeaconRegions() {
-        var beaconRegion : ESTBeaconRegion = ESTBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D"), identifier: "Estimotes")
-        beaconManager.startRangingBeaconsInRegion(beaconRegion)
-    }
-    
-    func beaconManager(manager: ESTBeaconManager!, didRangeBeacons beacons: [AnyObject]!, inRegion region: ESTBeaconRegion!) {
-        
-//        // filter out unknown beacons
-//        let knownBeacons = beacons.filter{ $0.proximity != CLProximity.Unknown }
-//        
-//        if (knownBeacons.count > 0) {
-//            let closestBeacon = knownBeacons[0] as ESTBeacon
-//            
-//            println("The closest beacon to me is ID: \(closestBeacon.minor.integerValue)!")
-//            self.view.backgroundColor = self.colors[closestBeacon.minor.integerValue]
-//            
-//            // check if the closest beacon ID has changed value
-//            if (self.closestBeaconID != closestBeacon.minor.integerValue) {
-//                println("Beacon ID Changed! It is now: \(closestBeacon.minor.integerValue)")
-//                
-//                // update tree with new beacon ID content instance
-//                MBSwiftPostman().createContentInstanceWith(String(self.closestBeaconID))
-//            }
-//            
-//            self.closestBeaconID = closestBeacon.minor.integerValue
-//        }
     }
     
     // MARK: Query Location Handling
@@ -409,12 +357,14 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         if locBeaconFlag == "1" {
             println("Getting beacon location...")
             
-            // get beacon indoor position
+            // get beacon indoor position and go to map marker
+            self.extractLatestLocBeaconContent()
             
         } else if locBeaconFlag == "0" && locCMXFlag == "1" {
             println("Getting CMX location...")
 
             // get cmx indoor position
+            
             
         } else if locBeaconFlag == "0" && locCMXFlag == "0" && locGPSFlag == "1" {
             println("Getting GPS location...")
@@ -436,7 +386,78 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     // MARK: Beacon Query Functions
     
-    
+    func extractLatestLocBeaconContent() {
+        let httpMethod = "GET"
+        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+self.queriedUserUUID+"/LocBeacon/latest?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
+        let url = NSURL(string: urlAsString)
+        let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        
+        // config request with timeout
+        let urlRequest = NSMutableURLRequest(URL: url!, cachePolicy: cachePolicy, timeoutInterval: 15.0)
+        urlRequest.HTTPMethod = httpMethod
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+        urlRequest.addValue("Basic YWRtaW46YWRtaW4=", forHTTPHeaderField: "Authorization")
+        
+        let queue = NSOperationQueue()
+        
+        // create connection on new thread
+        NSURLConnection.sendAsynchronousRequest(urlRequest, queue: queue) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            if error != nil {
+                println("Error: \(error)")
+                println("Response: \(response)")
+                
+            } else {
+                
+                // deserialize json object
+                let json = JSON(data: data)
+                println("Got latest LocBeacon content.")
+                println("\n-------------------------------\n")
+                
+                // extract gps location content
+                for obj in json["output"]["ResourceOutput"][0]["Attributes"][7] {
+                    
+                    // check for coords
+                    var string: NSString = obj.1.stringValue
+                    if string != "content" {
+                        println("Found indoor location: \(string)!")
+                        
+                        // split string into map id, x and y
+                        var splitString = string.componentsSeparatedByString(",")
+                        var mapid = splitString[0] as! NSString
+                        var x = splitString[1] as! NSString
+                        var y = splitString[2] as! NSString
+                        self.queriedUserBeaconCoordinates = "\(x)" + "," + "\(y)"
+                        self.isMappingQueriedUser = true
+                        
+                        // go to indoor map marker
+                        self.displayAlert("Found \(self.queriedUser)!", error: "Go to the \(mapid) indoor map.")
+                        self.updatingLocationTimer?.invalidate()
+                        
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            // stop animation and end ignoring events
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                        })
+                        
+                    } else {
+                        println("Did not find coords.")
+                    }
+                }
+                println("\n-------------------------------\n")
+                
+                if self.queriedUserBeaconCoordinates == "" {
+                    self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s indoor location.")
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        // stop animation and end ignoring events
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    })
+                }
+            }
+        } // end NSURLConnection block
+    }
     
     // MARK: CMX Query Functions
     
@@ -473,7 +494,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 
                 // extract gps location content
                 for obj in json["output"]["ResourceOutput"][0]["Attributes"][7] {
-                    println(obj.1)
                     
                     // check for coords
                     var string: NSString = obj.1.stringValue
