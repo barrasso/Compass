@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     /* Estimote IndoorLocation */
     var location: ESTLocation?
-    var indoorCoords: String?
+    var indoorCoords: String!
     private var manager: ESTIndoorLocationManager!
     
     var didJustStartApplication = true
@@ -121,17 +121,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             location.name,
             position.x,
             position.y) as String
-        println(yourPos)
+        
+        self.indoorCoords = String(format: "%@,%.2f,%.2f", location.name, position.x, position.y)
+        println(self.indoorCoords)
         
         if !self.didUpdateIndoorLocation {
-            
-            self.indoorCoords = String(format: "%@,%.2f,%.2f", location.name, position.x, position.y)
             
             // stop not indoor timer
             self.notIndoorLocationTimer?.invalidate()
             
             // init update timer
-            self.updateIndoorLocationTimer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "updateUserIndoorLocation", userInfo: nil, repeats: true)
+            self.updateIndoorLocationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateUserIndoorLocation", userInfo: nil, repeats: true)
             
             self.didUpdateIndoorLocation = true
         }
@@ -177,13 +177,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func updateUserIndoorLocation() {
         
-        var coords = self.indoorCoords
-        
         // put 1 in LocBeacon accuracy flag
         MBSwiftPostman().getFlagEnableForLocBeacon()
         
         // post content instance with updated indoor position
-        MBSwiftPostman().createLocBeaconContentInstance(coords!)
+        MBSwiftPostman().createLocBeaconContentInstance(self.indoorCoords)
     }
     
     func updateUserNotIndoorLocation() {

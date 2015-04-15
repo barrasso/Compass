@@ -305,6 +305,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                     var flag: String = obj.1.stringValue
                     if flag != "labels" {
                         println("Found flag: \(flag)")
+                        
                         self.accuracyFlag = flag
                         
                         // pass flag to accurate location decision method
@@ -472,6 +473,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                         var splitString = string.componentsSeparatedByString(",")
                         var lat = (splitString[0] as! NSString).doubleValue
                         var long = (splitString[1] as! NSString).doubleValue
+                        
+                        
+                        
                         self.queriedUserGPSCoordinates = CLLocationCoordinate2D(latitude: lat as CLLocationDegrees, longitude: long as CLLocationDegrees)
                         
                         // create new marker
