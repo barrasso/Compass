@@ -10,6 +10,8 @@ import UIKit
 
 class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLocationManagerDelegate {
     
+    let hostname = "155.41.48.159"
+    
     @IBOutlet var indoorSearchBar: UISearchBar!
     @IBOutlet var indoorLocationView: ESTIndoorLocationView!
     @IBOutlet var showTraceSwitch: UISwitch!
@@ -138,7 +140,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
             self.getQueriedUserUUID(searchText)
             
             // init update queried user location timer
-            self.updatingLocationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "updateQueriedUserLocation", userInfo: nil, repeats: true)
+            self.updatingLocationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateQueriedUserLocation", userInfo: nil, repeats: true)
         }
     }
     
@@ -152,7 +154,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
     func getQueriedUserUUID(userid: String) {
         
         let httpMethod = "GET"
-        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkUserAE/"+userid+"/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkUserAE/"+userid+"/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=2"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -215,7 +217,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
     func getQueriedUUIDAccuracyFlag(uuid: String) {
         
         let httpMethod = "GET"
-        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=3"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=3"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -305,7 +307,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
     
     func extractLatestLocBeaconContent() {
         let httpMethod = "GET"
-        let urlAsString = "http://52.10.62.166:8282/InCSE1/MarkLocationAE/Things/"+self.queriedUserUUID+"/LocBeacon/latest?from=http:52.10.62.166:10000&requestIdentifier=12345&resultContent=2"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+self.queriedUserUUID+"/LocBeacon/latest?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=2"
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
         
@@ -351,23 +353,17 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
                             self.queriedUserBeaconCoordinates = "\(x)" + "," + "\(y)"
                             self.isMappingQueriedUser = true
                             
-                            println("x: \(x), y:\(y)")
-//                            self.indoorLocationView.drawLocation(self.location)
                             // TODO: update or remove previously drawn object
-
+                            var realX = self.indoorLocationView.calculatePictureCoordinateForRealX(x.doubleValue)
+                            var realY = self.indoorLocationView.calculatePictureCoordinateForRealY(y.doubleValue)
+                            
+                            println("fake X: \(x), fake Y: \(y)")
+                            println("real X: \(realX), real Y: \(realY)")
                             
                             self.queriedUserView = UIImageView(image: UIImage(named: "marker_icon.png"))
                             self.indoorLocationView.drawObject(self.queriedUserView, withPosition: ESTPoint(x: x.doubleValue, y: y.doubleValue))
                             
-                           // self.indoorLocationView//.
-                            
-
-                            
                         })
-
-                        
-                        
-                        
                         
                     } else {
                         println("Did not find coords.")

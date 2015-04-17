@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func applicationWillTerminate(application: UIApplication) {
     }
 
-    // MARK: Location Manager Delegate Methods
+    // MARK: GPS Location Manager Delegate Methods
     
     func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
         if isExecutingInBackground {
@@ -99,18 +99,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         var long = newLocation.coordinate.longitude
         var coords = String(format: "%f,%f", lat,long)
         
-        // put 1 in LocGPS accuracy flag
-        MBSwiftPostman().getFlagEnableForLocGPS()
-        
-        // post content instance with updated GPS position
-        MBSwiftPostman().createLocGPSContentInstance(coords)
+        if PFUser.currentUser() != nil {
+            
+            // put 1 in LocGPS accuracy flag
+            MBSwiftPostman().getFlagEnableForLocGPS()
+            
+            // post content instance with updated GPS position
+            MBSwiftPostman().createLocGPSContentInstance(coords)
+        }
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         println("Location manager failed with error: \(error)")
         
-        // put 0 in LocGPS accuracy flag
-        MBSwiftPostman().getFlagDisableForLocGPS()
+        if PFUser.currentUser() != nil {
+            
+            // put 0 in LocGPS accuracy flag
+            MBSwiftPostman().getFlagDisableForLocGPS()
+        }
     }
         
     // MARK: ESTIndoorLocationManager delegate
@@ -125,32 +131,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         self.indoorCoords = String(format: "%@,%.2f,%.2f", location.name, position.x, position.y)
         println(self.indoorCoords)
         
-        if !self.didUpdateIndoorLocation {
-            
-            // stop not indoor timer
-            self.notIndoorLocationTimer?.invalidate()
-            
-            // init update timer
-            self.updateIndoorLocationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateUserIndoorLocation", userInfo: nil, repeats: true)
-            
-            self.didUpdateIndoorLocation = true
+        if PFUser.currentUser() != nil {
+        
+            if !self.didUpdateIndoorLocation {
+                
+                // stop not indoor timer
+                self.notIndoorLocationTimer?.invalidate()
+                
+                // init update timer
+                self.updateIndoorLocationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateUserIndoorLocation", userInfo: nil, repeats: true)
+                
+                self.didUpdateIndoorLocation = true
+            }
         }
     }
     
     func indoorLocationManager(manager: ESTIndoorLocationManager!, didFailToUpdatePositionWithError error: NSError!) {
         
-        if self.didUpdateIndoorLocation || self.didJustStartApplication {
+        if PFUser.currentUser() != nil {
             
-            NSLog(error.localizedDescription)
-            
-            // stop update indoor location timer
-            self.updateIndoorLocationTimer?.invalidate()
-            
-            // init not indoor location timer
-            self.notIndoorLocationTimer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "updateUserNotIndoorLocation", userInfo: nil, repeats: true)
-            
-            self.didUpdateIndoorLocation = false
-            self.didJustStartApplication = false
+            if self.didUpdateIndoorLocation || self.didJustStartApplication {
+                
+                NSLog(error.localizedDescription)
+                
+                // stop update indoor location timer
+                self.updateIndoorLocationTimer?.invalidate()
+                
+                // init not indoor location timer
+                self.notIndoorLocationTimer = NSTimer.scheduledTimerWithTimeInterval(3.0, target: self, selector: "updateUserNotIndoorLocation", userInfo: nil, repeats: true)
+                
+                self.didUpdateIndoorLocation = false
+                self.didJustStartApplication = false
+            }
         }
     }
     
