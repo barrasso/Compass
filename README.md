@@ -103,3 +103,9 @@ An `AccuracyFlag` container is created with it's `labels` attribute set to a 3-b
   * The latest content instance in `LocBeacon` is retrieved and passed to a displaying function for the indoor map view
   * This process is continuously repeated to monitor the queried device's position . . .
 
+
+### Data Flow Diagram
+![alt tag](http://i.imgur.com/g7RbQkD.png)
+*Note: When another iPhone queries for a user's position, it also acts similarly to the NodeJS server with GET calls*
+
+*See the `getMostAccurateLocation:` function in `MapViewController` and `LocationViewController`*
