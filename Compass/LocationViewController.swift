@@ -195,10 +195,13 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
                         var getUUID = string.lastPathComponent
                         var uuid = getUUID.stringByReplacingOccurrencesOfString("]", withString: "", options: .LiteralSearch, range: nil)
                         println("Found user UUID: \(uuid)")
-                        self.queriedUserUUID = uuid
                         
-                        // find flag for uuid
-                        self.getQueriedUUIDAccuracyFlag(uuid)
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.queriedUserUUID = uuid
+                        
+                            // find flag for uuid
+                            self.getQueriedUUIDAccuracyFlag(uuid)
+                        })
                         
                     } else {
                         println("Did not find user.")
@@ -252,10 +255,13 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
                     var flag: String = obj.1.stringValue
                     if flag != "labels" {
                         println("Found flag: \(flag)")
-                        self.accuracyFlag = flag
                         
-                        // pass flag to accurate location decision method
-                        self.getMostAccurateLocation(self.accuracyFlag)
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.accuracyFlag = flag
+                        
+                            // pass flag to accurate location decision method
+                            self.getMostAccurateLocation(self.accuracyFlag)
+                        })
                         
                     } else {
                         println("Did not find flag.")

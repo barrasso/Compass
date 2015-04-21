@@ -201,6 +201,16 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     func updateQueriedUserLocation() {
         println("Getting \(self.queriedUser)'s location again...")
+        
+        // clear queried user marker if any
+        let annotationsToRemove = self.mapView.annotations.filter({$0 as? MKUserLocation != self.mapView.userLocation})
+        self.mapView.removeAnnotations(annotationsToRemove)
+        self.isMappingQueriedUser = false
+            
+        // readd indoor map markers
+        self.addIndoorAnnotationsToMapView()
+        
+        // continue searcg
         self.getQueriedUserUUID(self.queriedUser)
     }
     
@@ -236,35 +246,39 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 println("Got \(userid) container under UserAE.")
                 println("\n-------------------------------\n")
                 
-                // extract UserAE container list
-                for obj in json["output"]["ResourceOutput"][0]["Attributes"][0] {
-                    println(obj.1)
-                    
-                    // check for queried user id
-                    var string: String = obj.1.stringValue
-                    if string.rangeOfString(userid, options: nil, range: Range(start: string.startIndex, end: string.endIndex), locale: nil) != nil {
-                        println("Found user: \(userid)")
-                        self.queriedUser = userid
-                        
-                        // extract uuid
-                        var getUUID = string.lastPathComponent
-                        var uuid = getUUID.stringByReplacingOccurrencesOfString("]", withString: "", options: .LiteralSearch, range: nil)
-                        println("Found user UUID: \(uuid)")
-                        self.queriedUserUUID = uuid
-                        
-                        // find flag for uuid
-                        self.getQueriedUUIDAccuracyFlag(uuid)
-                        
-                    } else {
-                        println("Did not find user.")
-                    }
-                }
-                println("\n-------------------------------\n")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 
-                if self.queriedUser == "" {
-                    self.displayAlert("Oh no!", error: "Did not find username \(userid)")
-                    
-                }
+                    // extract UserAE container list
+                    for obj in json["output"]["ResourceOutput"][0]["Attributes"][0] {
+                        println(obj.1)
+                            
+                        // check for queried user id
+                        var string: String = obj.1.stringValue
+                        if string.rangeOfString(userid, options: nil, range: Range(start: string.startIndex, end: string.endIndex), locale: nil) != nil {
+                            println("Found user: \(userid)")
+                            self.queriedUser = userid
+                            
+                            // extract uuid
+                            var getUUID = string.lastPathComponent
+                            var uuid = getUUID.stringByReplacingOccurrencesOfString("]", withString: "", options: .LiteralSearch, range: nil)
+                            println("Found user UUID: \(uuid)")
+                            self.queriedUserUUID = uuid
+                            
+                            // find flag for uuid
+                            self.getQueriedUUIDAccuracyFlag(uuid)
+                            
+                        } else {
+                            println("Did not find user.")
+                        }
+                    }
+                })
+
+                println("\n-------------------------------\n")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if self.queriedUser == "" {
+                        self.displayAlert("Oh no!", error: "Did not find username \(userid)")
+                    }
+                })
             }
         } // end NSURLConnection block
     }
@@ -299,24 +313,28 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 println("Got AccuracyFlag Container for \(uuid)")
                 println("\n-------------------------------\n")
                 
-                // extract UserAE container list
-                for obj in json["output"]["ResourceOutput"][0]["Attributes"][3] {
-                    println(obj.1)
-                    
-                    // check for accuracy flag
-                    var flag: String = obj.1.stringValue
-                    if flag != "labels" {
-                        println("Found flag: \(flag)")
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
+                    // extract UserAE container list
+                    for obj in json["output"]["ResourceOutput"][0]["Attributes"][3] {
+                        println(obj.1)
                         
-                        self.accuracyFlag = flag
-                        
-                        // pass flag to accurate location decision method
-                        self.getMostAccurateLocation(self.accuracyFlag)
-                        
-                    } else {
-                        println("Did not find flag.")
+                        // check for accuracy flag
+                        var flag: String = obj.1.stringValue
+                        if flag != "labels" {
+                            println("Found flag: \(flag)")
+                            
+                            self.accuracyFlag = flag
+                            
+                            // pass flag to accurate location decision method
+                            self.getMostAccurateLocation(self.accuracyFlag)
+                            
+                        } else {
+                            println("Did not find flag.")
+                        }
                     }
-                }
+                })
                 println("\n-------------------------------\n")
             }
         } // end NSURLConnection block
@@ -389,39 +407,42 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 println("Got latest LocBeacon content.")
                 println("\n-------------------------------\n")
                 
-                // extract gps location content
-                for obj in json["output"]["ResourceOutput"][0]["Attributes"][7] {
-                    
-                    // check for coords
-                    var string: NSString = obj.1.stringValue
-                    if string != "content" {
-                        println("Found indoor location: \(string)!")
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
+                    // extract gps location content
+                    for obj in json["output"]["ResourceOutput"][0]["Attributes"][7] {
                         
-                        // split string into map id, x and y
-                        var splitString = string.componentsSeparatedByString(",")
-                        var mapid = splitString[0] as! NSString
-                        var x = splitString[1] as! NSString
-                        var y = splitString[2] as! NSString
-                        self.queriedUserBeaconCoordinates = "\(x)" + "," + "\(y)"
-                        self.isMappingQueriedUser = true
-                        
-                        // go to indoor map marker
-                        self.updatingLocationTimer?.invalidate()
-                        
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.performSegueWithIdentifier("showIndoorMapView", sender: self)
-                        })
-                        
-                    } else {
-                        println("Did not find coords.")
+                        // check for coords
+                        var string: NSString = obj.1.stringValue
+                        if string != "content" {
+                            println("Found indoor location: \(string)!")
+                            
+                            // split string into map id, x and y
+                            var splitString = string.componentsSeparatedByString(",")
+                            var mapid = splitString[0] as! NSString
+                            var x = splitString[1] as! NSString
+                            var y = splitString[2] as! NSString
+                            self.queriedUserBeaconCoordinates = "\(x)" + "," + "\(y)"
+                            self.isMappingQueriedUser = true
+                            
+                            // go to indoor map marker
+                            self.updatingLocationTimer?.invalidate()
+                            
+                                self.performSegueWithIdentifier("showIndoorMapView", sender: self)
+                            
+                        } else {
+                            println("Did not find coords.")
+                        }
                     }
-                }
+                })
                 println("\n-------------------------------\n")
                 
-                if self.queriedUserBeaconCoordinates == "" {
-                    self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s indoor location.")
-
-                }
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if self.queriedUserBeaconCoordinates == "" {
+                        self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s indoor location.")
+                    }
+                })
             }
         } // end NSURLConnection block
     }
@@ -463,38 +484,42 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 println("Got latest LocGPS content.")
                 println("\n-------------------------------\n")
                 
-                // extract gps location content
-                for obj in json["output"]["ResourceOutput"][0]["Attributes"][7] {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
-                    // check for coords
-                    var string: NSString = obj.1.stringValue
-                    if string != "content" {
-                        println("Found coords: \(string)!")
+                    // extract gps location content
+                    for obj in json["output"]["ResourceOutput"][0]["Attributes"][7] {
                         
-                        // convert string to CLLocationCoordinates
-                        var splitString = string.componentsSeparatedByString(",")
-                        var lat = (splitString[0] as! NSString).doubleValue
-                        var long = (splitString[1] as! NSString).doubleValue
-                        
-                        self.queriedUserGPSCoordinates = CLLocationCoordinate2D(latitude: lat as CLLocationDegrees, longitude: long as CLLocationDegrees)
-                        
-                        // create new marker
-                        var newAnnotation = MBUserLocGPSAnnotation(coordinate: self.queriedUserGPSCoordinates, title: self.queriedUser)
-                        self.queriedUserAnnotation = newAnnotation
-                        self.mapView.addAnnotation(newAnnotation)
-                        self.isMappingQueriedUser = true
-                        
-                        
-                    } else {
-                        println("Did not find coords.")
+                        // check for coords
+                        var string: NSString = obj.1.stringValue
+                        if string != "content" {
+                            println("Found coords: \(string)!")
+                            
+                            // convert string to CLLocationCoordinates
+                            var splitString = string.componentsSeparatedByString(",")
+                            var lat = (splitString[0] as! NSString).doubleValue
+                            var long = (splitString[1] as! NSString).doubleValue
+                            
+                            self.queriedUserGPSCoordinates = CLLocationCoordinate2D(latitude: lat as CLLocationDegrees, longitude: long as CLLocationDegrees)
+                            
+                            // create new marker
+                            var newAnnotation = MBUserLocGPSAnnotation(coordinate: self.queriedUserGPSCoordinates, title: self.queriedUser)
+                            self.queriedUserAnnotation = newAnnotation
+                            self.mapView.addAnnotation(newAnnotation)
+                            self.isMappingQueriedUser = true
+                            
+                            
+                        } else {
+                            println("Did not find coords.")
+                        }
                     }
-                }
+                })
                 println("\n-------------------------------\n")
                 
-                if self.queriedUserGPSCoordinates.longitude == 0  && self.queriedUserGPSCoordinates.latitude == 0 {
-                    self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s GPS location.")
-
-                }
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if self.queriedUserGPSCoordinates.longitude == 0  && self.queriedUserGPSCoordinates.latitude == 0 {
+                        self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s GPS location.")
+                    }
+                })
             }
         } // end NSURLConnection block
     }
