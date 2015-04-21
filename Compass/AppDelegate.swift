@@ -129,7 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             position.y) as String
         
         self.indoorCoords = String(format: "%@,%.2f,%.2f", location.name, position.x, position.y)
-        println(self.indoorCoords)
+        //println(self.indoorCoords)
         
         if PFUser.currentUser() != nil {
         

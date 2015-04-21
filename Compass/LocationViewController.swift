@@ -359,16 +359,23 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
                             self.queriedUserBeaconCoordinates = "\(x)" + "," + "\(y)"
                             self.isMappingQueriedUser = true
                             
-                            // TODO: update or remove previously drawn object
-                            var realX = self.indoorLocationView.calculatePictureCoordinateForRealX(x.doubleValue)
-                            var realY = self.indoorLocationView.calculatePictureCoordinateForRealY(y.doubleValue)
+                            // convert indoor coords to view coords
+                            var viewX = self.indoorLocationView.calculatePictureCoordinateForRealX(x.doubleValue)
+                            var viewY = self.indoorLocationView.calculatePictureCoordinateForRealY(y.doubleValue)
                             
-                            println("fake X: \(x), fake Y: \(y)")
-                            println("real X: \(realX), real Y: \(realY)")
+                            // clear and add new marker for user's indoor position
+                            self.queriedUserView = UIImageView(frame: CGRectMake(viewX, viewX, 48.0, 64.0))
+                            var userImage = UIImage(named: "marker_icon.png")
+                            self.queriedUserView?.image = userImage
+                            self.queriedUserView?.tag = 8
+                            self.indoorLocationView.viewWithTag(8)?.removeFromSuperview()
+                            self.indoorLocationView.addSubview(self.queriedUserView!)
                             
-                            self.queriedUserView = UIImageView(image: UIImage(named: "marker_icon.png"))
-                            self.indoorLocationView.drawObject(self.queriedUserView, withPosition: ESTPoint(x: x.doubleValue, y: y.doubleValue))
+//                            println("indoor X: \(x), indoor Y: \(y)")
+//                            println("view X: \(viewX), view Y: \(viewY)")
                             
+//                            self.queriedUserView = UIImageView(image: UIImage(named: "marker_icon.png"))
+//                            self.indoorLocationView.drawObject(self.queriedUserView, withPosition: ESTPoint(x: x.doubleValue, y: y.doubleValue))
                         })
                         
                     } else {
@@ -377,10 +384,12 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
                 }
                 println("\n-------------------------------\n")
                 
-                if self.queriedUserBeaconCoordinates == "" {
-                    self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s indoor location.")
-                    
-                }
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    if self.queriedUserBeaconCoordinates == "" {
+                        self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s indoor location.")
+                        
+                    }
+                })
             }
         } // end NSURLConnection block
     }
