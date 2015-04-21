@@ -10,7 +10,7 @@ import Foundation
 
 class MBSwiftPostman {
     
-    let hostname = "155.41.48.159"
+    let hostname = "155.41.48.194"
     //let fromHostname = "other"
     
     // MARK: New User POST Functions
@@ -377,7 +377,7 @@ class MBSwiftPostman {
         
         let httpMethod = "GET"
         let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=3"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -432,7 +432,7 @@ class MBSwiftPostman {
         // set input method
         let httpMethod = "PUT"
         let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=3"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         /* use this json payload to update flag label */
         var params: [NSString : AnyObject] =
@@ -484,7 +484,7 @@ class MBSwiftPostman {
         
         let httpMethod = "GET"
         let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=3"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -539,7 +539,7 @@ class MBSwiftPostman {
         // set input method
         let httpMethod = "PUT"
         let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=3"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         /* use this json payload to update flag label */
         var params: [NSString : AnyObject] =
@@ -584,7 +584,7 @@ class MBSwiftPostman {
     func getFlagDisableForLocGPS() {
         let httpMethod = "GET"
         let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=3"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -638,7 +638,7 @@ class MBSwiftPostman {
         // set input method
         let httpMethod = "PUT"
         let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=3"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         /* use this json payload to update flag label */
         var params: [NSString : AnyObject] =
@@ -690,7 +690,7 @@ class MBSwiftPostman {
         
         let httpMethod = "GET"
         let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=3"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -744,7 +744,7 @@ class MBSwiftPostman {
         // set input method
         let httpMethod = "PUT"
         let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=3"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         /* use this json payload to update flag label */
         var params: [NSString : AnyObject] =
@@ -791,7 +791,7 @@ class MBSwiftPostman {
         // set input method
         let httpMethod = "POST"
         let uuid = UIDevice.currentDevice().identifierForVendor.UUIDString
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/LocGPS/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=3"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/LocGPS/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         /* use this json payload to create content instances */
         var params: [NSString : AnyObject] =
