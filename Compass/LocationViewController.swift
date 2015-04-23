@@ -10,7 +10,7 @@ import UIKit
 
 class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLocationManagerDelegate {
     
-    let hostname = "155.41.48.194"
+    let hostname = "155.41.26.22"
     
     @IBOutlet var indoorSearchBar: UISearchBar!
     @IBOutlet var indoorLocationView: ESTIndoorLocationView!
@@ -154,7 +154,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
     func getQueriedUserUUID(userid: String) {
         
         let httpMethod = "GET"
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkUserAE/"+userid+"/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=6"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/UserAE/"+userid+"/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=6"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -220,7 +220,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
     func getQueriedUUIDAccuracyFlag(uuid: String) {
         
         let httpMethod = "GET"
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/LocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -313,7 +313,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
     
     func extractLatestLocBeaconContent() {
         let httpMethod = "GET"
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+self.queriedUserUUID+"/LocBeacon/latest?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=6"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/LocationAE/Things/"+self.queriedUserUUID+"/LocBeacon/latest?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=6"
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
         
@@ -365,17 +365,11 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
                             
                             // clear and add new marker for user's indoor position
                             self.queriedUserView = UIImageView(frame: CGRectMake(viewX, viewX, 48.0, 64.0))
-                            var userImage = UIImage(named: "marker_icon.png")
+                            var userImage = UIImage(named: "compass_icon.png")
                             self.queriedUserView?.image = userImage
                             self.queriedUserView?.tag = 8
                             self.indoorLocationView.viewWithTag(8)?.removeFromSuperview()
                             self.indoorLocationView.addSubview(self.queriedUserView!)
-                            
-//                            println("indoor X: \(x), indoor Y: \(y)")
-//                            println("view X: \(viewX), view Y: \(viewY)")
-                            
-//                            self.queriedUserView = UIImageView(image: UIImage(named: "marker_icon.png"))
-//                            self.indoorLocationView.drawObject(self.queriedUserView, withPosition: ESTPoint(x: x.doubleValue, y: y.doubleValue))
                         })
                         
                     } else {
@@ -387,7 +381,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     if self.queriedUserBeaconCoordinates == "" {
                         self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s indoor location.")
-                        
                     }
                 })
             }

@@ -14,7 +14,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     @IBOutlet var findSearchBar: UISearchBar!
     
-    let hostname = "155.41.48.194"
+    let hostname = "155.41.26.22"
     
     /* Annotations */
     let annotationTitles = ["PHO111"]
@@ -219,7 +219,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     func getQueriedUserUUID(userid: String) {
         
         let httpMethod = "GET"
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkUserAE/"+userid+"/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=6"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/UserAE/"+userid+"/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=6"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -286,7 +286,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     func getQueriedUUIDAccuracyFlag(uuid: String) {
         
         let httpMethod = "GET"
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/LocationAE/Things/"+uuid+"/AccuracyFlag/?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=5"
         
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
@@ -381,7 +381,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     func extractLatestLocBeaconContent() {
         let httpMethod = "GET"
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+self.queriedUserUUID+"/LocBeacon/latest?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=6"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/LocationAE/Things/"+self.queriedUserUUID+"/LocBeacon/latest?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=6"
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
         
@@ -458,7 +458,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     func extractLatestLocGPSContent() {
         
         let httpMethod = "GET"
-        let urlAsString = "http://"+hostname+":8282/InCSE1/MarkLocationAE/Things/"+self.queriedUserUUID+"/LocGPS/latest?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=6"
+        let urlAsString = "http://"+hostname+":8282/InCSE1/LocationAE/Things/"+self.queriedUserUUID+"/LocGPS/latest?from=http:"+hostname+":10000&requestIdentifier=12345&resultContent=6"
         let url = NSURL(string: urlAsString)
         let cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
         
