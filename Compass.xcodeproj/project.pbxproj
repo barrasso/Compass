@@ -70,6 +70,7 @@
 		043C8AB61AC5E1A80056EDC9 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 043C8AB51AC5E1A80056EDC9 /* MediaPlayer.framework */; };
 		043C8AB81AC5E1AE0056EDC9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 043C8AB71AC5E1AE0056EDC9 /* MessageUI.framework */; };
 		04441CC31AE95E5E008ED3DE /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04441CC21AE95E5E008ED3DE /* Media.xcassets */; };
+		04441CD91AF67DBF008ED3DE /* MBReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04441CD81AF67DBF008ED3DE /* MBReachability.swift */; };
 		0448E4341ACC7709005B3ADC /* marker_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448E4331ACC7709005B3ADC /* marker_icon.png */; };
 		0448E4381ACC79A3005B3ADC /* user_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 0448E4371ACC79A3005B3ADC /* user_marker.png */; };
 		044F1B231AD720440085B2F6 /* MBUserLocGPSAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F1B221AD720440085B2F6 /* MBUserLocGPSAnnotation.swift */; };
@@ -178,6 +179,7 @@
 		043C8AB51AC5E1A80056EDC9 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		043C8AB71AC5E1AE0056EDC9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		04441CC21AE95E5E008ED3DE /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		04441CD81AF67DBF008ED3DE /* MBReachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBReachability.swift; sourceTree = "<group>"; };
 		0448E4331ACC7709005B3ADC /* marker_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marker_icon.png; sourceTree = "<group>"; };
 		0448E4371ACC79A3005B3ADC /* user_marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_marker.png; sourceTree = "<group>"; };
 		044F1B221AD720440085B2F6 /* MBUserLocGPSAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBUserLocGPSAnnotation.swift; sourceTree = "<group>"; };
@@ -523,6 +525,7 @@
 			children = (
 				047D3DE91AD9C738003B54EE /* SwiftyJSON.swift */,
 				04A4FCEF1AA64B4D00403042 /* MBAnnotation.swift */,
+				04441CD81AF67DBF008ED3DE /* MBReachability.swift */,
 				04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */,
 				044F1B221AD720440085B2F6 /* MBUserLocGPSAnnotation.swift */,
 			);
@@ -682,6 +685,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04441CD91AF67DBF008ED3DE /* MBReachability.swift in Sources */,
 				04F0E3C01ACB0A6800018155 /* LocationViewController.swift in Sources */,
 				04FC363B1ACB79B2008E592E /* MBNavigationViewController.swift in Sources */,
 				042B4B001A9A56FA007F361F /* LoginViewController.swift in Sources */,

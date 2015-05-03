@@ -10,7 +10,7 @@ import UIKit
 
 class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLocationManagerDelegate {
     
-    let hostname = "155.41.26.22"
+    let hostname = "52.10.62.166"
     
     @IBOutlet var indoorSearchBar: UISearchBar!
     @IBOutlet var indoorLocationView: ESTIndoorLocationView!
@@ -60,6 +60,11 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
         
         // disable rotation
         self.indoorLocationView.rotateOnPositionUpdate = false
+        
+        // check for network connection
+        if !MBReachability.isConnectedToNetwork() {
+            self.displayAlert("Error", error: "You are not connected to a network.")
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -77,10 +82,6 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
         
         self.location = indoorLocation
         self.title = indoorLocation.name
-    }
-    
-    func drawQueriedUserIndoorLocation() {
-        
     }
     
     // MARK: UISwitch events
@@ -120,7 +121,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
         
         if ((searchText == "") || (trimmedSearchText == "")) {
             self.displayAlert("Error", error: "Please enter a valid username.")
-        } else {
+        } else if MBReachability.isConnectedToNetwork() {
             
             // clear queried user marker if any
             if isMappingQueriedUser {
@@ -141,6 +142,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
             
             // init update queried user location timer
             self.updatingLocationTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateQueriedUserLocation", userInfo: nil, repeats: true)
+        } else {
+            self.displayAlert("Error", error: "Check your network connection.")
         }
     }
     
@@ -212,6 +215,8 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
                 if self.queriedUser == "" {
                     self.displayAlert("Oh no!", error: "Did not find username \(userid)")
                     
+                    // stop updating user location timer
+                    self.updatingLocationTimer?.invalidate()
                 }
             }
         } // end NSURLConnection block
@@ -299,12 +304,15 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
         } else if locBeaconFlag == "0" && locCMXFlag == "0" && locGPSFlag == "1" {
             println("Getting GPS location...")
             
-            // get GPS location
+            // go back to outdoor map view
+            self.navigationController?.popViewControllerAnimated(true)
             
         } else {
             
             self.displayAlert("Oh no!", error: "Could not find any location for \(self.queriedUser)")
             
+            // stop updating user location timer
+            self.updatingLocationTimer?.invalidate()
         }
     }
     
@@ -364,7 +372,7 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
                             var viewY = self.indoorLocationView.calculatePictureCoordinateForRealY(y.doubleValue)
                             
                             // clear and add new marker for user's indoor position
-                            self.queriedUserView = UIImageView(frame: CGRectMake(viewX, viewX, 48.0, 64.0))
+                            self.queriedUserView = UIImageView(frame: CGRectMake(viewX, viewX, 24.0, 32.0))
                             var userImage = UIImage(named: "compass_icon.png")
                             self.queriedUserView?.image = userImage
                             self.queriedUserView?.tag = 8
@@ -381,6 +389,9 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     if self.queriedUserBeaconCoordinates == "" {
                         self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s indoor location.")
+                        
+                        // stop updating user location timer
+                        self.updatingLocationTimer?.invalidate()
                     }
                 })
             }

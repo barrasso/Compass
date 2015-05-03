@@ -80,6 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
 
     func applicationWillTerminate(application: UIApplication) {
+        MBSwiftPostman().getFlagDisableForLocBeacon()
+        MBSwiftPostman().getFlagDisableForLocGPS()
     }
 
     // MARK: GPS Location Manager Delegate Methods
@@ -99,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         var long = newLocation.coordinate.longitude
         var coords = String(format: "%f,%f", lat,long)
         
-        if PFUser.currentUser() != nil {
+        if PFUser.currentUser() != nil && MBReachability.isConnectedToNetwork() {
             
             // put 1 in LocGPS accuracy flag
             MBSwiftPostman().getFlagEnableForLocGPS()
@@ -112,7 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         println("Location manager failed with error: \(error)")
         
-        if PFUser.currentUser() != nil {
+        if PFUser.currentUser() != nil && MBReachability.isConnectedToNetwork() {
             
             // put 0 in LocGPS accuracy flag
             MBSwiftPostman().getFlagDisableForLocGPS()
@@ -129,9 +131,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             position.y) as String
         
         self.indoorCoords = String(format: "%@,%.2f,%.2f", location.name, position.x, position.y)
-        //println(self.indoorCoords)
+        println(self.indoorCoords)
         
-        if PFUser.currentUser() != nil {
+        if PFUser.currentUser() != nil && MBReachability.isConnectedToNetwork() {
         
             if !self.didUpdateIndoorLocation {
                 
@@ -148,7 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func indoorLocationManager(manager: ESTIndoorLocationManager!, didFailToUpdatePositionWithError error: NSError!) {
         
-        if PFUser.currentUser() != nil {
+        if PFUser.currentUser() != nil && MBReachability.isConnectedToNetwork() {
             
             if self.didUpdateIndoorLocation || self.didJustStartApplication {
                 

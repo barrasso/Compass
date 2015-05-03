@@ -14,7 +14,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     @IBOutlet var findSearchBar: UISearchBar!
     
-    let hostname = "155.41.26.22"
+    let hostname = "52.10.62.166"
     
     /* Annotations */
     let annotationTitles = ["PHO111"]
@@ -34,6 +34,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     var queriedUserGPSCoordinates = CLLocationCoordinate2DMake(0, 0)
     
     /* Map View */
+    var didLoadMapView = false
     @IBOutlet var mapView: MKMapView!
     
     required init(coder aDecoder: NSCoder) {
@@ -51,8 +52,10 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         // add annotations
         self.addIndoorAnnotationsToMapView()
 
-        // subscribe to location updates
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatedLocation:", name: "newLocationNoti", object: nil)
+        // check for network connection
+        if !MBReachability.isConnectedToNetwork() {
+            self.displayAlert("Error", error: "You are not connected to a network.")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -157,8 +160,11 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         
-        // center map to user
-        self.setCenterOfMapToLocation(mapView.userLocation.location.coordinate)
+        if !didLoadMapView {
+            // center map to user
+            self.setCenterOfMapToLocation(mapView.userLocation.location.coordinate)
+            didLoadMapView = true
+        }
     }
     
     // MARK: Search Bar Delegate
@@ -171,7 +177,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         
         if ((searchText == "") || (trimmedSearchText == "")) {
             self.displayAlert("Error", error: "Please enter a valid username.")
-        } else {
+            
+        } else if MBReachability.isConnectedToNetwork() {
             
             // clear queried user marker if any
             if isMappingQueriedUser {
@@ -195,7 +202,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             self.getQueriedUserUUID(searchText)
             
             // init update queried user location timer
-            self.updatingLocationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "updateQueriedUserLocation", userInfo: nil, repeats: true)
+            self.updatingLocationTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: "updateQueriedUserLocation", userInfo: nil, repeats: true)
+        } else {
+            self.displayAlert("Error", error: "Check your network connection.")
         }
     }
     
@@ -210,7 +219,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         // readd indoor map markers
         self.addIndoorAnnotationsToMapView()
         
-        // continue searcg
+        // continue search
         self.getQueriedUserUUID(self.queriedUser)
     }
     
@@ -277,6 +286,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     if self.queriedUser == "" {
                         self.displayAlert("Oh no!", error: "Did not find username \(userid)")
+                        
+                        // stop updating user location timer
+                        self.updatingLocationTimer?.invalidate()
                     }
                 })
             }
@@ -373,7 +385,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         } else {
             
             self.displayAlert("Oh no!", error: "Could not find any location for \(self.queriedUser)")
-
+            
+            // stop updating user location timer
+            self.updatingLocationTimer?.invalidate()
         }
     }
     
@@ -441,6 +455,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     if self.queriedUserBeaconCoordinates == "" {
                         self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s indoor location.")
+                        
+                        // stop updating user location timer
+                        self.updatingLocationTimer?.invalidate()
                     }
                 })
             }
@@ -505,8 +522,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                             var newAnnotation = MBUserLocGPSAnnotation(coordinate: self.queriedUserGPSCoordinates, title: self.queriedUser)
                             self.queriedUserAnnotation = newAnnotation
                             self.mapView.addAnnotation(newAnnotation)
-                            self.isMappingQueriedUser = true
-                            
+                            self.isMappingQueriedUser = true                            
                             
                         } else {
                             println("Did not find coords.")
@@ -518,6 +534,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     if self.queriedUserGPSCoordinates.longitude == 0  && self.queriedUserGPSCoordinates.latitude == 0 {
                         self.displayAlert("Oh no!", error: "Error finding \(self.queriedUser)'s GPS location.")
+                        
+                        // stop updating user location timer
+                        self.updatingLocationTimer?.invalidate()
                     }
                 })
             }

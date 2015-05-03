@@ -10,12 +10,11 @@ import Foundation
 
 class MBSwiftPostman {
     
-    let hostname = "155.41.26.22"
+    let hostname = "52.10.62.166"
     //let fromHostname = "other"
     
     // MARK: New User POST Functions
     
-    // all new user functions nested
     func createNewUserContainer() {
         
         // set input method
