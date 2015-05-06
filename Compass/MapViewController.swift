@@ -209,18 +209,22 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     }
     
     func updateQueriedUserLocation() {
-        println("Getting \(self.queriedUser)'s location again...")
         
-        // clear queried user marker if any
-        let annotationsToRemove = self.mapView.annotations.filter({$0 as? MKUserLocation != self.mapView.userLocation})
-        self.mapView.removeAnnotations(annotationsToRemove)
-        self.isMappingQueriedUser = false
+        if MBReachability.isConnectedToNetwork() {
+        
+            println("Getting \(self.queriedUser)'s location again...")
             
-        // readd indoor map markers
-        self.addIndoorAnnotationsToMapView()
-        
-        // continue search
-        self.getQueriedUserUUID(self.queriedUser)
+            // clear queried user marker if any
+            let annotationsToRemove = self.mapView.annotations.filter({$0 as? MKUserLocation != self.mapView.userLocation})
+            self.mapView.removeAnnotations(annotationsToRemove)
+            self.isMappingQueriedUser = false
+                
+            // readd indoor map markers
+            self.addIndoorAnnotationsToMapView()
+            
+            // continue search
+            self.getQueriedUserUUID(self.queriedUser)
+        }
     }
     
     // MARK: Query Location Handling

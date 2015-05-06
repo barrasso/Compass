@@ -148,8 +148,11 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
     }
     
     func updateQueriedUserLocation() {
-        println("Getting \(self.queriedUser)'s location again...")
-        self.getQueriedUserUUID(self.queriedUser)
+        
+        if MBReachability.isConnectedToNetwork() {
+            println("Getting \(self.queriedUser)'s location again...")
+            self.getQueriedUserUUID(self.queriedUser)
+        }
     }
     
     // MARK: Query Location Handling
