@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // initialize parse sdk
         Parse.setApplicationId("RWNddnNuYwk6BfS87tsIlSXNPX1FIHOsDxYriBId",
             clientKey: "jZtdpdn7ydTL3izCvenqQchVGG5Ctv8ApaLzeq8E")
-        
+                
         // init indoor manager
         self.initIndoorLocationManaging()
         
@@ -80,8 +80,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
 
     func applicationWillTerminate(application: UIApplication) {
-        MBSwiftPostman().getFlagDisableForLocBeacon()
-        MBSwiftPostman().getFlagDisableForLocGPS()
+        if MBReachability.isConnectedToNetwork() {
+            MBSwiftPostman().getFlagDisableForLocBeacon()
+            MBSwiftPostman().getFlagDisableForLocGPS()
+        }
     }
 
     // MARK: GPS Location Manager Delegate Methods
@@ -191,17 +193,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func updateUserIndoorLocation() {
         
-        // put 1 in LocBeacon accuracy flag
-        MBSwiftPostman().getFlagEnableForLocBeacon()
-        
-        // post content instance with updated indoor position
-        MBSwiftPostman().createLocBeaconContentInstance(self.indoorCoords)
+        if MBReachability.isConnectedToNetwork() {
+            
+            // put 1 in LocBeacon accuracy flag
+            MBSwiftPostman().getFlagEnableForLocBeacon()
+            
+            // post content instance with updated indoor position
+            MBSwiftPostman().createLocBeaconContentInstance(self.indoorCoords)
+        }
     }
     
     func updateUserNotIndoorLocation() {
         
-        // put 0 in LocBeacon accuracy flag
-        MBSwiftPostman().getFlagDisableForLocBeacon()
+        if MBReachability.isConnectedToNetwork() {
+            
+            // put 0 in LocBeacon accuracy flag
+            MBSwiftPostman().getFlagDisableForLocBeacon()
+        }
     }
 }
 

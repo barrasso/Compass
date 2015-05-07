@@ -38,6 +38,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         arrowButton.alpha = 0
         self.makeUsernameBorder()
         self.makePasswordBorder()
+        
+        // keyboard notifications
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -255,6 +259,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         usernameTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
         return true
+    }
+    
+    func keyboardWillShow(noti: NSNotification) {
+        self.view.frame.origin.y -= 200
+    }
+    
+    func keyboardWillHide(noti: NSNotification) {
+        self.view.frame.origin.y += 200
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let len = count(textField.text) + count(string) - range.length
+        return len <= 12
     }
     
     // MARK: Alert Functions
