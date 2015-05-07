@@ -161,7 +161,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
         
         if !didLoadMapView {
-            // center map to user
+            // initially center map to user
             self.setCenterOfMapToLocation(mapView.userLocation.location.coordinate)
             didLoadMapView = true
         }
@@ -191,6 +191,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                 
                 // stop updating user location timer
                 self.updatingLocationTimer?.invalidate()
+                
+                // center map back to user location
+                self.setCenterOfMapToLocation(mapView.userLocation.location.coordinate)
             }
             
             // clear cached user query info
@@ -526,7 +529,10 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                             var newAnnotation = MBUserLocGPSAnnotation(coordinate: self.queriedUserGPSCoordinates, title: self.queriedUser)
                             self.queriedUserAnnotation = newAnnotation
                             self.mapView.addAnnotation(newAnnotation)
-                            self.isMappingQueriedUser = true                            
+                            self.isMappingQueriedUser = true
+                            
+                            // lock on to queried user
+                            self.setCenterOfMapToLocation(self.queriedUserGPSCoordinates)
                             
                         } else {
                             println("Did not find coords.")
