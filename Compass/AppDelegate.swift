@@ -105,11 +105,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         if PFUser.currentUser() != nil && MBReachability.isConnectedToNetwork() {
             
-            // put 1 in LocGPS accuracy flag
-            MBSwiftPostman().getFlagEnableForLocGPS()
-            
-            // post content instance with updated GPS position
-            MBSwiftPostman().createLocGPSContentInstance(coords)
+//            // put 1 in LocGPS accuracy flag
+//            MBSwiftPostman().getFlagEnableForLocGPS()
+//            
+//            // post content instance with updated GPS position
+//            MBSwiftPostman().createLocGPSContentInstance(coords)
         }
     }
     
@@ -119,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         if PFUser.currentUser() != nil && MBReachability.isConnectedToNetwork() {
             
             // put 0 in LocGPS accuracy flag
-            MBSwiftPostman().getFlagDisableForLocGPS()
+//            MBSwiftPostman().getFlagDisableForLocGPS()
         }
     }
         
@@ -195,11 +195,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         if MBReachability.isConnectedToNetwork() {
             
-            // put 1 in LocBeacon accuracy flag
-            MBSwiftPostman().getFlagEnableForLocBeacon()
-            
-            // post content instance with updated indoor position
-            MBSwiftPostman().createLocBeaconContentInstance(self.indoorCoords)
+//            // put 1 in LocBeacon accuracy flag
+//            MBSwiftPostman().getFlagEnableForLocBeacon()
+//            
+//            // post content instance with updated indoor position
+//            MBSwiftPostman().createLocBeaconContentInstance(self.indoorCoords)
         }
     }
     

@@ -95,7 +95,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VlR-hf-rqp">
                                 <rect key="frame" x="290" y="418" width="32" height="30"/>
                                 <fontDescription key="fontDescription" name="ElegantIcons" family="ElegantIcons" pointSize="39"/>
-                                <state key="normal" title="5">
+                                <state key="normal">
                                     <color key="titleColor" red="0.0039215686269999999" green="0.79215686269999996" blue="0.62745098040000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -126,7 +126,7 @@
                         <outlet property="passwordTextField" destination="dWx-rq-xZo" id="Uhj-Ji-fUK"/>
                         <outlet property="signupTriangle" destination="Ru7-FD-cDC" id="HKl-gq-f7s"/>
                         <outlet property="usernameTextField" destination="CJ5-Lo-vy4" id="rU2-VT-Bn3"/>
-                        <segue destination="8Ju-yy-SnL" kind="show" identifier="showMapView" id="4M7-DS-A82"/>
+                        <segue destination="xLK-HD-qs4" kind="show" identifier="showMapView" id="ocP-W7-KX4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JBO-Cm-kcF" sceneMemberID="firstResponder"/>
@@ -150,6 +150,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vrH-jc-npU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="962.5" y="371.5"/>
+        </scene>
+        <!--Reveal View Controller-->
+        <scene sceneID="RnY-fK-Bcy">
+            <objects>
+                <viewController id="xLK-HD-qs4" customClass="SWRevealViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xvp-EV-lNG"/>
+                        <viewControllerLayoutGuide type="bottom" id="qJE-ZT-lPd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jfR-cs-Cvk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="8b2-s2-A5g" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="xXh-Gc-sCw"/>
+                        <segue destination="8Ju-yy-SnL" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="7AG-0B-yvy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vKv-eu-WtO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="962.5" y="-428.5"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="kDb-8C-wUX">
+            <objects>
+                <tableViewController id="8b2-s2-A5g" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="h5r-dp-hXl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Pqe-n2-nXW">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pqe-n2-nXW" id="9VW-Rf-unu">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="8b2-s2-A5g" id="5bu-mI-rdL"/>
+                            <outlet property="delegate" destination="8b2-s2-A5g" id="GBn-Sw-lcg"/>
+                        </connections>
+                    </tableView>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QaI-yS-oXu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="962.5" y="-1212.5"/>
         </scene>
         <!--Map-->
         <scene sceneID="IQ7-RV-e9v">
@@ -184,9 +234,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="39A-fd-MYe">
-                        <barButtonItem key="leftBarButtonItem" image="740-gear-toolbar.png" id="Vdi-1V-vG0">
+                        <barButtonItem key="leftBarButtonItem" image="895-user-group-toolbar.png" id="Xvz-Ql-TzV"/>
+                        <barButtonItem key="rightBarButtonItem" image="740-gear-toolbar.png" id="dIn-z4-hyH">
                             <connections>
-                                <segue destination="dGp-nr-8bS" kind="show" id="lfN-vF-efY"/>
+                                <segue destination="dGp-nr-8bS" kind="show" id="2Fc-Ga-Q19"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -194,6 +245,7 @@
                     <connections>
                         <outlet property="findSearchBar" destination="GYV-zl-wE9" id="MfO-qV-KdS"/>
                         <outlet property="mapView" destination="TJi-iL-02y" id="uue-jv-y1c"/>
+                        <outlet property="usersButton" destination="Xvz-Ql-TzV" id="im0-xM-tXQ"/>
                         <segue destination="57X-N1-f8a" kind="show" identifier="showIndoorMapView" id="lFV-1F-p9i"/>
                     </connections>
                 </viewController>
@@ -349,6 +401,7 @@
     </scenes>
     <resources>
         <image name="740-gear-toolbar.png" width="22" height="22"/>
+        <image name="895-user-group-toolbar.png" width="22" height="16"/>
         <image name="compass_icon.png" width="48" height="64"/>
         <image name="triangle-select.png" width="500" height="500"/>
     </resources>

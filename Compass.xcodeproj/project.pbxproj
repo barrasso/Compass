@@ -89,6 +89,11 @@
 		04F0E3C51ACB0BFD00018155 /* location.json in Resources */ = {isa = PBXBuildFile; fileRef = 04F0E3C41ACB0BFD00018155 /* location.json */; };
 		04F0E3C71ACB0CC700018155 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F0E3C61ACB0CC700018155 /* CoreMotion.framework */; };
 		04F0E3C91ACB0CDD00018155 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04F0E3C81ACB0CDD00018155 /* Foundation.framework */; };
+		04F6070D1AFC17FF00E79EED /* 895-user-group-toolbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F6070A1AFC17FF00E79EED /* 895-user-group-toolbar.png */; };
+		04F6070E1AFC17FF00E79EED /* 895-user-group-toolbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F6070B1AFC17FF00E79EED /* 895-user-group-toolbar@2x.png */; };
+		04F6070F1AFC17FF00E79EED /* 895-user-group-toolbar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F6070C1AFC17FF00E79EED /* 895-user-group-toolbar@3x.png */; };
+		04F607191AFC1AFC00E79EED /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F607181AFC1AFC00E79EED /* SWRevealViewController.m */; };
+		04F6071B1AFC1BCC00E79EED /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F6071A1AFC1BCC00E79EED /* MenuTableViewController.swift */; };
 		04FC363B1ACB79B2008E592E /* MBNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FC363A1ACB79B2008E592E /* MBNavigationViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -223,6 +228,12 @@
 		04F0E3C41ACB0BFD00018155 /* location.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = location.json; path = ../location.json; sourceTree = "<group>"; };
 		04F0E3C61ACB0CC700018155 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		04F0E3C81ACB0CDD00018155 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		04F6070A1AFC17FF00E79EED /* 895-user-group-toolbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "895-user-group-toolbar.png"; sourceTree = "<group>"; };
+		04F6070B1AFC17FF00E79EED /* 895-user-group-toolbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "895-user-group-toolbar@2x.png"; sourceTree = "<group>"; };
+		04F6070C1AFC17FF00E79EED /* 895-user-group-toolbar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "895-user-group-toolbar@3x.png"; sourceTree = "<group>"; };
+		04F607171AFC1AFC00E79EED /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		04F607181AFC1AFC00E79EED /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		04F6071A1AFC1BCC00E79EED /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		04FC363A1ACB79B2008E592E /* MBNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBNavigationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -345,6 +356,9 @@
 				04B455731AD5827D00273A4A /* 740-gear-toolbar.png */,
 				04B455741AD5827D00273A4A /* 740-gear-toolbar@2x.png */,
 				04B455751AD5827D00273A4A /* 740-gear-toolbar@3x.png */,
+				04F6070A1AFC17FF00E79EED /* 895-user-group-toolbar.png */,
+				04F6070B1AFC17FF00E79EED /* 895-user-group-toolbar@2x.png */,
+				04F6070C1AFC17FF00E79EED /* 895-user-group-toolbar@3x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -516,6 +530,7 @@
 				042B4AFF1A9A56FA007F361F /* LoginViewController.swift */,
 				04B455791AD582C600273A4A /* SettingsViewController.swift */,
 				04F0E3BE1ACB0A6800018155 /* LocationViewController.swift */,
+				04F6071A1AFC1BCC00E79EED /* MenuTableViewController.swift */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -528,6 +543,8 @@
 				04441CD81AF67DBF008ED3DE /* MBReachability.swift */,
 				04A4FCD91AA1025000403042 /* MBSwiftPostman.swift */,
 				044F1B221AD720440085B2F6 /* MBUserLocGPSAnnotation.swift */,
+				04F607171AFC1AFC00E79EED /* SWRevealViewController.h */,
+				04F607181AFC1AFC00E79EED /* SWRevealViewController.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -646,6 +663,7 @@
 				043C8AA01AC5E1290056EDC9 /* beaconGreySmall@2x.png in Resources */,
 				043C8AAF1AC5E1290056EDC9 /* tick@2x.png in Resources */,
 				043C8A941AC5E1290056EDC9 /* 8b.mov in Resources */,
+				04F6070D1AFC17FF00E79EED /* 895-user-group-toolbar.png in Resources */,
 				043C8A9C1AC5E1290056EDC9 /* beaconblueberry@2x.png in Resources */,
 				04B455771AD5827D00273A4A /* 740-gear-toolbar@2x.png in Resources */,
 				04B455761AD5827D00273A4A /* 740-gear-toolbar.png in Resources */,
@@ -664,10 +682,12 @@
 				043C8AAA1AC5E1290056EDC9 /* screen8_beacon_blue@2x.png in Resources */,
 				043C8A991AC5E1290056EDC9 /* 8b_first_frame@2x.png in Resources */,
 				042B4AE01A9A5672007F361F /* LaunchScreen.xib in Resources */,
+				04F6070E1AFC17FF00E79EED /* 895-user-group-toolbar@2x.png in Resources */,
 				0448E4341ACC7709005B3ADC /* marker_icon.png in Resources */,
 				043C8A9F1AC5E1290056EDC9 /* beacongrey@2x.png in Resources */,
 				043C8A9A1AC5E1290056EDC9 /* 8c_first_frame@2x.png in Resources */,
 				042B4AFE1A9A56C6007F361F /* triangle-select.png in Resources */,
+				04F6070F1AFC17FF00E79EED /* 895-user-group-toolbar@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,6 +707,7 @@
 			files = (
 				04441CD91AF67DBF008ED3DE /* MBReachability.swift in Sources */,
 				04F0E3C01ACB0A6800018155 /* LocationViewController.swift in Sources */,
+				04F6071B1AFC1BCC00E79EED /* MenuTableViewController.swift in Sources */,
 				04FC363B1ACB79B2008E592E /* MBNavigationViewController.swift in Sources */,
 				042B4B001A9A56FA007F361F /* LoginViewController.swift in Sources */,
 				047D3DEA1AD9C738003B54EE /* SwiftyJSON.swift in Sources */,
@@ -696,6 +717,7 @@
 				042B4AD61A9A5672007F361F /* AppDelegate.swift in Sources */,
 				044F1B231AD720440085B2F6 /* MBUserLocGPSAnnotation.swift in Sources */,
 				04B4557A1AD582C600273A4A /* SettingsViewController.swift in Sources */,
+				04F607191AFC1AFC00E79EED /* SWRevealViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

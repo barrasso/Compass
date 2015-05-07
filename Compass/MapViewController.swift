@@ -12,6 +12,8 @@ import MapKit
 
 class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
     
+    @IBOutlet var usersButton: UIBarButtonItem!
+    
     @IBOutlet var findSearchBar: UISearchBar!
     
     let hostname = "52.10.62.166"
@@ -55,6 +57,16 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         // check for network connection
         if !MBReachability.isConnectedToNetwork() {
             self.displayAlert("Error", error: "You are not connected to a network.")
+        }
+        
+        // check for reveal controller
+        if self.revealViewController() != nil {
+            self
+            usersButton.target = self.revealViewController()
+            usersButton.action = "revealToggle:"
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        } else {
+            println("nah bro")
         }
     }
 
