@@ -16,11 +16,18 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     @IBOutlet var findSearchBar: UISearchBar!
     
+    @IBOutlet var queryOverlayView: UIView!
+    
     let hostname = "52.10.62.166"
     
     /* Annotations */
-    let annotationTitles = ["PHO111"]
-    let annotationCoordinates = [CLLocationCoordinate2DMake(42.349170, -71.106104)]
+    let annotationTitles = [
+        "Room533",
+        "IAPLounge"]
+
+    let annotationCoordinates = [
+        CLLocationCoordinate2DMake(42.348164, -71.093903), // Room533
+        CLLocationCoordinate2DMake(37.232837,-121.980558)] // IAPLounge
     var indoorAnnotations = []
     
     /* Searching */
@@ -61,12 +68,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         
         // check for reveal controller
         if self.revealViewController() != nil {
-            self
             usersButton.target = self.revealViewController()
             usersButton.action = "revealToggle:"
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        } else {
-            println("nah bro")
         }
     }
 
@@ -158,9 +162,15 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
         if control == view.rightCalloutAccessoryView {
-            println("Disclosure Pressed! \(view.annotation.title)")
+            println("Disclosure Pressed! \(view.annotation.title!)")
+            
             
             if let indoorAnnotation = view.annotation as? MBAnnotation {
+                
+                // set nsuserdefaults indoor location title name
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.setObject(view.annotation.title!, forKey: "indoorLocationTitle")
+                
                 performSegueWithIdentifier("showIndoorMapView", sender: self)
             }
             
@@ -459,10 +469,15 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                             self.queriedUserBeaconCoordinates = "\(x)" + "," + "\(y)"
                             self.isMappingQueriedUser = true
                             
+                            
+                            
                             // go to indoor map marker
                             self.updatingLocationTimer?.invalidate()
                             
-                                self.performSegueWithIdentifier("showIndoorMapView", sender: self)
+                            // set nsuserdefaults indoor location title name
+                            let defaults = NSUserDefaults.standardUserDefaults()
+                            defaults.setObject(mapid, forKey: "indoorLocationTitle")
+                            self.performSegueWithIdentifier("showIndoorMapView", sender: self)
                             
                         } else {
                             println("Did not find coords.")

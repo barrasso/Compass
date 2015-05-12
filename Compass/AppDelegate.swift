@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     /* Estimote IndoorLocation */
     var location: ESTLocation?
+    var didLoadIndoorLocation = false
     var indoorCoords: String!
     private var manager: ESTIndoorLocationManager!
     
@@ -43,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             clientKey: "jZtdpdn7ydTL3izCvenqQchVGG5Ctv8ApaLzeq8E")
                 
         // init indoor manager
-        self.initIndoorLocationManaging()
+        //self.initIndoorLocationManaging()
         
         // init location manager
         locationManager = CLLocationManager()
@@ -102,6 +103,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         var lat = newLocation.coordinate.latitude
         var long = newLocation.coordinate.longitude
         var coords = String(format: "%f,%f", lat,long)
+        
+        if !didLoadIndoorLocation {
+            
+            if long > 100 { // for now... means you're in SV
+                self.loadLocationFromJSON("IAPLounge")
+            } else {
+                self.loadLocationFromJSON("Room533")
+            }
+            self.initIndoorLocationManaging()
+            
+            didLoadIndoorLocation = true
+        }
         
         if PFUser.currentUser() != nil && MBReachability.isConnectedToNetwork() {
             
@@ -170,18 +183,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
     
-    func loadLocationFromJSON() {
+    func loadLocationFromJSON(name: String) {
         let bundle = NSBundle.mainBundle()
-        let path = bundle.pathForResource("location", ofType: "json")
+        
+        // set nsuserdefaults indoor location title name
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(name, forKey: "indoorLocationTitle")
+            
+        let path = bundle.pathForResource("\(name)"+"-location", ofType: "json")
         let content = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil) as! String
         
         let indoorLocation = ESTLocationBuilder.parseFromJSON(content)
+        
         self.location = indoorLocation
     }
     
     func initIndoorLocationManaging() {
-        
-        self.loadLocationFromJSON()
         
         // init indoor manager
         self.manager = ESTIndoorLocationManager()

@@ -174,20 +174,32 @@
             </objects>
             <point key="canvasLocation" x="962.5" y="-428.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Menu Table View Controller-->
         <scene sceneID="kDb-8C-wUX">
             <objects>
-                <tableViewController id="8b2-s2-A5g" sceneMemberID="viewController">
+                <tableViewController id="8b2-s2-A5g" customClass="MenuTableViewController" customModule="Compass" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="h5r-dp-hXl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Pqe-n2-nXW">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="usercell" id="vIN-oL-Z5U">
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pqe-n2-nXW" id="9VW-Rf-unu">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vIN-oL-Z5U" id="jTU-Ud-tHS">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hJ-yW-3Yy">
+                                            <rect key="frame" x="61" y="6" width="132" height="31"/>
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="22"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="973-user.png" translatesAutoresizingMaskIntoConstraints="NO" id="sTP-4h-YlU">
+                                            <rect key="frame" x="19" y="9" width="25" height="25"/>
+                                        </imageView>
+                                    </subviews>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.94085192679999996" green="0.94903725390000004" blue="0.95307987930000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -199,7 +211,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QaI-yS-oXu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="962.5" y="-1212.5"/>
+            <point key="canvasLocation" x="1658.5" y="-428.5"/>
         </scene>
         <!--Map-->
         <scene sceneID="IQ7-RV-e9v">
@@ -220,15 +232,23 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TJi-iL-02y">
                                 <rect key="frame" x="0.0" y="108" width="375" height="559"/>
                             </mapView>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="owE-oO-cda">
+                                <rect key="frame" x="0.0" y="108" width="375" height="75"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="owE-oO-cda" firstAttribute="top" secondItem="GYV-zl-wE9" secondAttribute="bottom" id="4tr-FU-Bm7"/>
                             <constraint firstItem="TJi-iL-02y" firstAttribute="top" secondItem="GYV-zl-wE9" secondAttribute="bottom" id="9I0-Qd-dUx"/>
                             <constraint firstItem="TJi-iL-02y" firstAttribute="top" secondItem="GYV-zl-wE9" secondAttribute="bottom" id="APZ-8f-OAK"/>
                             <constraint firstItem="TJi-iL-02y" firstAttribute="leading" secondItem="VTh-zg-Tgc" secondAttribute="leadingMargin" constant="-16" id="BEi-e9-Jte"/>
                             <constraint firstItem="m6t-pe-QZF" firstAttribute="top" secondItem="TJi-iL-02y" secondAttribute="bottom" id="EG0-9f-5jo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="TJi-iL-02y" secondAttribute="trailing" constant="-16" id="G4g-YW-pHr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GYV-zl-wE9" secondAttribute="trailing" constant="-16" id="aSG-Jy-Kfi"/>
+                            <constraint firstItem="owE-oO-cda" firstAttribute="leading" secondItem="VTh-zg-Tgc" secondAttribute="leadingMargin" constant="-16" id="by9-QW-jN8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="owE-oO-cda" secondAttribute="trailing" constant="-16" id="jeq-QN-EJr"/>
+                            <constraint firstAttribute="centerX" secondItem="owE-oO-cda" secondAttribute="centerX" id="n6Z-59-KG4"/>
                             <constraint firstItem="GYV-zl-wE9" firstAttribute="top" secondItem="07i-xU-Pb6" secondAttribute="bottom" id="n9R-EA-efe"/>
                             <constraint firstItem="GYV-zl-wE9" firstAttribute="leading" secondItem="VTh-zg-Tgc" secondAttribute="leadingMargin" constant="-16" id="wSe-cy-caN"/>
                         </constraints>
@@ -245,6 +265,7 @@
                     <connections>
                         <outlet property="findSearchBar" destination="GYV-zl-wE9" id="MfO-qV-KdS"/>
                         <outlet property="mapView" destination="TJi-iL-02y" id="uue-jv-y1c"/>
+                        <outlet property="queryOverlayView" destination="owE-oO-cda" id="Tg1-nK-tcm"/>
                         <outlet property="usersButton" destination="Xvz-Ql-TzV" id="im0-xM-tXQ"/>
                         <segue destination="57X-N1-f8a" kind="show" identifier="showIndoorMapView" id="lFV-1F-p9i"/>
                     </connections>
@@ -395,13 +416,35 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lq5-Gy-030" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationItem title="Map" id="5no-nb-XRf">
+                    <barButtonItem key="leftBarButtonItem" image="895-user-group-toolbar.png" id="rxU-vF-4t2"/>
+                    <barButtonItem key="rightBarButtonItem" image="740-gear-toolbar.png" id="Vdm-xu-OQm"/>
+                </navigationItem>
             </objects>
             <point key="canvasLocation" x="2335.5" y="371.5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="J6R-Iq-LU4">
+            <objects>
+                <viewController id="Ziw-84-Uiv" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9wO-rK-Z1K"/>
+                        <viewControllerLayoutGuide type="bottom" id="fr1-Sp-7dr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QT6-2h-YBD">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nx0-VR-y96" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>
         <image name="740-gear-toolbar.png" width="22" height="22"/>
         <image name="895-user-group-toolbar.png" width="22" height="16"/>
+        <image name="973-user.png" width="28" height="24"/>
         <image name="compass_icon.png" width="48" height="64"/>
         <image name="triangle-select.png" width="500" height="500"/>
     </resources>

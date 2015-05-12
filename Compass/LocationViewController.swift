@@ -75,13 +75,22 @@ class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLo
     
     func loadLocationFromJSON() {
         let bundle = NSBundle.mainBundle()
-        let path = bundle.pathForResource("location", ofType: "json")
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let name = defaults.stringForKey("indoorLocationTitle")
+        {
+        let indoorLocationName = "\(name)"+"-location"
+        let path = bundle.pathForResource(indoorLocationName, ofType: "json")
+            println("Loaded: \(indoorLocationName)!!!!")
         let content = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: nil) as! String
         
         let indoorLocation = ESTLocationBuilder.parseFromJSON(content)
         
         self.location = indoorLocation
         self.title = indoorLocation.name
+        } else {
+            println("Error loading indoor location!")
+        }
     }
     
     // MARK: UISwitch events

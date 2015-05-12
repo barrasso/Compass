@@ -9,15 +9,36 @@
 import UIKit
 
 class MenuTableViewController: UITableViewController {
+    
+    // user arrays
+    var userArray = [String]()
+    var sortedUserArray = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        // load users 
+        // query for other users
+        var query = PFUser.query()
+        query.whereKey("username", notEqualTo: PFUser.currentUser().username)
+        
+        // synchronous query  //TODO: do in bg with activity indicator loading
+        var users = query.findObjects()
+        
+        for user in users {
+            // add usernames to user array 
+            userArray.append(user.username)
+            
+            // update table view
+            tableView.reloadData()
+        }
+        
+        // sort user array alphabetically
+        sortedUserArray = userArray.sorted({
+            $0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending
+        })
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,27 +48,23 @@ class MenuTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-//    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        // #warning Potentially incomplete method implementation.
-//        // Return the number of sections.
-//        return 0
-//    }
-//
-//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete method implementation.
-//        // Return the number of rows in the section.
-//        return 0
-//    }
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // Return the number of sections.
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Return the number of rows in the section.
+        return userArray.count
+    }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("usercell", forIndexPath: indexPath) as! UITableViewCell
 
-        // Configure the cell...
-
+        // set cell labels
+        cell.textLabel?.text = sortedUserArray[indexPath.row]
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
