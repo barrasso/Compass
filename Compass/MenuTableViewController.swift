@@ -19,26 +19,34 @@ class MenuTableViewController: UITableViewController {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
 
         // load users 
-        // query for other users
         var query = PFUser.query()
         query.whereKey("username", notEqualTo: PFUser.currentUser().username)
         
-        // synchronous query  //TODO: do in bg with activity indicator loading
-        var users = query.findObjects()
-        
-        for user in users {
-            // add usernames to user array 
-            userArray.append(user.username)
-            
-            // update table view
-            tableView.reloadData()
+        // async query
+        query.findObjectsInBackgroundWithBlock { (objects:[AnyObject]!, error: NSError!) -> Void in
+            if error == nil {
+                
+                if let users = objects as? [PFObject] {
+                    for user in users {
+                        
+                        let username = user.objectForKey("username") as! String
+                        
+                        // add usernames to user array 
+                        self.userArray.append(username)
+                        
+                        // update table view
+                        self.tableView.reloadData()
+                        
+                        // sort user array alphabetically
+                        self.sortedUserArray = self.userArray.sorted({
+                            $0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending
+                        })
+                    }
+                }
+            } else {
+                println(error)
+            }
         }
-        
-        // sort user array alphabetically
-        sortedUserArray = userArray.sorted({
-            $0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending
-        })
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,20 +57,50 @@ class MenuTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // Return the number of sections.
-        return 1
+        return  userArray.count
+    }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let spacing = UIView(frame: CGRectMake(0, 0, self.tableView.frame.size.width, 20.0))
+        spacing.backgroundColor = UIColor.clearColor()
+        return spacing
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 50
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
-        return userArray.count
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.dequeueReusableCellWithIdentifier("usercell", forIndexPath: indexPath) as! UserCell
+        
+        // set cell labels
+        cell.userCellTitle.text = sortedUserArray[indexPath.section]
+
+        // set queried user defaults
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(sortedUserArray[indexPath.section], forKey: "queriedUser")
+        
+        // post internal notification
+        NSNotificationCenter.defaultCenter().postNotificationName("QueryIdentifier", object: nil)
+        
+        // segue to map view and start following
+        self.revealViewController().revealToggleAnimated(true)
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("usercell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("usercell", forIndexPath: indexPath) as! UserCell
 
         // set cell labels
-        cell.textLabel?.text = sortedUserArray[indexPath.row]
+        cell.userCellTitle.text = sortedUserArray[indexPath.section]
         return cell
     }
 

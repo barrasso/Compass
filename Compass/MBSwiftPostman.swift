@@ -10,7 +10,7 @@ import Foundation
 
 class MBSwiftPostman {
     
-    let hostname = "52.10.62.166"
+    let hostname = "52.25.30.141"
     //let fromHostname = "other"
     
     // MARK: New User POST Functions
@@ -188,6 +188,7 @@ class MBSwiftPostman {
             "content": [
                 "labels":"",
                 "resourceName":"LocBeacon",
+                "maxNrOfInstances":"1"
             ]
         ]
         
@@ -239,6 +240,7 @@ class MBSwiftPostman {
             "content": [
                 "labels":"",
                 "resourceName":"LocCMX",
+                "maxNrOfInstances":"1"
             ]
         ]
         
@@ -287,9 +289,11 @@ class MBSwiftPostman {
             "from":"http:localhost:10000",
             "requestIdentifier":"12345",
             "resourceType":"container",
+            "maxNrOfInstances":"1",
             "content": [
                 "labels":"",
                 "resourceName":"LocGPS",
+                "maxNrOfInstances":"1"
             ]
         ]
         

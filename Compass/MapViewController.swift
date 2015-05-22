@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate {
+class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate, SWRevealViewControllerDelegate {
     
     @IBOutlet var usersButton: UIBarButtonItem!
     
@@ -18,7 +18,11 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     
     @IBOutlet var queryOverlayView: UIView!
     
-    let hostname = "52.10.62.166"
+    @IBOutlet var followingLabel: UILabel!
+    @IBOutlet var followingNameLabel: UILabel!
+    @IBOutlet var stopFollowingButton: UIButton!
+    
+    let hostname = "52.25.30.141"
     
     /* Annotations */
     let annotationTitles = [
@@ -42,7 +46,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     var queriedUserBeaconCoordinates = ""
     var queriedUserGPSCoordinates = CLLocationCoordinate2DMake(0, 0)
     
-    /* Map View */
+    //MARK: /* Map View */
     var didLoadMapView = false
     @IBOutlet var mapView: MKMapView!
     
@@ -51,9 +55,26 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         mapView = MKMapView()
     }
     
+    //MARK: IBActions
+    
+    @IBAction func stopFollowingButtonPressed(sender: AnyObject) {
+        println("pressed STOP!!!!!!!!!!!!!!!!!!!!")
+    }
+    
+    //MARK: /* View Functions */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let name = defaults.stringForKey("queriedUser") {
+            if name == "" {
+                queryOverlayView.hidden = true
+            } else {
+                followingNameLabel.text = name
+            }
+        }
+        
         // set delegates
         mapView.delegate = self
         findSearchBar.delegate = self
@@ -71,6 +92,21 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             usersButton.target = self.revealViewController()
             usersButton.action = "revealToggle:"
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "receivedQueryNotification:", name:"QueryIdentifier", object: nil)
+    }
+        
+    override func viewWillAppear(animated: Bool) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let name = defaults.stringForKey("queriedUser") {
+            if name == "" {
+                queryOverlayView.hidden = true
+            } else {
+                queryOverlayView.hidden = false
+                followingNameLabel.text = name
+                
+            }
         }
     }
 
@@ -110,6 +146,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
         let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
     }
+
+    func setCenterOfMapToUserLocation(location: CLLocationCoordinate2D) {
+        let span = MKCoordinateSpan(latitudeDelta: 0.000001, longitudeDelta: 0.000001)
+        let region = MKCoordinateRegion(center: location, span: span)
+        mapView.setRegion(region, animated: true)
+    }
     
     func addIndoorAnnotationsToMapView() {
         for (var i = 0; i < self.annotationTitles.count; i++) {
@@ -132,7 +174,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             if userLocView == nil {
                 userLocView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
                 userLocView.canShowCallout = true
-                userLocView.image = UIImage(named: "user_marker.png")
+                userLocView.image = UIImage(named: "userBlue0.png")
             } else {
                 userLocView.annotation = annotation
             }
@@ -219,6 +261,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             }
             
             // clear cached user query info
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setObject("", forKey: "queriedUser")
             self.queriedUser = ""
             self.queriedUserUUID = ""
             self.accuracyFlag = ""
@@ -242,8 +286,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
             // clear queried user marker if any
             let annotationsToRemove = self.mapView.annotations.filter({$0 as? MKUserLocation != self.mapView.userLocation})
             self.mapView.removeAnnotations(annotationsToRemove)
-            self.isMappingQueriedUser = false
-                
+            
             // readd indoor map markers
             self.addIndoorAnnotationsToMapView()
             
@@ -253,6 +296,52 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
     }
     
     // MARK: Query Location Handling
+    
+    func receivedQueryNotification(notification: NSNotification) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let name = defaults.stringForKey("queriedUser") {
+            if name == "" {
+                queryOverlayView.hidden = true
+            } else {
+                queryOverlayView.hidden = false
+                followingNameLabel.text = name
+                beginSearchForUser(name)
+            }
+        }
+    }
+    
+    func beginSearchForUser(username: String) {
+        
+        if MBReachability.isConnectedToNetwork() {
+            
+            // clear queried user marker if any
+            let annotationsToRemove = self.mapView.annotations.filter({$0 as? MKUserLocation != self.mapView.userLocation})
+            self.mapView.removeAnnotations(annotationsToRemove)
+            self.isMappingQueriedUser = false
+            
+            // readd indoor map markers
+            self.addIndoorAnnotationsToMapView()
+            
+            // stop updating user location timer
+            self.updatingLocationTimer?.invalidate()
+            
+            // center map back to user location
+            self.setCenterOfMapToLocation(mapView.userLocation.location.coordinate)
+            
+            // clear cached user query info
+            self.queriedUser = username
+            self.queriedUserUUID = ""
+            self.accuracyFlag = ""
+            
+            println("Searching for: \(username)...")
+            self.getQueriedUserUUID(username)
+            
+            // init update queried user location timer
+            self.updatingLocationTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: "updateQueriedUserLocation", userInfo: nil, repeats: true)
+        } else {
+            self.displayAlert("Error", error: "Check your network connection.")
+        }
+    }
     
     func getQueriedUserUUID(userid: String) {
         
@@ -294,6 +383,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                         var string: String = obj.1.stringValue
                         if string.rangeOfString(userid, options: nil, range: Range(start: string.startIndex, end: string.endIndex), locale: nil) != nil {
                             println("Found user: \(userid)")
+                            let defaults = NSUserDefaults.standardUserDefaults()
+                            defaults.setObject(userid, forKey: "queriedUser")
                             self.queriedUser = userid
                             
                             // extract uuid
@@ -556,10 +647,13 @@ class MapViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegat
                             var newAnnotation = MBUserLocGPSAnnotation(coordinate: self.queriedUserGPSCoordinates, title: self.queriedUser)
                             self.queriedUserAnnotation = newAnnotation
                             self.mapView.addAnnotation(newAnnotation)
-                            self.isMappingQueriedUser = true
                             
                             // lock on to queried user
-                            self.setCenterOfMapToLocation(self.queriedUserGPSCoordinates)
+                            if !self.isMappingQueriedUser {
+                                self.setCenterOfMapToUserLocation(self.queriedUserGPSCoordinates)
+                            }
+                            
+                            self.isMappingQueriedUser = true
                             
                         } else {
                             println("Did not find coords.")

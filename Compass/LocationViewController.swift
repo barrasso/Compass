@@ -10,7 +10,7 @@ import UIKit
 
 class LocationViewController: UIViewController, UISearchBarDelegate, ESTIndoorLocationManagerDelegate {
     
-    let hostname = "52.10.62.166"
+    let hostname = "52.25.30.141"
     
     @IBOutlet var indoorSearchBar: UISearchBar!
     @IBOutlet var indoorLocationView: ESTIndoorLocationView!

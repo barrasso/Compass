@@ -14,7 +14,7 @@ class MBUserLocGPSAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2DMake(0, 0)
     var title: String!
     var subtitle = "Tap to Navigate"
-    var imageName = "user_marker.png"
+    var imageName = "userBlue0.png"
     
     init(coordinate: CLLocationCoordinate2D, title: String) {
         self.coordinate = coordinate

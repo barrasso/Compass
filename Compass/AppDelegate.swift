@@ -42,9 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // initialize parse sdk
         Parse.setApplicationId("RWNddnNuYwk6BfS87tsIlSXNPX1FIHOsDxYriBId",
             clientKey: "jZtdpdn7ydTL3izCvenqQchVGG5Ctv8ApaLzeq8E")
-                
-        // init indoor manager
-        //self.initIndoorLocationManaging()
         
         // init location manager
         locationManager = CLLocationManager()
@@ -56,6 +53,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
         
         locationManager.startUpdatingLocation()
+        
+        // reset defaults queried user
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject("", forKey: "queriedUser")
         
         return true
     }
@@ -118,11 +119,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         if PFUser.currentUser() != nil && MBReachability.isConnectedToNetwork() {
             
-//            // put 1 in LocGPS accuracy flag
-//            MBSwiftPostman().getFlagEnableForLocGPS()
-//            
-//            // post content instance with updated GPS position
-//            MBSwiftPostman().createLocGPSContentInstance(coords)
+            // put 1 in LocGPS accuracy flag
+            MBSwiftPostman().getFlagEnableForLocGPS()
+            
+            // post content instance with updated GPS position
+            MBSwiftPostman().createLocGPSContentInstance(coords)
         }
     }
     
@@ -132,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         if PFUser.currentUser() != nil && MBReachability.isConnectedToNetwork() {
             
             // put 0 in LocGPS accuracy flag
-//            MBSwiftPostman().getFlagDisableForLocGPS()
+            MBSwiftPostman().getFlagDisableForLocGPS()
         }
     }
         
@@ -212,11 +213,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         if MBReachability.isConnectedToNetwork() {
             
-//            // put 1 in LocBeacon accuracy flag
-//            MBSwiftPostman().getFlagEnableForLocBeacon()
-//            
-//            // post content instance with updated indoor position
-//            MBSwiftPostman().createLocBeaconContentInstance(self.indoorCoords)
+            // put 1 in LocBeacon accuracy flag
+            MBSwiftPostman().getFlagEnableForLocBeacon()
+            
+            // post content instance with updated indoor position
+            MBSwiftPostman().createLocBeaconContentInstance(self.indoorCoords)
         }
     }
     
